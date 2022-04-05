@@ -4,14 +4,7 @@ import 'package:flutter/material.dart';
 //import 'package:gimme/Api/Models/fetchRequestOpenModel.dart';
 import 'package:gimme/Api/fetchDataAPIRequest.dart';
 import 'package:gimme/config.dart';
-//import 'package:gimme/pages/Home.dart';
-//import 'package:gimme/pages/addRequest.dart';
-//import 'package:gimme/pages/chatPage.dart';
-//import 'package:gimme/pages/homePage.dart';
-//import 'package:gimme/pages/profilePage.dart';
-//import 'package:gimme/pages/searchPage.dart';
 import 'package:gimme/widget/Pdrawer.dart';
-//import 'package:gimme/widget/customInputTextField.dart';
 import 'package:gimme/main.dart';
 
 
@@ -61,8 +54,8 @@ final FetchDataAPIRequest _fetchDataAPIRequest = FetchDataAPIRequest();
         currentIndex: currnetIndex,
         unselectedItemColor: Colors.black,
         iconSize: 30,
-        unselectedFontSize: 16,
-        selectedFontSize: 20,
+        unselectedFontSize: 15,
+        selectedFontSize: 18,
         onTap: (index) => setState(() => currnetIndex = index),
         // ignore: prefer_const_literals_to_create_immutables
         items: [
@@ -84,6 +77,11 @@ final FetchDataAPIRequest _fetchDataAPIRequest = FetchDataAPIRequest();
         BottomNavigationBarItem(
           icon:Icon(Icons.add_box),
           label: 'Add request',
+          backgroundColor: primaryColor 
+        ),
+        BottomNavigationBarItem(
+          icon:Icon(Icons.map),
+          label: 'GoogleMap',
           backgroundColor: primaryColor 
         ),
         BottomNavigationBarItem(

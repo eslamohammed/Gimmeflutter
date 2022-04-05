@@ -92,7 +92,7 @@ return Drawer(
     buildMenuItem(
      text : 'update',
      icon : Icons.update,
-     onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>GoogleMaps())),
+     //onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>)),
 
      //waiting for next version updates on app store    
    ),

@@ -3,11 +3,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:gimme/Api/fetchDataAPIRequest.dart';
-import 'package:gimme/Google_maps/googleMap.dart';
-import 'package:gimme/config.dart';
+//import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/widget/customInputTextField.dart';
 import 'package:gimme/main.dart';
+import 'package:snippet_coder_utils/hex_color.dart';
 
+//final GoogleMaps x = new GoogleMaps(); 
 
 
 class AddRequest extends StatefulWidget {
@@ -18,26 +19,34 @@ class AddRequest extends StatefulWidget {
 }
 
 class _AddRequestState extends State<AddRequest>{
-  final TextEditingController _toTextEditingController= TextEditingController();  
-  final TextEditingController _fromTextEditingController= TextEditingController();
-  final TextEditingController _dataBodyTextEditingController= TextEditingController();
-  final TextEditingController _titleDataTextEditingController= TextEditingController();
-  final TextEditingController _minTextEditingController= TextEditingController();
-  final TextEditingController _maxTextEditingController= TextEditingController();
+  //final TextEditingController _toTextEditingController= TextEditingController();  
+  //final TextEditingController _fromTextEditingController= TextEditingController();
+
+  final TextEditingController _titleTextEditingController= TextEditingController();
+  final TextEditingController _bodyTextEditingController= TextEditingController();
+  final TextEditingController _minPricreTextEditingController= TextEditingController();
+  final TextEditingController _maxPricreTextEditingController= TextEditingController();
+  final TextEditingController _minTimeTextEditingController= TextEditingController();
+  final TextEditingController _maxTimeTextEditingController= TextEditingController();
 
   double ? _minDropDownValue; //value of price
 
   double ? _mintimeDropDownValue; //value of price
 
 
+
+
   @override
   void dispose(){
-    _toTextEditingController.dispose();
-    _fromTextEditingController.dispose();
-    _dataBodyTextEditingController.dispose();
-    _titleDataTextEditingController.dispose();
-    _minTextEditingController.dispose();
-    _maxTextEditingController.dispose();
+    //_toTextEditingController.dispose();
+    //_fromTextEditingController.dispose();
+    _bodyTextEditingController.dispose();
+    _titleTextEditingController.dispose();
+    _minPricreTextEditingController.dispose();
+    _maxPricreTextEditingController.dispose();
+    _minTimeTextEditingController.dispose();
+    _maxTimeTextEditingController.dispose();
+
     super.dispose();
   }
 
@@ -69,16 +78,16 @@ class _AddRequestState extends State<AddRequest>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-
       appBar:  AppBar(
       title:Text('Add request'),
       backgroundColor: primaryColor,
-     ),
+      ),
       body:Center(
        child:_addRequest(context), 
       )
     );
   }
+
 //Map<String, dynamic> payload = Jwt.parseJwt(prefs.getString("token") as String);
   //print(payload[]);
 
@@ -89,123 +98,196 @@ Widget _addRequest(BuildContext context){
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
     //// it will be impelemented later.. 
-
-    Padding(//logo
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Container(   
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height /6,
     
-    decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Colors.white,
-          Colors.white,
-          ],
-      ),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(100),
-          bottomRight: Radius.circular(100),
-      ),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-    Align(  //logo
-        alignment : Alignment.center,
-        //width: MediaQuery.of(context).size.width/3,
-        child: Image.asset("assets/gimmeMoblieApp.png",
-        width: 250,
-        fit: BoxFit.contain,),
-        ), 
-    
-    Center( // Request Card Word
-    child: Container(
-    decoration: BoxDecoration(color: primaryColor ,
-    borderRadius: BorderRadius.circular(20)),
-    
-    child: const Padding(
-      padding: EdgeInsets.all(7.5),
-      child: Text("Request Card" , style: TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-      fontSize: 20 ,),),),),)
-  ],
-  ),
- ),
-),
-      
     Padding( // Need Something && title && body
-     padding: const EdgeInsets.only(right: 10  ,),
+     padding: const EdgeInsets.only(right: 10 , left: 10),
   
      child: Container( //
      width: MediaQuery.of(context).size.width/1,
      height: MediaQuery.of(context).size.height/4,          
      decoration: const BoxDecoration(  
-     borderRadius:  BorderRadius.only(
-      topRight: Radius.circular(25)),
-     color: Colors.white, ),  
+     /*borderRadius:  BorderRadius.only(
+      
+      topRight: Radius.circular(25)),*/
+      color: Colors.white,
+      ),  
      child: Column(
      mainAxisAlignment: MainAxisAlignment.start,
      crossAxisAlignment: CrossAxisAlignment.start,
     children: [
      const Padding(    //Need Something field
-     padding:  EdgeInsets.only(top :10.0),
+     padding:  EdgeInsets.all(10.0),
      child:  Text("Need Something..!!! , Put here" ,
      style: TextStyle(
-     color: primaryColor,
+     color: Colors.black,
      fontWeight: FontWeight.bold,
-     fontSize: 17.5 ,
+     fontSize: 20 ,
     ),
    ),
  ),
 
-     Padding(    //title
-      padding: const EdgeInsets.only(left: 15 , right: 15),
-      child: CustomInputTextFieldWidget(hintText: "title ",
-       secure: false,
-       ccontroller:_titleDataTextEditingController, ),
+    SizedBox(          //title
+    width: MediaQuery.of(context).size.width,
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+
+      Padding(
+        padding: const EdgeInsets.all(10),
+        child: Container(
+          decoration: BoxDecoration(
+              color: HexColor("#E5E5E5"),
+              borderRadius: BorderRadius.only(  
+                topRight: Radius.circular(25),
+                bottomRight: Radius.circular(25),
+                topLeft: Radius.circular(25),
+                bottomLeft: Radius.circular(25),  
+                
+              )
+              /// contin
+          ),
+          
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: CustomInputTextFieldWidget(hintText: "title",
+            secure: false,ccontroller: _titleTextEditingController, 
+            icon: Icons.update,),
+          ),
+         ),
+       ),
+     ]),
     ),
-     
-     Padding(    //Requesting
-      padding: const EdgeInsets.only(left: 15 , right: 15),
-      child: CustomInputTextFieldWidget(hintText: "request body  ",
-       secure: false,
-       ccontroller:_dataBodyTextEditingController,),
+    
+    SizedBox(          //body
+    width: MediaQuery.of(context).size.width,
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+
+      Padding(
+        padding: const EdgeInsets.all(10),
+        child: Container(
+          decoration: BoxDecoration(
+              color: HexColor("#E5E5E5"),
+              borderRadius: BorderRadius.only(  
+                topRight: Radius.circular(25),
+                bottomRight: Radius.circular(25),
+                topLeft: Radius.circular(25),
+                bottomLeft: Radius.circular(25),  
+                
+              )
+              /// contin
+          ),
+          
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: CustomInputTextFieldWidget(hintText: "body",
+            secure: false,ccontroller: _bodyTextEditingController, 
+          ),
+         ),
+        ),
+       ),
+     ]),
     ),
-    ]
-   ),
+   ]
   ),
  ),
+ ),
     
-    Padding(//dopr down button to choose  price range
-     padding: const EdgeInsets.only(right: 10 , top: 1),
+    Padding(//price range
+     padding: const EdgeInsets.only(right: 10 , left: 10),
       child: Container(
        width: MediaQuery.of(context).size.width,
-       height: MediaQuery.of(context).size.height / 11 ,    
+       height: MediaQuery.of(context).size.height / 10 ,    
        decoration: const BoxDecoration(
        color: Colors.white,
       ),  
 
     child: Padding(
-      padding: const EdgeInsets.all(20),
-      child: Row(
-       crossAxisAlignment: CrossAxisAlignment.center,         
-      children: [
+    padding: const EdgeInsets.all(20),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,         
+    children: [
+     Container(   //Choose the delivery price.     
+      width: MediaQuery.of(context).size.width/2.7,  //**delivery price Word width**
+      decoration: const BoxDecoration(  //from-to box decoration 
+      color:Colors.white,
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text("the delivery price range..." , style: TextStyle(color: Colors.black, fontSize: 20 , fontWeight: FontWeight.bold),),
+    ),
+  ),
+                          //function implementaion min & max must be int 
+     Container( // price min
+       width: MediaQuery.of(context).size.width/5,     //** price width it self **
+       child:Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [  //min Price
 
-      Container(   //Choose the delivery price.     
-        width: MediaQuery.of(context).size.width/2,
+       Padding(   //min
+         padding: const EdgeInsets.only(right: 10 ,),
+         child: Container( 
+            decoration: BoxDecoration(
+                color: HexColor("#E5E5E5"),
+                borderRadius: BorderRadius.only(  
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),  
+                  
+                )
+                /// contin
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
+              child: CustomInputTextFieldWidget(hintText: "min",
+              secure: false,ccontroller: _minPricreTextEditingController, 
+              ),
+            ),
+         ),
+       ),
+     ]),
+    ),
+    
+     Container( // price max
+       width: MediaQuery.of(context).size.width/5,     //** price width it self **
+       child:Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [  //max Price
 
-        decoration: const BoxDecoration(  //from-to box decoration 
-        color:Colors.white,
-      ),
-      child: const Text("Choose the delivery price..." , style: TextStyle(color: primaryColor, fontSize: 16 , fontWeight: FontWeight.bold),),
+       Padding(   //max
+         padding: const EdgeInsets.only(left: 10),
+         child: Container( 
+            decoration: BoxDecoration(
+                color: HexColor("#E5E5E5"),
+                borderRadius: BorderRadius.only(  
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),  
+                  
+                )
+                /// contin
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
+              child: CustomInputTextFieldWidget(hintText: "max",
+              secure: false,ccontroller: _maxPricreTextEditingController, 
+              ),
+            ),
+         ),
+       ),
+     ]),
     ),
 
+/*
       Container( // price DropdownButton
-       width: MediaQuery.of(context).size.width/4,
+       width: MediaQuery.of(context).size.width/3,
        decoration: BoxDecoration(            
          borderRadius: BorderRadius.circular(50),
          color: primaryColor,         
@@ -231,17 +313,113 @@ Widget _addRequest(BuildContext context){
         style: TextStyle(color: Colors.white  , fontSize:15 ),
         ),
       ),            
+    */
     ],
    ),
   ),       
  ),
  ),
 
-    Padding(//dopr down button to choose  time range
-     padding: const EdgeInsets.only(right: 10 , top: 1),
+    
+    Padding(// Time range
+     padding: const EdgeInsets.only(right: 10 , left: 10),
       child: Container(
        width: MediaQuery.of(context).size.width,
-       height: MediaQuery.of(context).size.height / 11 ,    
+       height: MediaQuery.of(context).size.height / 10 ,    
+       decoration: const BoxDecoration(
+       color: Colors.white,
+      ),  
+
+    child: Padding(
+    padding: const EdgeInsets.all(20),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,         
+    children: [
+     Container(   //Choose the delivery price.     
+      width: MediaQuery.of(context).size.width/2.7,  //**delivery price Word width**
+      decoration: const BoxDecoration(  //from-to box decoration 
+      color:Colors.white,
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text("Delivery Time range..." , style: TextStyle(color: Colors.black, fontSize: 20 , fontWeight: FontWeight.bold),),
+    ),
+  ),
+                          //function implementaion min & max must be int 
+     Container( // price min
+       width: MediaQuery.of(context).size.width/5,     //** price width it self **
+       child:Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [  //min Time
+     Padding(   //min
+         padding: const EdgeInsets.only(right: 10 ,),
+         child: Container( 
+            decoration: BoxDecoration(
+                color: HexColor("#E5E5E5"),
+                borderRadius: BorderRadius.only(  
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),  
+                  
+                )
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
+              child: CustomInputTextFieldWidget(hintText: "min",
+              secure: false,ccontroller: _minTimeTextEditingController, 
+              ),
+            ),
+         ),
+       ),
+     ]),
+    ),
+
+     Container(  //max Time
+       width: MediaQuery.of(context).size.width/5,     //** price width it self **
+       child:Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [  //max Price
+
+       Padding(   //max
+         padding: const EdgeInsets.only(left: 10),
+         child: Container( 
+            decoration: BoxDecoration(
+                color: HexColor("#E5E5E5"),
+                borderRadius: BorderRadius.only(  
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),  
+                  
+                )
+                /// contin
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
+              child: CustomInputTextFieldWidget(hintText: "max",
+              secure: false,ccontroller: _maxTimeTextEditingController, 
+              ),
+            ),
+         ),
+       ),
+     ]),
+    ),
+    ],
+   ),
+  ),       
+ ),
+ ),
+
+// if design want dragdrop buttom
+/*
+    Padding(//dopr down button to choose  time range
+     padding: const EdgeInsets.only(right: 10 , left: 10),
+      child: Container(
+       width: MediaQuery.of(context).size.width,
+       height: MediaQuery.of(context).size.height / 12 ,    
        decoration: const BoxDecoration(
        color: Colors.white,
       ),  
@@ -253,8 +431,7 @@ Widget _addRequest(BuildContext context){
       children: [
 
       Container(                 
-        width: MediaQuery.of(context).size.width/2,
-
+        width: MediaQuery.of(context).size.width/1.9,
         decoration: const BoxDecoration(  //from-to box decoration 
         color:Colors.white,
       ),
@@ -263,15 +440,14 @@ Widget _addRequest(BuildContext context){
 
       //SizedBox(      width: MediaQuery.of(context).size.width/8,),           
       
-      Center(
-        child: Container( // time range DropdownButton
-         width: MediaQuery.of(context).size.width/4,
-         decoration: BoxDecoration(            
+      
+         Container( // time range DropdownButton
+         width: MediaQuery.of(context).size.width/3,
+         decoration: BoxDecoration(
            borderRadius: BorderRadius.circular(50),
            color: primaryColor,
            
-         ),
-        
+         ),      
          child: DropdownButton(items: [
          DropdownMenuItem<double>(child: Text("  30:00   min "),value: 30*60, ),
          DropdownMenuItem<double>(child: Text("  60:00   min "),value: 60*60, ),
@@ -295,21 +471,18 @@ Widget _addRequest(BuildContext context){
           ),
  
           ),
-      ),
+      
     ],
    ),
   ),       
  ),
  ),
-   
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-
-    Padding( // add request   
+*/
+    Padding(   
      padding: const EdgeInsets.only(right: 10 ,),
       child: Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 8,
-    
       decoration: const BoxDecoration(  //from-to box decoration 
       color: Colors.white,),
 
@@ -317,50 +490,54 @@ Widget _addRequest(BuildContext context){
       child: SizedBox(
         width: MediaQuery.of(context).size.width*0.75,
         child: Row(
-     children: [
-     
-    SizedBox( width: MediaQuery.of(context).size.width*0.1),
-    
-    Container(      //from
-     height: MediaQuery.of(context).size.height*0.05,
-     width: MediaQuery.of(context).size.width*0.25,  
-     
-      child:TextButton(onPressed: () {
+      children: [
         
-        //GoogleMaps();
-        print("hi");
+      SizedBox( width: MediaQuery.of(context).size.width*0.1),
+      
+      Container(      //from
+        height: MediaQuery.of(context).size.height*0.05,
+        width: MediaQuery.of(context).size.width*0.25,  
+        
+        child:TextButton(onPressed: () async{
+          
+          /*Position position = await _getGeoLocationPosition();
+          location ='Lat: ${position.latitude} , Long: ${position.longitude}';
+          GetAddressFromLatLong(position);
+
+          //GoogleMaps();
+          print("hi");
 
 
 
-        /*
-        CupertinoAlertDialog(
-          title: Text("Choose Location"),
-          content: Text("Current location Or Another on ?"), 
-          actions: [
-            FlatButton(onPressed: (){}, child: Text("Current location")),
-            FlatButton(onPressed: (){}, child: Text("Google map"))
-          ],
-        );*/
-      },
-      child: SizedBox(
-      width: MediaQuery.of(context).size.width*0.5,
-      child: const Center(
-      child: Text("From" , style: TextStyle(color:Colors.white, fontSize:20,),),
-         ),
+          
+          CupertinoAlertDialog(
+            title: Text("Choose Location"),
+            content: Text("Current location Or Another on ?"), 
+            actions: [
+              FlatButton(onPressed: (){}, child: Text("Current location")),
+              FlatButton(onPressed: (){}, child: Text("Google map"))
+            ],
+          );*/
+        },
+        child: SizedBox(
+        width: MediaQuery.of(context).size.width*0.5,
+        child: const Center(
+        child: Text("Get Location" , style: TextStyle(color:Colors.white, fontSize:20,),),
+            ),
+          ),
+          ),
+        color: primaryColor,
         ),
-       ),
-      color: primaryColor,
-      ),
 
-    SizedBox( width: MediaQuery.of(context).size.width*0.05),
-    
-    Container( //to
-     height: MediaQuery.of(context).size.height*0.05,
-     width: MediaQuery.of(context).size.width*0.25,
-     decoration: const BoxDecoration(color:primaryColor,),
-      child: const Text("to"),
-    ),
-    ],
+      SizedBox( width: MediaQuery.of(context).size.width*0.05),
+      
+      Container( //to
+        height: MediaQuery.of(context).size.height*0.05,
+        width: MediaQuery.of(context).size.width*0.25,
+        decoration: const BoxDecoration(color:primaryColor,),
+        child: const Text("to"),
+        ),
+      ],
    ),
   ),
  ),
@@ -400,6 +577,8 @@ Widget _addRequest(BuildContext context){
     ), 
   ),
 ),
+
+    SizedBox(height : 100),
 ////////////////////////////////////
 /*Center(
   child: Text(prefs.getString("token") as String),                
@@ -410,22 +589,21 @@ Widget _addRequest(BuildContext context){
   
 }
 
-double getCurrentLocation( double loc){
-
-
-  return loc ;
-}
-
-double getOtherLocationGMap( double loc){
-
-
-  return loc ;
-}
-
-
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

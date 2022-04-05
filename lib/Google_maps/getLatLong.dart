@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
@@ -14,7 +16,7 @@ class GetLatLong extends StatefulWidget {
 class _GetLatLongState extends State<GetLatLong> {
 
   String location ='Null, Press Button';
-  String Address = 'search';
+  String address = 'search';
 
 
   @override
@@ -33,7 +35,7 @@ class _GetLatLongState extends State<GetLatLong> {
             SizedBox(height: 10,),
             Text('ADDRESS',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
             SizedBox(height: 10,),
-            Text('${Address}'),
+            Text('${address}'),
             ElevatedButton(onPressed: () async{
               Position position = await _getGeoLocationPosition();
               location ='Lat: ${position.latitude} , Long: ${position.longitude}';
@@ -88,7 +90,7 @@ class _GetLatLongState extends State<GetLatLong> {
     List placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
     print(placemarks);
     Placemark place = placemarks[0];
-    Address = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    address = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     setState(()  {
     });
   }

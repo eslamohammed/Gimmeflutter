@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
+import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/pages/Home_page.dart';
 import 'package:gimme/pages/addRequest.dart';
 import 'package:gimme/pages/chatPage.dart';
@@ -11,18 +11,19 @@ import 'package:gimme/pages/registerAccountPage/register_page.dart';
 import 'package:gimme/pages/searchPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-int currnetIndex = 0;  //to index that only responisible for change between home screens 
+int currnetIndex = 0;  //the index that only responisible for change between home screens 
   final screens = [   // home screens home, chat, search, add request , profile
     Home(),
     SearchPage(),
     ChatPage(),
     AddRequest(),
+    GoogleMaps(),
     ProfilePages(),
   ];
    
 const primaryColor = Color.fromARGB(179, 0, 161, 35);
 //const primaryColor = Color.fromARGB(255, 23, 192, 52);
-
+ 
 SharedPreferences prefs = "null" as SharedPreferences ;
 
 void main() async{
@@ -42,7 +43,7 @@ void main() async{
     }else{
       _screen = HomePage();
     } 
-
+  
   runApp(MyApp(_screen));
 
 }

@@ -20,6 +20,93 @@ class _HomeXState extends State<HomeX>{
  }
 }
 /*
+@override
+ void initState(){
+   intilize();
+   super.initState();
+ }*/
+/* 
+intilize()async{
+  double  lat = await currentLatLocation() as double;
+  double  lng = await currentLngLocation() as double;
+  
+  Marker firstMarker = Marker(
+        markerId: MarkerId('1') , 
+        position: LatLng( lat , lng),   //current location is initial position by defualt  
+        infoWindow: InfoWindow(
+          title: "Gimme mobile app",
+          snippet: 'From',
+          onTap: (){
+            // send lat-long to API
+            print('==================================');
+            debugPrint("--------------------------------");
+            debugPrint("----------\n Start latlng($startLat,$startLong)");
+            debugPrint("----------\n End   latlng($endlat,$endlong)");
+                        
+            print("Hallooooooooooooo");
+          },
+        ),
+      //onDrag: 
+      draggable: true,
+      // position: LatLng(value.latitude, value.longitude),
+
+      onDragStart:((newPosition) {
+        debugPrint("its longtide of start drag: $newPosition...");
+        startLat = newPosition.latitude;
+        startLong = newPosition.longitude;
+      }),
+      //////////////////////////////////////////////////////////
+      onDragEnd: ((newPosition) {
+        debugPrint("its longtide of drag end : $newPosition...");
+        endlat = newPosition.latitude;
+        endlong = newPosition.longitude;
+      }),
+      
+     );
+  
+  Marker secondMarker = Marker(
+        markerId: MarkerId('2') , 
+        position: LatLng( lat -5.0 , lng-5.0 ),        //-5 , -5 far from first marker location to avoid user see both as one marker
+        infoWindow: InfoWindow(
+          title: "Gimme mobile app",
+          snippet: 'To',
+          onTap: (){
+            // send lat-long to API
+            print('==================================');
+            debugPrint("--------------------------------");
+            debugPrint("----------\n Start latlng($startLat,$startLong)");
+            debugPrint("----------\n End   latlng($endlat,$endlong)");
+                        
+            print("Hallooooooooooooo");
+          },
+        ),
+      //onDrag: 
+      draggable: true,
+      // position: LatLng(value.latitude, value.longitude),
+
+      onDragStart:((newPosition) {
+        debugPrint("its longtide of start drag: $newPosition...");
+        startLat = newPosition.latitude;
+        startLong = newPosition.longitude;
+      }),
+      //////////////////////////////////////////////////////////
+      onDragEnd: ((newPosition) {
+        debugPrint("its longtide of drag end : $newPosition...");
+        endlat = newPosition.latitude;
+        endlong = newPosition.longitude;
+      }),
+      
+     );
+
+      ///***adding both markers to the map
+  //markers.add(firstMarker);
+  //markers.add(secondMarker);
+
+
+  */
+}
+*/
+/*
 
 // ignore_for_file: file_names, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors
 
