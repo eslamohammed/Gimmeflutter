@@ -1,8 +1,6 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:gimme/Api/Models/profileModel.dart';
 import 'package:gimme/config.dart';
 import 'package:gimme/main.dart';

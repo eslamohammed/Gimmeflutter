@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/Api/sharedPrefs.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/Home_page.dart';
+import 'package:gimme/pages/homePage.dart';
 import 'package:gimme/widget/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -457,7 +458,7 @@ Future  _loginToAccount() async{      //login to account
   var url = Uri.parse(Config.apiURl + Config.loginAPI);
   var response = await http.post(url, 
   body: {
-  "email" : _emailTextEditingController.text,
+  "email"    : _emailTextEditingController.text,
   "password" : _passwordTextEditingController.text, });            
                   
       // if condition to check if account already exited or created and if then send user to login page
@@ -467,6 +468,7 @@ Future  _loginToAccount() async{      //login to account
       debugPrint('Response status: ${response.statusCode}');
 
       var body =jsonDecode(response.body());
+
       debugPrint(body["message"] );
       debugPrint(body["data"] );
       checkAccount = body["message"];
@@ -504,7 +506,17 @@ Future  _loginToAccount() async{      //login to account
             "Login Successfully     Now Press Ok to continue",
             "Ok", 
             (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+           },
+          );
+         }else if(checkAccount == "Success : User has been logged in !!!"){
+           FormHelper.showSimpleAlertDialog(
+            context, 
+            Config.appName,
+            "Login Successfully     Now Press Ok to continue",
+            "Ok", 
+            (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
            },
           );
          }

@@ -45,6 +45,7 @@ dependencies:
   geocoding: ^2.0.4
   geocode: ^1.0.1
   flutter_google_places: ^0.3.0
+  jaguar_jwt: ^3.0.0
 
 
 dev_dependencies:

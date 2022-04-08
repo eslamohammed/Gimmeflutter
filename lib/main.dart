@@ -9,10 +9,11 @@ import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/pages/profilePage.dart';
 import 'package:gimme/pages/registerAccountPage/register_page.dart';
 import 'package:gimme/pages/searchPage.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int currnetIndex = 0;  //the index that only responisible for change between home screens 
-  final screens = [   // home screens home, chat, search, add request , profile
+  final screens = [    // home screens home, chat, search, add request , profile
     Home(),
     SearchPage(),
     ChatPage(),
@@ -21,9 +22,7 @@ int currnetIndex = 0;  //the index that only responisible for change between hom
     ProfilePages(),
   ];
    
-const primaryColor = Color.fromARGB(179, 0, 161, 35);
-//const primaryColor = Color.fromARGB(255, 23, 192, 52);
- 
+const primaryColor = Color.fromARGB(179, 0, 161, 35); 
 SharedPreferences prefs = "null" as SharedPreferences ;
 
 void main() async{
@@ -31,17 +30,43 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();   //because we now in main class so flutter have to ignore an some Ops
    prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token") ;  //getting token value
-    //String? tokenEmail = prefs.getString("tokenEmail");
 
+    // To decode the token
+    Map<String, dynamic> payload = Jwt.parseJwt(token!);
+    print(payload);                                     // Print the payload
+    print(payload['_id']);                              // Print one of its property(example: email):
+    /*
+    DateTime? expiryDate = Jwt.getExpiryDate(token);    //   To get expiry date
+                                                        //   Note: The return value from getExpiryDate function is nullable.
+    debugPrint("the expire date at : $expiryDate");                                  //Print the expiry date
+    // To check if token is expired
+    bool isExpired = Jwt.isExpired(token);
+    print(isExpired);
+    // Can be used for auth state
+    if (!isExpired) {                                   //   Token isn't expired 
+      print("token is not Expired") ;              
+
+      } else {                                          //Token is expired
+      print("token is not Expired") ;              
+
+  }*/
+
+
+
+    //String? tokenEmail = prefs.getString("tokenEmail");
+    //String? token2 = token;
+  
   Widget _screen;               //initial screen ==> if user have allready token / logged in before then send him to home page directly 
                                 // user should not log in again
-   if((token == null) || (token == "null") || (token == "")){
+   
+   if((token == null) || (token == "null") || (token == "")/*||token == token2*/){
       _screen = Login_page();
     }
     else if(token == "Invalid Syntax : Email and Password are required!" || token == "Incorrect Password!!!" || token == "User not found!!!" ){
      _screen = Login_page();
     }else{
       _screen = HomePage();
+      //_screen = screens[1];
     } 
   
   runApp(MyApp(_screen));
@@ -56,6 +81,8 @@ class MyApp extends StatelessWidget {
 Widget build(BuildContext context) {
   
   return MaterialApp(
+    debugShowCheckedModeBanner: false,   //remove debug padged
+    //debugShowMaterialGrid: false,
     title: 'Gimme App',
     theme: ThemeData(
      //primarySwatch: Colors.blue,

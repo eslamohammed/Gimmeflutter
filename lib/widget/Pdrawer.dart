@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:gimme/Google_maps/getLatLong.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/config.dart';
+import 'package:gimme/main.dart';
 import 'package:gimme/pages/loginPage/login_page.dart';
 
 //import '../Api/fetchDataAPIRequest.dart';
@@ -111,10 +112,21 @@ return Drawer(
      buildMenuItem(
       text : 'Log Out',
       icon : Icons.logout,
-      onCliced: ()=> {            
+      onCliced: ()=> {   
+       
       Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login_page())), 
      },
     ),
+    ListTile(
+    leading : Icon(Icons.logout , color:  primaryColor,),
+    title: Text('LogOut' , style: const TextStyle(color: primaryColor),),
+    hoverColor: Colors.black,
+    onTap: () async => {    
+     await prefs.remove('token'),    //remove token
+     Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login_page())), 
+     },
+    ),//success = await prefs.remove('counter');,
+  
    ],
   ),
  ),

@@ -4,56 +4,76 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:gimme/main.dart';
+//import 'package:gimme/main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 String location ='Null, Press Button';
 String address = 'search';
-  
-double fromLat = 0.00;
-double fromLong = 0.00;
-double toLat = 0.00;
-double toLong = 0.00;
 
 var myMarkers = HashSet<Marker>(); //collection to store all markers like array return data as a type marker
 
 class GoogleMaps extends StatefulWidget{
 
   @override
-  _GoogleMapsState createState() => _GoogleMapsState();
+  GoogleMapsState createState() => GoogleMapsState();
+
+   
+
+  void hehe (){
+    print("hehe $myMarkers");
+    print(myMarkers);
+  //  print(fromlat);
+
+  }
 
 }
 // ignore: camel_case_types
-class  _GoogleMapsState extends State<GoogleMaps>{
+class  GoogleMapsState extends State<GoogleMaps>{
 
+double ? fromLat ;
+double ? fromLong ;
+double ? toLat ;
+double ? toLong ;
+/*
+callBack(x , y){
+  setState(() {
+    fromLat = x;
+    fromLong= y;
+  });
+}
+*/
 //  List <Marker> markers = [];  // list that contain from & to markers
 //var myMarkers = HashSet<Marker>(); //collection to store all markers like array return data as a type marker
+//double get data => fromLat ;
 
 @override
 Widget build(BuildContext context){
-  return  Scaffold(
+  return  Scaffold(/*
     appBar: AppBar(
-      title: Text("GoogleMaps"),
+      title: const Text("GoogleMaps"),
       backgroundColor: primaryColor,
-    ),
-    body: GoogleMap(
-      //mapType: MapType.hybrid,
+    ),*/
+    body: Stack(
+      children: [
+      GoogleMap(
        initialCameraPosition:
        const CameraPosition(
-         target: LatLng(30.033333, 31.233334),
+         target: LatLng(30.033333, 31.233334), //LatLng(currentLatLocation(), currentLngLocation()) , //LatLng(30.033333, 31.233334),
          zoom: 11.0,),    //lag $$ long
-      onMapCreated:_onMapCreated,  //after map ready to be used
-      markers:Set<Marker>.of(myMarkers), 
-    ),//_loginUI(context),
+       onMapCreated:onMapCreated,  //after map ready to be used
+       markers:Set<Marker>.of(myMarkers),  //array of mrakers any marker is added to on onMapCreated it will be add here
+      ),
+      Center(child: Text("lat long($fromLat , $fromLong)"),),
+      ],
+    ) ,
   );
  }
 
-//Future ?
- void _onMapCreated(googleMapController)async{
+ void onMapCreated(googleMapController)async{
   double  lat = await currentLatLocation() as double;
   double  lng = await currentLngLocation() as double;
 
-  Marker firstMarker = Marker(
+  Marker fromMarker = Marker(
         markerId: MarkerId('1'), 
         position: LatLng( lat , lng),   //current location is initial position by defualt  
         infoWindow: InfoWindow(
@@ -76,21 +96,22 @@ Widget build(BuildContext context){
       //////////////////////////////////////////////////////////
       onDragEnd: ((newPosition) {
         debugPrint("its longtide of drag end : $newPosition...");
-        fromLat  = newPosition.latitude;
-        fromLong = newPosition.longitude;
+        setState(() {
+          fromLat  = newPosition.latitude;
+          fromLong = newPosition.longitude;
+        });
       }),      
      );
-  
-  Marker secondMarker = Marker(
+  Marker toMarker = Marker(
         markerId: MarkerId('2') , 
-        position: LatLng( lat -0.03 , lng-0.0 ),        //-5 , -5 far from first marker location to avoid user see both as one marker
+        position: LatLng( lat -0.03 , lng+0.0 ),        //-0.03 , 0.0 far from first marker location to avoid user see both as one marker
         infoWindow: InfoWindow(
           title: "Gimme mobile app",
           snippet: 'To',
           onTap: (){
             // send lat-long to API
             debugPrint('==================================');
-            debugPrint("----------\n To the location of latlng($toLat,$toLong)");                        
+            debugPrint("----------\n To the location of marker 2: latlng($toLat,$toLong)");                        
             debugPrint("--------------------------------");
           },
         ),
@@ -98,29 +119,32 @@ Widget build(BuildContext context){
       draggable: true,
       //////////////////////////////////////////////////////////
       onDragEnd: ((newPosition) {
-        debugPrint("its longtide of drag end : $newPosition...");
-        toLat = newPosition.latitude;
-        toLong = newPosition.longitude;
+        debugPrint("Marker #2's LatLng of final drag : $newPosition...");
+
+        setState(() {
+          toLat = newPosition.latitude;
+          toLong = newPosition.longitude;
+        });  
       }),
     );
-
+          
   setState((){
-    myMarkers.add(firstMarker);   //from Marker
-    myMarkers.add(secondMarker);  //To Marker
+    myMarkers.add(fromMarker);   //from Marker
+    myMarkers.add(toMarker);  //To Marker
   });
 }
   ///*** 2 methods to bring user current location using Gps 
   Future currentLatLocation()async{  //Getting Users current Latitude
       Position position = await _getGeoLocationPosition();
       location ='Lat: ${position.latitude} , Long: ${position.longitude}';
-      GetAddressFromLatLong(position);
+      //GetAddressFromLatLong(position);     //calling func to printing location in details [adress,street,....] it is going to used later. 
       return position.latitude;
   }
 
   Future currentLngLocation()async{   //Getting Users current Longitude
       Position position = await _getGeoLocationPosition();
       location ='Lat: ${position.latitude} , Long: ${position.longitude}';
-      GetAddressFromLatLong(position);
+      //GetAddressFromLatLong(position);    //calling func to printing location in details [adress,street,....] it is going to used later.
       return  position.longitude ;
   }
 
@@ -166,7 +190,8 @@ Widget build(BuildContext context){
     List placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
     print(placemarks);
     Placemark place = placemarks[0];
-    address = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+//    address = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
   }
+
 }

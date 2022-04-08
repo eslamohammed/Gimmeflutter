@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/Models/fetchRequestOpenModel.dart';
+import 'package:gimme/Api/Models/fetchAddRequestData.dart';
 import 'package:gimme/Api/fetchDataAPIRequest.dart';
 import 'package:gimme/config.dart';
 import 'package:gimme/pages/trash/IgnoredHome.dart';
@@ -79,7 +79,13 @@ class _HomeState extends State<Home>{
           ),
       ]
       ),*/  
-   child: Center(),
+   child: Center(
+     child: Padding(
+       padding: const EdgeInsets.all(25),
+       child: Text(prefs.getString("token") as String),
+       
+     ),
+   ),
    ) 
   );
  }

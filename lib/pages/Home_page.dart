@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
 
 }
 
-
 class _HomePageState extends State<HomePage>{
   final TextEditingController _searchTextEditingController= TextEditingController();
 
@@ -80,7 +79,7 @@ final FetchDataAPIRequest _fetchDataAPIRequest = FetchDataAPIRequest();
           backgroundColor: primaryColor 
         ),
         BottomNavigationBarItem(
-          icon:Icon(Icons.map),
+          icon:Icon(Icons.add_location_alt),
           label: 'GoogleMap',
           backgroundColor: primaryColor 
         ),

@@ -1,24 +1,26 @@
-
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:gimme/Api/Models/fetchAddRequestData.dart';
+import 'package:gimme/Api/Models/fetchAddRequestData.dart';
 import 'package:gimme/Api/fetchDataAPIRequest.dart';
-//import 'package:gimme/Google_maps/googleMap.dart';
+import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/widget/customInputTextField.dart';
 import 'package:gimme/main.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-//final GoogleMaps x = new GoogleMaps(); 
-
+//final GoogleMaps x = GoogleMaps(); 
 
 class AddRequest extends StatefulWidget {
-  const AddRequest({Key? key}) : super(key: key);
+//  const AddRequest({Key? key}) : super(key: key);
   
   @override
   _AddRequestState createState() =>_AddRequestState();  
 }
 
 class _AddRequestState extends State<AddRequest>{
+
   //final TextEditingController _toTextEditingController= TextEditingController();  
   //final TextEditingController _fromTextEditingController= TextEditingController();
 
@@ -30,11 +32,7 @@ class _AddRequestState extends State<AddRequest>{
   final TextEditingController _maxTimeTextEditingController= TextEditingController();
 
   double ? _minDropDownValue; //value of price
-
   double ? _mintimeDropDownValue; //value of price
-
-
-
 
   @override
   void dispose(){
@@ -49,15 +47,15 @@ class _AddRequestState extends State<AddRequest>{
 
     super.dispose();
   }
+  //          FetchAddRequestData().fetchAddRequestModel();
 
-  final FetchDataAPIRequest _fetchDataAPIRequest = FetchDataAPIRequest();
+   FetchAddRequestData _fetchDataAPIRequest = FetchAddRequestData();
 
   void iniState(){
-    _fetchDataAPIRequest.fetchDataAPIRequest();
+    _fetchDataAPIRequest.fetchRequests();
     super.initState();
 
   }
-
 
   void minDropDownCallback(double? selectedprice){
     if(selectedprice is double){
@@ -240,7 +238,7 @@ Widget _addRequest(BuildContext context){
                   bottomLeft: Radius.circular(20),  
                   
                 )
-                /// contin
+                /// contin...
             ),
             child: Padding(
               padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
@@ -320,7 +318,6 @@ Widget _addRequest(BuildContext context){
  ),
  ),
 
-    
     Padding(// Time range
      padding: const EdgeInsets.only(right: 10 , left: 10),
       child: Container(
@@ -351,8 +348,8 @@ Widget _addRequest(BuildContext context){
        child:Column(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: [  //min Time
-     Padding(   //min
+    children: [  //min && mas
+     Padding(   //min Time
          padding: const EdgeInsets.only(right: 10 ,),
          child: Container( 
             decoration: BoxDecoration(
@@ -372,8 +369,7 @@ Widget _addRequest(BuildContext context){
               ),
             ),
          ),
-       ),
-     ]),
+       ),]),
     ),
 
      Container(  //max Time
@@ -492,7 +488,8 @@ Widget _addRequest(BuildContext context){
         child: Row(
       children: [
         
-      SizedBox( width: MediaQuery.of(context).size.width*0.1),
+      SizedBox(
+         width: MediaQuery.of(context).size.width*0.1),
       
       Container(      //from
         height: MediaQuery.of(context).size.height*0.05,
@@ -500,6 +497,7 @@ Widget _addRequest(BuildContext context){
         
         child:TextButton(onPressed: () async{
           
+        
           /*Position position = await _getGeoLocationPosition();
           location ='Lat: ${position.latitude} , Long: ${position.longitude}';
           GetAddressFromLatLong(position);
@@ -524,7 +522,7 @@ Widget _addRequest(BuildContext context){
         child: const Center(
         child: Text("Get Location" , style: TextStyle(color:Colors.white, fontSize:20,),),
             ),
-          ),
+           ),
           ),
         color: primaryColor,
         ),
@@ -559,8 +557,17 @@ Widget _addRequest(BuildContext context){
       child: Center( //Add request button & calling Addrequest() Function function;
       child: Padding(
       padding: const EdgeInsets.all(8.0),
-      child: FlatButton(onPressed: () {
+      child: FlatButton(onPressed: () async{
         //Calling fetchAddRequest() function here
+
+        FetchAddRequestData().fetchRequests();
+
+        debugPrint(prefs.getString("token") as String);
+          Map<String, dynamic> payload = Jwt.parseJwt(prefs.getString("token") as String);
+          print(payload['_id']);   
+
+        //  debugPrint() ;
+
       },
       child: Padding(
       padding: const EdgeInsets.all(12.5),
@@ -572,10 +579,10 @@ Widget _addRequest(BuildContext context){
         ),
        ),
       color: primaryColor,
-      ),
-     ),
-    ), 
-  ),
+    ),
+   ),
+  ), 
+ ),
 ),
 
     SizedBox(height : 100),
@@ -583,14 +590,10 @@ Widget _addRequest(BuildContext context){
 /*Center(
   child: Text(prefs.getString("token") as String),                
 ),*/
-  ],    
-  ),
- );
-  
-}
-
-
-
+    ],    
+   ),
+  );
+ }
 }
 
 
