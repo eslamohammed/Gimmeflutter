@@ -11,6 +11,8 @@ import 'package:gimme/pages/registerAccountPage/register_page.dart';
 import 'package:gimme/pages/searchPage.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:gimme/utilies/global_library.dart' as global_library;
+//import 'package:global_library.dart' as global_library ;
 
 int currnetIndex = 0;  //the index that only responisible for change between home screens 
   final screens = [    // home screens home, chat, search, add request , profile
@@ -26,11 +28,13 @@ const primaryColor = Color.fromARGB(179, 0, 161, 35);
 SharedPreferences prefs = "null" as SharedPreferences ;
 
 void main() async{
+  //global_library.fromLat ;
   
   WidgetsFlutterBinding.ensureInitialized();   //because we now in main class so flutter have to ignore an some Ops
    prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token") ;  //getting token value
 
+    //print(global_library.toLat);
     // To decode the token
     Map<String, dynamic> payload = Jwt.parseJwt(token!);
     print(payload);                                     // Print the payload

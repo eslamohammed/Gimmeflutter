@@ -5,6 +5,7 @@ import 'package:gimme/Api/Models/fetchAddRequestData.dart';
 import 'package:gimme/Api/Models/fetchAddRequestData.dart';
 import 'package:gimme/Api/fetchDataAPIRequest.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
+import 'package:gimme/utilies/global_library.dart' as globals;
 import 'package:gimme/widget/customInputTextField.dart';
 import 'package:gimme/main.dart';
 import 'package:jwt_decode/jwt_decode.dart';
@@ -559,6 +560,8 @@ Widget _addRequest(BuildContext context){
       padding: const EdgeInsets.all(8.0),
       child: FlatButton(onPressed: () async{
         //Calling fetchAddRequest() function here
+
+        debugPrint("${globals.fromLat} , ${globals.fromLong}");           //
 
         FetchAddRequestData().fetchRequests();
 

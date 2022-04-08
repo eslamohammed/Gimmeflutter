@@ -24,7 +24,7 @@ class FetchDataAPIRequest{
     if(response.statusCode == 200){
       print(response.statusCode);
       print(response.body());
-      print("=========================");
+      print("=============================");
       var body = jsonDecode(response.body());
       
 

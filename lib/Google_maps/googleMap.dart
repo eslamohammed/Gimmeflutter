@@ -4,8 +4,9 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-//import 'package:gimme/main.dart';
+import 'package:gimme/utilies/global_library.dart' as globals ;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 String location ='Null, Press Button';
 String address = 'search';
@@ -29,11 +30,12 @@ class GoogleMaps extends StatefulWidget{
 }
 // ignore: camel_case_types
 class  GoogleMapsState extends State<GoogleMaps>{
-
+/*
 double ? fromLat ;
 double ? fromLong ;
 double ? toLat ;
 double ? toLong ;
+*/
 /*
 callBack(x , y){
   setState(() {
@@ -63,7 +65,7 @@ Widget build(BuildContext context){
        onMapCreated:onMapCreated,  //after map ready to be used
        markers:Set<Marker>.of(myMarkers),  //array of mrakers any marker is added to on onMapCreated it will be add here
       ),
-      Center(child: Text("lat long($fromLat , $fromLong)"),),
+      Center(child: Text("lat long(${globals.fromLat} , ${globals.fromLong})"),),
       ],
     ) ,
   );
@@ -82,7 +84,7 @@ Widget build(BuildContext context){
           onTap: (){
             // send lat-long to API
             debugPrint('==================================');
-            debugPrint("----------\n from location of latlng($fromLat,$fromLong)");                        
+            debugPrint("----------\n from location of latlng(${globals.fromLat},${globals.fromLat})");                        
             debugPrint("--------------------------------");
           },
         ),
@@ -97,8 +99,8 @@ Widget build(BuildContext context){
       onDragEnd: ((newPosition) {
         debugPrint("its longtide of drag end : $newPosition...");
         setState(() {
-          fromLat  = newPosition.latitude;
-          fromLong = newPosition.longitude;
+          globals.fromLat  = newPosition.latitude;
+          globals.fromLong = newPosition.longitude;
         });
       }),      
      );
@@ -111,7 +113,7 @@ Widget build(BuildContext context){
           onTap: (){
             // send lat-long to API
             debugPrint('==================================');
-            debugPrint("----------\n To the location of marker 2: latlng($toLat,$toLong)");                        
+            debugPrint("----------\n To the location of marker 2: latlng(${globals.toLat},${globals.toLong})");                        
             debugPrint("--------------------------------");
           },
         ),
@@ -122,8 +124,9 @@ Widget build(BuildContext context){
         debugPrint("Marker #2's LatLng of final drag : $newPosition...");
 
         setState(() {
-          toLat = newPosition.latitude;
-          toLong = newPosition.longitude;
+          //globals.toLatLong = newPosition;
+          globals.toLat = newPosition.latitude;
+          globals.toLong = newPosition.longitude;
         });  
       }),
     );
