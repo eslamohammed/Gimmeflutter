@@ -1,8 +1,8 @@
-// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, camel_case_types
+// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, camel_case_types, prefer_const_constructors
 
 import 'dart:convert';
 import 'package:flutter/gestures.dart';
-import 'package:gimme/Api/sharedPrefs.dart';
+import 'package:gimme/sharedPrefrances/sharedPrefsToken.dart';
 import 'package:gimme/main.dart';
 import 'package:http/http.dart' as http ;
 
@@ -59,7 +59,7 @@ class  _Register_pageState extends State<Register_page>{
 
 
 Widget _registerUI(BuildContext context){
-  return SafeArea(
+  return SingleChildScrollView(
     child: Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
@@ -71,81 +71,62 @@ Widget _registerUI(BuildContext context){
             child: Row(  //Sign Up word in UI & log in
               mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                          decoration: BoxDecoration(color: Colors.white),
-                          height: MediaQuery.of(context).size.height*0.05,
-                          width: MediaQuery.of(context).size.width*0.25, 
-
-                        ),
-                  Container(
-                    decoration: BoxDecoration(),
-                    height: MediaQuery.of(context).size.height*0.05,
-                    width: MediaQuery.of(context).size.width*0.25, 
-                  
-                   child: const Center(
-                     child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                      fontWeight:  FontWeight.bold, 
-                      fontSize: 40,
-                      color: Colors.black ),
-                      ),
-                    ),
-                  ),      
-                Container(
+                Container(//for UI
                   decoration: BoxDecoration(color: Colors.white),
                   height: MediaQuery.of(context).size.height*0.05,
-                  width: MediaQuery.of(context).size.width*0.32, 
-                  child: Center(
-                    child: RichText(
-                  text : TextSpan(
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 22.5,
-                      fontWeight: FontWeight.bold,
+                  width: MediaQuery.of(context).size.width*0.25,
+                ),
+                SizedBox(//Sign Up
+                  height: MediaQuery.of(context).size.height*0.05,
+                  width: MediaQuery.of(context).size.width*0.25,       
+                  child: const Center(
+                    child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                    fontWeight:  FontWeight.bold, 
+                    fontSize: 40,
+                    color: Colors.black ),
                     ),
-                    children: <TextSpan>[
-                    TextSpan(
-                        text: "Log in",
-                        style: const TextStyle(
-                          color: primaryColor,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                        ..onTap = (){
-                          Navigator.pushNamed(context, "/login");
-                        }
+                  ),
+                ),      
+                Container(//Log in
+                    decoration: BoxDecoration(color: Colors.white),
+                    height: MediaQuery.of(context).size.height*0.05,
+                    width: MediaQuery.of(context).size.width*0.32, 
+                    child: Center(
+                      child: RichText(
+                    text : TextSpan(
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 22.5,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                      children: <TextSpan>[
+                      TextSpan(
+                          text: "Log in",
+                          style: const TextStyle(
+                            color: primaryColor,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                          ..onTap = (){
+                            Navigator.pushNamed(context, "/login");
+                          }
+                        ),
+                      ],
                     ),
-                  ),
-               ),
+                      ),
+                    ),
+                ),
               ],
             ),
           ),
-          SizedBox(
+          SizedBox(// username , email , password , phone... //Register
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height/2 ,
-
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-
-              children: [// username , email , password , phone...
-               /* 
-                Padding(    //Create your Account, Now! field
-                  padding:  EdgeInsets.only(top :10.0),
-                    child: Center(
-                    child: Text("Create your Account, Now!" ,
-                     style: TextStyle(
-                     color: primaryColor,
-                     fontWeight: FontWeight.bold,
-                     fontSize: 20 ,
-                     ),
-                   ),
-                  ),
-                ),
-                */
+              children: [// username , email , password , phone... //Register
                 Padding(    //username
                   padding: const EdgeInsets.all(10),
                   child: Container(
@@ -292,44 +273,23 @@ Widget _registerUI(BuildContext context){
   ),
  );  
 }
-Future  registerAccount() async{
-                    //create account
+Future  registerAccount() async{ ///Register/create account Method
   var url = Uri.parse(Config.apiURl + Config.registerAPI);
-  //var url = Uri.parse("http://localhost:8080/api/user/register");
   var response = await http.post(url,
-                  body: {
-                "name"  : _nameTextEditingController.text,
-                "email" : _emailTextEditingController.text,
-                "phone" : _phoneTextEditingController.text,
-                "password" : _passwordTextEditingController.text, 
-              });
-              
-// if condition to check if account already exited or created and if then send user to login page
+      body: {
+    "name"  : _nameTextEditingController.text,
+    "email" : _emailTextEditingController.text,
+    "phone" : _phoneTextEditingController.text,
+    "password" : _passwordTextEditingController.text, 
+  });
+  
   if(response.statusCode == 200){
-      debugPrint('Response body: ${response.body()}');
-      debugPrint("=======================================");
-      debugPrint('Response status: ${response.statusCode}');
-      
       var body =jsonDecode(response.body());
-      debugPrint(body["message"] );
-      checkMassage = body["message"] ;
+      print("Data body : ${body["status"]}");
       ///////////////////////////////////////
       SharedPrefs.saveToken(body["data"]);
-
-       if(checkMassage == "Email Already Exists"){
-          debugPrint(checkMassage);
-          FormHelper.showSimpleAlertDialog(
-            context, 
-            Config.appName,
-            "Account Already Exists",
-            "Ok", 
-            (){
-              Navigator.pop(context);  
-              },);
-        }
-        else if(checkMassage == "Success : User registered !!!"){
-          debugPrint(checkMassage);
-          FormHelper.showSimpleAlertDialog(
+      if (body["status"]==true) {
+        FormHelper.showSimpleAlertDialog(
             context, 
             Config.appName,
             "Account created ! Now Press OK to login",
@@ -338,23 +298,38 @@ Future  registerAccount() async{
               Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login_page()));
             },
           );
-        } else {
-            debugPrint("try again");
-            FormHelper.showSimpleAlertDialog(
-            context, 
-            Config.appName,
-            "Data can not be Empty Or an error has ouccerd please try again [Ensure that you insert ther right data with the right requirments]",
-            "Ok", 
-            (){
-                Navigator.pop(context);
-            },
-          );}
-    }else{
-      debugPrint("account not created ====");
-      var body =jsonDecode(response.body());
-      debugPrint(body["massage"]);
+      } else{
+        FormHelper.showSimpleAlertDialog(
+        context, 
+        Config.appName,
+        "validation failed:Insert required data.",
+        "Ok", 
+        (){
+            Navigator.pop(context);
+        },
+      );
       }
-
-
+    }else if(response.statusCode == 400){
+      FormHelper.showSimpleAlertDialog(
+      context, 
+      Config.appName,
+      "Error Bad Request : User validation failed: ... is required.",
+      "Ok", 
+      (){
+          Navigator.pop(context);
+      },
+    );
+    } else {
+      debugPrint("try again");
+      FormHelper.showSimpleAlertDialog(
+      context, 
+      Config.appName,
+      "Data can not be Empty Or an error has ouccerd please try again [Ensure that you insert ther right data with the right requirments]",
+      "try again", 
+      (){
+          Navigator.pop(context);
+      },
+    );
+  }
 } 
 }

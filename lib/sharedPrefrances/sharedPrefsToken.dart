@@ -11,17 +11,7 @@ class SharedPrefs{
     prefs.setString("token", token);
   }
 
-  static Future saveId(int id) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt("id", id);
-  }
-    static Future saveEmail(String saveEmail) async {
-  
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("saveEmail", saveEmail);
-
-  }
-
+    
  /* static getToken() async {
     
     SharedPreferences prefs = await SharedPreferences.getInstance();

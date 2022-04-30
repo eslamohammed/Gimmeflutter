@@ -1,63 +1,69 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
+import 'dart:convert';
+
+
 import 'package:gimme/Api/Models/fetchAddRequestData.dart';
-import 'package:gimme/Api/Models/fetchAddRequestData.dart';
-import 'package:gimme/Api/fetchDataAPIRequest.dart';
-import 'package:gimme/Google_maps/googleMap.dart';
-import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:gimme/sharedPrefrances/sharedPrefsReqID.dart';
+import 'package:gimme/config.dart';
 import 'package:gimme/widget/customInputTextField.dart';
-import 'package:gimme/main.dart';
-import 'package:jwt_decode/jwt_decode.dart';
+
+import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:gimme/utilies/global_library.dart' as globals;
+
+import 'package:gimme/main.dart';
+import 'HomeController.dart';
 
 //final GoogleMaps x = GoogleMaps(); 
 
-class AddRequest extends StatefulWidget {
-//  const AddRequest({Key? key}) : super(key: key);
-  
+class AddRequest extends StatefulWidget {  
   @override
   _AddRequestState createState() =>_AddRequestState();  
+
 }
 
 class _AddRequestState extends State<AddRequest>{
 
-  //final TextEditingController _toTextEditingController= TextEditingController();  
-  //final TextEditingController _fromTextEditingController= TextEditingController();
+  final TextEditingController _pointToTextEditingController= TextEditingController();   //e.g: menouf
+  final TextEditingController _pointFromTextEditingController= TextEditingController(); //e.g: Benha
 
   final TextEditingController _titleTextEditingController= TextEditingController();
   final TextEditingController _bodyTextEditingController= TextEditingController();
+
   final TextEditingController _minPricreTextEditingController= TextEditingController();
   final TextEditingController _maxPricreTextEditingController= TextEditingController();
-  final TextEditingController _minTimeTextEditingController= TextEditingController();
-  final TextEditingController _maxTimeTextEditingController= TextEditingController();
+  final TextEditingController _timeRangeTextEditingController= TextEditingController();
+  //final TextEditingController _maxTimeTextEditingController= TextEditingController();
 
-  double ? _minDropDownValue; //value of price
-  double ? _mintimeDropDownValue; //value of price
+  //double ? _minDropDownValue; //value of price
+  //double ? _mintimeDropDownValue; //value of price
 
   @override
   void dispose(){
-    //_toTextEditingController.dispose();
-    //_fromTextEditingController.dispose();
+    _pointToTextEditingController.dispose();
+    _pointFromTextEditingController.dispose();
     _bodyTextEditingController.dispose();
     _titleTextEditingController.dispose();
     _minPricreTextEditingController.dispose();
     _maxPricreTextEditingController.dispose();
-    _minTimeTextEditingController.dispose();
-    _maxTimeTextEditingController.dispose();
+    _timeRangeTextEditingController.dispose();
+    //_maxTimeTextEditingController.dispose();
 
     super.dispose();
   }
-  //          FetchAddRequestData().fetchAddRequestModel();
+  //  String checkRequestData = "";
 
    FetchAddRequestData _fetchDataAPIRequest = FetchAddRequestData();
 
   void iniState(){
-    _fetchDataAPIRequest.fetchRequests();
+    _fetchDataAPIRequest.fetchRequests("624e9ebce96ec076cbce6e53");
     super.initState();
 
   }
-
+/*
   void minDropDownCallback(double? selectedprice){
     if(selectedprice is double){
       setState(() {
@@ -73,7 +79,7 @@ class _AddRequestState extends State<AddRequest>{
       });
     }
   }
-
+*/
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -82,7 +88,7 @@ class _AddRequestState extends State<AddRequest>{
       backgroundColor: primaryColor,
       ),
       body:Center(
-       child:_addRequest(context), 
+       child:_addRequestUI(context), 
       )
     );
   }
@@ -90,7 +96,7 @@ class _AddRequestState extends State<AddRequest>{
 //Map<String, dynamic> payload = Jwt.parseJwt(prefs.getString("token") as String);
   //print(payload[]);
 
-Widget _addRequest(BuildContext context){
+Widget _addRequestUI(BuildContext context){
   return SingleChildScrollView(
    child: Column(
     mainAxisAlignment: MainAxisAlignment.start,
@@ -105,9 +111,6 @@ Widget _addRequest(BuildContext context){
      width: MediaQuery.of(context).size.width/1,
      height: MediaQuery.of(context).size.height/4,          
      decoration: const BoxDecoration(  
-     /*borderRadius:  BorderRadius.only(
-      
-      topRight: Radius.circular(25)),*/
       color: Colors.white,
       ),  
      child: Column(
@@ -264,12 +267,11 @@ Widget _addRequest(BuildContext context){
          child: Container( 
             decoration: BoxDecoration(
                 color: HexColor("#E5E5E5"),
-                borderRadius: BorderRadius.only(  
+                borderRadius: const BorderRadius.only(  
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                   topLeft: Radius.circular(20),
                   bottomLeft: Radius.circular(20),  
-                  
                 )
                 /// contin
             ),
@@ -334,245 +336,145 @@ Widget _addRequest(BuildContext context){
       crossAxisAlignment: CrossAxisAlignment.center,         
     children: [
      Container(   //Choose the delivery price.     
-      width: MediaQuery.of(context).size.width/2.7,  //**delivery price Word width**
+      width: MediaQuery.of(context).size.width/2.2,  //**delivery price Word width**
       decoration: const BoxDecoration(  //from-to box decoration 
       color:Colors.white,
     ),
     child: Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text("Delivery Time range..." , style: TextStyle(color: Colors.black, fontSize: 20 , fontWeight: FontWeight.bold),),
-    ),
-  ),
-                          //function implementaion min & max must be int 
-     Container( // price min
-       width: MediaQuery.of(context).size.width/5,     //** price width it self **
-       child:Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [  //min && mas
+      child: Text("Delivery Time range..." , style: TextStyle(color: Colors.black, fontSize: 20.5 , fontWeight: FontWeight.bold),),),),
+    
+     Container( // time min
+       width: MediaQuery.of(context).size.width/4,     //** price width it self **
+       child:
      Padding(   //min Time
          padding: const EdgeInsets.only(right: 10 ,),
-         child: Container( 
-            decoration: BoxDecoration(
-                color: HexColor("#E5E5E5"),
-                borderRadius: BorderRadius.only(  
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),  
-                  
-                )
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
-              child: CustomInputTextFieldWidget(hintText: "min",
-              secure: false,ccontroller: _minTimeTextEditingController, 
+         child: Center(
+           child: Container( 
+              decoration: BoxDecoration(
+                  color: HexColor("#E5E5E5"),
+                  borderRadius: const BorderRadius.only(  
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),  
+                    
+                  )
               ),
-            ),
-         ),
-       ),]),
-    ),
-
-     Container(  //max Time
-       width: MediaQuery.of(context).size.width/5,     //** price width it self **
-       child:Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [  //max Price
-
-       Padding(   //max
-         padding: const EdgeInsets.only(left: 10),
-         child: Container( 
-            decoration: BoxDecoration(
-                color: HexColor("#E5E5E5"),
-                borderRadius: BorderRadius.only(  
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),  
-                  
-                )
-                /// contin
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
-              child: CustomInputTextFieldWidget(hintText: "max",
-              secure: false,ccontroller: _maxTimeTextEditingController, 
+              child: Padding(
+                padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
+                child: CustomInputTextFieldWidget(hintText: "Time in hour",
+                secure: false,ccontroller: _timeRangeTextEditingController, 
+                ),
               ),
-            ),
+           ),
          ),
        ),
-     ]),
     ),
+
     ],
    ),
   ),       
  ),
  ),
 
-// if design want dragdrop buttom
-/*
-    Padding(//dopr down button to choose  time range
-     padding: const EdgeInsets.only(right: 10 , left: 10),
-      child: Container(
-       width: MediaQuery.of(context).size.width,
-       height: MediaQuery.of(context).size.height / 12 ,    
-       decoration: const BoxDecoration(
-       color: Colors.white,
-      ),  
-
-    child: Padding(
-      padding: const EdgeInsets.all(20),
-      child: Row(
-       crossAxisAlignment: CrossAxisAlignment.center,         
-      children: [
-
-      Container(                 
-        width: MediaQuery.of(context).size.width/1.9,
-        decoration: const BoxDecoration(  //from-to box decoration 
-        color:Colors.white,
-      ),
-      child: const Text("Delivery range time ..." , style: TextStyle(color: primaryColor, fontSize: 16 , fontWeight: FontWeight.bold),),
-    ),
-
-      //SizedBox(      width: MediaQuery.of(context).size.width/8,),           
+    Container(      //Location
+      height: MediaQuery.of(context).size.height*0.15,
+      width: MediaQuery.of(context).size.width*0.9,  
       
-      
-         Container( // time range DropdownButton
-         width: MediaQuery.of(context).size.width/3,
-         decoration: BoxDecoration(
-           borderRadius: BorderRadius.circular(50),
-           color: primaryColor,
-           
-         ),      
-         child: DropdownButton(items: [
-         DropdownMenuItem<double>(child: Text("  30:00   min "),value: 30*60, ),
-         DropdownMenuItem<double>(child: Text("  60:00   min "),value: 60*60, ),
-         DropdownMenuItem<double>(child: Text("  120:00  min"),value:  2*60*60, ),
-         DropdownMenuItem<double>(child: Text("  12:00:00 hour "),value:  12 * 60 * 60, ),
-         DropdownMenuItem<double>(child: Text("  1 Day"),value:  24*60*60, ),
-        ],
-          value: _mintimeDropDownValue,
-          onChanged: minTimeDropDownCallback,
-          iconSize: 17.0,
-          
-          iconEnabledColor: Colors.white,
-          iconDisabledColor: primaryColor,
-          focusColor: primaryColor,
-          icon: const Icon(Icons.timer_rounded , color: Colors.white,),
 
-          dropdownColor: primaryColor,
-          borderRadius: BorderRadius.circular(30),
-          isExpanded: true,
-          style: TextStyle(color: Colors.white  , fontSize:15 ),
-          ),
- 
-          ),
-      
-    ],
-   ),
-  ),       
- ),
- ),
-*/
-    Padding(   
-     padding: const EdgeInsets.only(right: 10 ,),
-      child: Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 8,
-      decoration: const BoxDecoration(  //from-to box decoration 
-      color: Colors.white,),
-
-      child: Center( //from & to
+      child:TextButton(onPressed: () async{ //navigation to GoogleMaps to place marker
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeControllerPage()));
+      },
       child: SizedBox(
-        width: MediaQuery.of(context).size.width*0.75,
-        child: Row(
-      children: [
-        
-      SizedBox(
-         width: MediaQuery.of(context).size.width*0.1),
+      height: MediaQuery.of(context).size.height*0.5,
+      width: MediaQuery.of(context).size.width*0.8,
       
-      Container(      //from
-        height: MediaQuery.of(context).size.height*0.05,
-        width: MediaQuery.of(context).size.width*0.25,  
-        
-        child:TextButton(onPressed: () async{
+      child: Center(child: Text("\t\t\t\t\t\t Select Location \n\nHint \n\nclick select Loctations [Source{from} & distination{to}] Points[Loc-Coordinantes'GoogleMaps'] Homepage Bar\n\nIf you if you are already here Just ignore this step " , style: TextStyle(color:Colors.white, fontSize:19,),)),
           
-        
-          /*Position position = await _getGeoLocationPosition();
-          location ='Lat: ${position.latitude} , Long: ${position.longitude}';
-          GetAddressFromLatLong(position);
-
-          //GoogleMaps();
-          print("hi");
-
-
-
-          
-          CupertinoAlertDialog(
-            title: Text("Choose Location"),
-            content: Text("Current location Or Another on ?"), 
-            actions: [
-              FlatButton(onPressed: (){}, child: Text("Current location")),
-              FlatButton(onPressed: (){}, child: Text("Google map"))
-            ],
-          );*/
-        },
-        child: SizedBox(
-        width: MediaQuery.of(context).size.width*0.5,
-        child: const Center(
-        child: Text("Get Location" , style: TextStyle(color:Colors.white, fontSize:20,),),
-            ),
-           ),
           ),
-        color: primaryColor,
         ),
-
-      SizedBox( width: MediaQuery.of(context).size.width*0.05),
-      
-      Container( //to
-        height: MediaQuery.of(context).size.height*0.05,
-        width: MediaQuery.of(context).size.width*0.25,
-        decoration: const BoxDecoration(color:primaryColor,),
-        child: const Text("to"),
-        ),
-      ],
-   ),
-  ),
- ),
- ), 
-),
+      color: primaryColor,
+      ),
+    
+    SizedBox(height : 50),
     
     Padding( // add request   
     padding: const EdgeInsets.only(right: 10 ,),
     child: Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 8,
+      width: MediaQuery.of(context).size.width/2,
+      height: MediaQuery.of(context).size.height / 10,
     
       decoration: const BoxDecoration(  
-      color: Colors.white,
+      color: Colors.black12,
       borderRadius:  BorderRadius.only(
-      bottomRight: Radius.circular(25))
+      bottomRight: Radius.circular(50),
+      topLeft: Radius.circular(50),
+      )
     ),    
 
       child: Center( //Add request button & calling Addrequest() Function function;
       child: Padding(
       padding: const EdgeInsets.all(8.0),
-      child: FlatButton(onPressed: () async{
-        //Calling fetchAddRequest() function here
+      child: FlatButton(onPressed: () async{//Calling AddRequest() function
 
-        debugPrint("${globals.fromLat} , ${globals.fromLong}");           //
-
-        FetchAddRequestData().fetchRequests();
-
-        debugPrint(prefs.getString("token") as String);
-          Map<String, dynamic> payload = Jwt.parseJwt(prefs.getString("token") as String);
-          print(payload['_id']);   
-
-        //  debugPrint() ;
-
+          if (_titleTextEditingController.text.isNotEmpty){
+            if(_bodyTextEditingController.text.isNotEmpty){
+              if(_minPricreTextEditingController.text.isNotEmpty && _maxPricreTextEditingController.text.isNotEmpty){
+                  if(_timeRangeTextEditingController.text.isNotEmpty){
+                    if(globals.fromLat != null && globals.fromLong !=null && globals.toLat != null && globals.toLong !=null){
+                       _addRequest();  //function to add Request
+                    }else  {FormHelper.showSimpleAlertDialog(//location
+                      context, 
+                      Config.appName,
+                      "Set {From & To} markers on Google maps blow, uh baka!!",
+                      "OK", 
+                      (){
+                        Navigator.pop(context);
+                        //Navigator.push(context, MaterialPageRoute(builder: (context)=>GoogleMaps()));                      
+                      },);
+                    }  
+                  }else  {FormHelper.showSimpleAlertDialog( //time
+                    context, 
+                    Config.appName,
+                    "Time[unit] in hour \nCheck inserted Time, press OK to try again",
+                    "OK", 
+                    (){
+                        Navigator.pop(context);
+                    },);
+                  }  
+                }else  {FormHelper.showSimpleAlertDialog(//price
+                context, 
+                Config.appName,
+                "inserted worng data , price and try again",
+                "OK", 
+                (){
+                    Navigator.pop(context);
+                },);
+              }            
+            }else  {FormHelper.showSimpleAlertDialog(//body
+              context, 
+              Config.appName,
+              "inserted worng data , body and try again",
+              "OK", 
+              (){
+                  Navigator.pop(context);
+                  debugPrint("");
+              },);
+            }
+          }else  {FormHelper.showSimpleAlertDialog(//all data
+            context, 
+            Config.appName,
+            "Request data is required and can not be Empty press OK to try again",
+            "OK", 
+            (){
+                Navigator.pop(context);
+                debugPrint("");
+            },
+          );
+        }
       },
-      child: Padding(
+      child: Padding(//Add Request
       padding: const EdgeInsets.all(12.5),
       child: SizedBox(
       width: MediaQuery.of(context).size.width*0.5,
@@ -582,35 +484,226 @@ Widget _addRequest(BuildContext context){
         ),
        ),
       color: primaryColor,
+      shape: StadiumBorder(),
     ),
    ),
   ), 
  ),
 ),
-
+    
     SizedBox(height : 100),
-////////////////////////////////////
-/*Center(
-  child: Text(prefs.getString("token") as String),                
-),*/
     ],    
    ),
   );
  }
+
+
+
+Future  _addRequest() async{      
+//  var header = {"Authorization":"Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5YWJkNmQ4MzUzODMxZDI1Nzg5MmQiLCJpYXQiOjE2NDk2ODMxNTB9.4UZEwg4UvTHR6AIZ2KyHvtcDxwpPJpjFUVLO1WZrT2A"};//(prefs.getString("token") as String)};
+  //var url = Uri.parse("http://192.168.1.4:8080/api/request/open"); //http://localhost:8080/api/request/open
+  Map<String,String> header = {
+   "Authorization":"Bearer " + (prefs.getString("token") as String),
+   'Content-type' : 'application/json', 
+   'Accept': 'application/json',
+};
+  String bodii = json.encode({
+        "title" : _titleTextEditingController.text,
+        "body" : _bodyTextEditingController.text,
+        "fromLocation" : {
+                "type" : "Point",
+                "coordinates" : [globals.fromLat, globals.fromLong]
+        },
+        "toLocation" : {
+                "type" : "Point",
+                "coordinates" : [globals.toLat, globals.toLong]
+        },
+        "priceRange" : {
+            "min" : _minPricreTextEditingController.text,
+            "max" : _maxPricreTextEditingController.text
+        },
+        "timeRange" : {
+            "val" : _timeRangeTextEditingController.text
+        }
+    });
+
+  var url = Uri.parse(Config.apiURl+Config.requestAPI+Config.openRequestAPI);
+  var response = await http.post(url, body: bodii, headers: header);
+      // if condition to check if account already exited or created and if then send user to login page
+      if(response.statusCode == 200){
+        print("success");
+        debugPrint('Response body: ${response.body()}');
+        debugPrint("=======================================");
+        debugPrint('Response status: ${response.statusCode}');
+
+      var body =jsonDecode(response.body());
+
+      debugPrint(body["message"] );
+      //  checkRequestData = body["message"];
+      print(body['data']['_id']);
+       ///////////////// saving Id ///////////////////      
+      var id = body['data']['_id'] as String ; //  requestId
+      SharedPrefsId.saveRequestID(id);
+      //SharedPrefs.saveToken(id);         // save id of request
+      ////////////////////////////////////////////////
+      print("your request id is :$id");
+      print("${prefsRequestID.getString("id")}");
+
+        FormHelper.showSimpleAlertDialog(
+          context, 
+        "["+Config.appName+"]",
+          "Request has been created !!!",
+          "Ok", 
+          (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeControllerPage()));
+          },
+        );
+      }else if(response.statusCode == 400){
+            FormHelper.showSimpleAlertDialog(
+            context, 
+            Config.appName,
+            "Invalid Syntax : ... \nEnsure that u inserted the right data press OK to try again",
+            "OK", 
+            (){
+                Navigator.pop(context);
+            },
+          );}else{
+            FormHelper.showSimpleAlertDialog(
+            context, 
+            Config.appName,
+            "not successed : ... \nSomething went woring, try again",
+            "OK", 
+            (){
+                Navigator.pop(context);
+            },
+            );
+          debugPrint("not successed =============");
+      }   
+  }
+
+ 
+Future getRequest(String id) async{
+  bool?  status ;
+  String?  msessage ;
+  dynamic data;
+  String?  title, bodii;
+  double? fromLocation , toLocation;
+  int  priceRangemin,  priceRangemax , timeRange ;
+  
+    var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
+
+  //  Map<String, dynamic> payload = Jwt.parseJwt(prefs.getString("token") as String); // will be putted instead 624e9ebce96ec076cbce6e53
+    var url = Uri.parse( Config.apiURl + Config.getRequestAPI + id );  //payload['_id']);//Config.apiURl+ Config.getRequestAPI);
+    http.Response  response = await http.get(url, headers: header); 
+    if(response.statusCode == 200){
+   var body = (json.decode(response.body()));
+    
+    setState(() {
+      globals.requestsData.add(body);
+    });
+
+    
+
+    
+    print((globals.requestsData));   //[first iteration added to list requestsData ][first data[body]]
+    print((globals.requestsData[0]['status']));   //[first iteration added to list requestsData ][first data[body]]
+
+    msessage = globals.requestsData[0]["msessage"];
+    status = globals.requestsData[0]["status"];
+    data = globals.requestsData[0]['data'];
+    title = globals.requestsData[0]["data"][0]["title"];  
+    bodii  = globals.requestsData[0]["data"][0]["body"];
+ 
+    fromLocation = globals.requestsData[0]['data'][0]['fromLocation']['coordinates'][1];
+    toLocation   = globals.requestsData[0]['data'][0]['fromLocation']['coordinates'][1];
+    priceRangemin= globals.requestsData[0]["data"][0]["priceRange"]["min"];
+    priceRangemax= globals.requestsData[0]["data"][0]["priceRange"]["max"];   
+    timeRange    = globals.requestsData[0]["data"][0]["timeRange"]["val"];
+
+    print("==============================");
+    print("${data}");
+    print("==============================");
+    print("${msessage}");
+    print("${status}");
+    print("${bodii}");
+    print("${title}");
+    print("${fromLocation}");
+    print("${toLocation}");
+    print("${priceRangemin}");
+    print("${priceRangemax}");
+    print("${timeRange}");
+
+    /*for (var i = 0; i < body.length; i++) {
+      // instgram example
+      requestsData.add((body[i]['fromLocation']['coordinates']));
+    }
+    for (var i = 0; i < body.length; i++) {
+      // instgram example
+      print((body[i]['fromLocation']['coordinates']));
+    }*/
+    
+    /*print(body);
+    print(body["data"]["fromLocation"]);
+    */
+    
+    return null;
+    
+  } else{
+      print("reject");
+    }
+  }
+
+
+Future  deleteRequest(String id) async{      
+//  var header = {"Authorization":"Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5YWJkNmQ4MzUzODMxZDI1Nzg5MmQiLCJpYXQiOjE2NDk2ODMxNTB9.4UZEwg4UvTHR6AIZ2KyHvtcDxwpPJpjFUVLO1WZrT2A"};//(prefs.getString("token") as String)};
+  //var url = Uri.parse("http://192.168.1.4:8080/api/request/open"); //http://localhost:8080/api/request/open
+  Map<String,String> header = { "Authorization":"Bearer " + (prefs.getString("token") as String),};
+
+    var url = Uri.parse(Config.apiURl+Config.requestAPI+Config.deleteRequestAPI + id);
+    var response = await http.delete(url , headers: header);
+
+    if(response.statusCode == 200)
+    {
+      print("hi");
+    }
+    else{
+      print("reject");
+    }
+  
+  }
+
+
+Future editRequest(String id) async {  
+  Map<String, String>header = {'Content-Type': 'application/json; charset=UTF-8',};
+   String bodii = json.encode({
+        "title" : _titleTextEditingController.text,
+        "body" : _bodyTextEditingController.text,
+        "fromLocation" : {
+                "type" : "Point",
+                "coordinates" : [globals.fromLat, globals.fromLong]
+        },
+        "toLocation" : {
+                "type" : "Point",
+                "coordinates" : [globals.toLat, globals.toLong]
+        },
+        "priceRange" : {
+            "min" : _minPricreTextEditingController.text,
+            "max" : _maxPricreTextEditingController.text
+        },
+        "timeRange" : {
+            "val" : _timeRangeTextEditingController.text
+        }
+    });
+  var url = Uri.parse(Config.apiURl+Config.requestAPI+Config.editRequestAPI + id);
+  var response = await http.put(url,body: bodii,headers: header);
+  if (response.statusCode == 200) {
+    print("success");
+  } else {
+    print("faild");
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to update album.');
+  }
+}  
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* */

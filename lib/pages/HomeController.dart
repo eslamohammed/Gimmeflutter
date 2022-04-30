@@ -1,180 +1,77 @@
 // ignore_for_file: file_names, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors
-import 'package:flutter/material.dart';
-import 'package:gimme/widget/Pdrawer.dart';
 
-class HomeX extends StatefulWidget {  
+import 'package:flutter/material.dart';
+import 'package:gimme/config.dart';
+import 'package:gimme/widget/Pdrawer.dart';
+import 'package:gimme/main.dart';
+
+import 'package:gimme/utilies/global_library.dart' as globals ;
+
+
+class HomeControllerPage extends StatefulWidget {  
   @override
-  _HomeXState createState() =>_HomeXState();  
+  _HomeControllerPageState createState() =>_HomeControllerPageState();  
 
 }
 
+class _HomeControllerPageState extends State<HomeControllerPage>{
 
-class _HomeXState extends State<HomeX>{
-  
-  @override
+@override
   Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: Colors.white,
-    //  drawer:PDrawer().widgetBuildDrawer(context),   //
-   );
- }
-}
-/*
-@override
- void initState(){
-   intilize();
-   super.initState();
- }*/
-/* 
-intilize()async{
-  double  lat = await currentLatLocation() as double;
-  double  lng = await currentLngLocation() as double;
-  
-  Marker firstMarker = Marker(
-        markerId: MarkerId('1') , 
-        position: LatLng( lat , lng),   //current location is initial position by defualt  
-        infoWindow: InfoWindow(
-          title: "Gimme mobile app",
-          snippet: 'From',
-          onTap: (){
-            // send lat-long to API
-            print('==================================');
-            debugPrint("--------------------------------");
-            debugPrint("----------\n Start latlng($startLat,$startLong)");
-            debugPrint("----------\n End   latlng($endlat,$endlong)");
-                        
-            print("Hallooooooooooooo");
-          },
-        ),
-      //onDrag: 
-      draggable: true,
-      // position: LatLng(value.latitude, value.longitude),
-
-      onDragStart:((newPosition) {
-        debugPrint("its longtide of start drag: $newPosition...");
-        startLat = newPosition.latitude;
-        startLong = newPosition.longitude;
-      }),
-      //////////////////////////////////////////////////////////
-      onDragEnd: ((newPosition) {
-        debugPrint("its longtide of drag end : $newPosition...");
-        endlat = newPosition.latitude;
-        endlong = newPosition.longitude;
-      }),
-      
-     );
-  
-  Marker secondMarker = Marker(
-        markerId: MarkerId('2') , 
-        position: LatLng( lat -5.0 , lng-5.0 ),        //-5 , -5 far from first marker location to avoid user see both as one marker
-        infoWindow: InfoWindow(
-          title: "Gimme mobile app",
-          snippet: 'To',
-          onTap: (){
-            // send lat-long to API
-            print('==================================');
-            debugPrint("--------------------------------");
-            debugPrint("----------\n Start latlng($startLat,$startLong)");
-            debugPrint("----------\n End   latlng($endlat,$endlong)");
-                        
-            print("Hallooooooooooooo");
-          },
-        ),
-      //onDrag: 
-      draggable: true,
-      // position: LatLng(value.latitude, value.longitude),
-
-      onDragStart:((newPosition) {
-        debugPrint("its longtide of start drag: $newPosition...");
-        startLat = newPosition.latitude;
-        startLong = newPosition.longitude;
-      }),
-      //////////////////////////////////////////////////////////
-      onDragEnd: ((newPosition) {
-        debugPrint("its longtide of drag end : $newPosition...");
-        endlat = newPosition.latitude;
-        endlong = newPosition.longitude;
-      }),
-      
-     );
-
-      ///***adding both markers to the map
-  //markers.add(firstMarker);
-  //markers.add(secondMarker);
-
-
-  */
-}
-*/
-/*
-
-// ignore_for_file: file_names, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors
-
-import 'package:flutter/material.dart';
-import 'package:gimme/Api/Models/fetchRequestOpenModel.dart';
-import 'package:gimme/Api/fetchDataAPIRequest.dart';
-import 'package:gimme/config.dart';
-import 'package:gimme/pages/Home.dart';
-import 'package:gimme/pages/addRequest.dart';
-import 'package:gimme/widget/Pdrawer.dart';
-import 'package:gimme/widget/customInputTextField.dart';
-import 'package:gimme/main.dart';
-
-
-class HomePage extends StatefulWidget {  
-  @override
-  _HomePageState createState() =>_HomePageState();  
-
-}
-
-
-class _HomePageState extends State<HomePage>{
-   final TextEditingController _searchTextEditingController= TextEditingController();
-
-/*  final TextEditingController _toTextEditingController= TextEditingController();  
-  final TextEditingController _fromTextEditingController= TextEditingController();
-  final TextEditingController _requestDataTextEditingController= TextEditingController();
-*/ 
-
-  void dispose(){
-    _searchTextEditingController.dispose();
-    super.dispose();
-  }
-/*  void dispose(){
-   /* _toTextEditingController.dispose();
-    _fromTextEditingController.dispose();
-    _requestDataTextEditingController.dispose();*/
-    super.dispose();
-  }*/
-
-@override
-
-final FetchDataAPIRequest _fetchDataAPIRequest = FetchDataAPIRequest();
-
-  void iniState(){
-    _fetchDataAPIRequest.fetchDataAPIRequest();
-    super.initState();
-
-  }
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(
-      backgroundColor: primaryColor,
       appBar:  AppBar(
       title: Text(Config.appName),
-      centerTitle: true,
       backgroundColor: primaryColor,
-     ),
+      ),
       drawer:PDrawer().widgetBuildDrawer(context),   //
-      body:Center(
-       child:_homePageUI(context), 
-       /*ListView.builder(itemCount: 2,
-      itemBuilder: (context, index)
-      {
-        return addRequestCard();
-      }
-      ), */
-      )
+      body:IndexedStack(
+       index : globals.currnetIndex,
+       children : screens,          //from main class
+      ),   
+      bottomNavigationBar: BottomNavigationBar(  //navigating Bar  in the bottom
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.white,
+        backgroundColor: primaryColor,
+        currentIndex: globals.currnetIndex,
+        unselectedItemColor: Colors.black,
+        iconSize: 30,
+        unselectedFontSize: 15,
+        selectedFontSize: 18,
+        onTap: (index) => setState(() => globals.currnetIndex = index),
+        // ignore: prefer_const_literals_to_create_immutables
+        items: [
+        BottomNavigationBarItem(
+          icon:Icon(Icons.home),
+          label: 'home',
+          backgroundColor: primaryColor 
+        ), 
+        BottomNavigationBarItem(
+          icon:Icon(Icons.search),
+          label: 'search',
+          backgroundColor: primaryColor 
+        ),              
+        BottomNavigationBarItem(
+          icon:Icon(Icons.chat),
+          label: 'chat',
+          backgroundColor: primaryColor
+        ),
+        BottomNavigationBarItem(
+          icon:Icon(Icons.add_box),
+          label: 'Add request',
+          backgroundColor: primaryColor 
+        ),
+        BottomNavigationBarItem(
+          icon:Icon(Icons.add_location_alt),
+          label: 'GoogleMap',
+          backgroundColor: primaryColor 
+        ),
+        BottomNavigationBarItem(
+          icon:Icon(Icons.person),
+          label: 'profile',
+          backgroundColor: primaryColor,
+        ),
+      ]),
     );
   }
 //Map<String, dynamic> payload = Jwt.parseJwt(prefs.getString("token") as String);
@@ -182,7 +79,7 @@ final FetchDataAPIRequest _fetchDataAPIRequest = FetchDataAPIRequest();
 
 Widget _homePageUI(BuildContext context){
   return SingleChildScrollView(
-   child: Column(
+/*   child: Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.values[3],
     children: [
@@ -246,7 +143,7 @@ Widget _homePageUI(BuildContext context){
 
 ),
 ),
-   
+/*   
 
   Padding(  //search
     padding: const EdgeInsets.only(top: 5,right: 10),
@@ -293,9 +190,9 @@ Widget _homePageUI(BuildContext context){
     ]),
    ),
   ),    
-
+*/
   ////////////////////////////////////
-    
+   /* 
   Padding( //All request here
 
   padding: const EdgeInsets.only(right: 10 , top: 10 , left: 5  ),
@@ -315,7 +212,7 @@ Widget _homePageUI(BuildContext context){
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
     children:  <Widget>[
-     
+/*     
      Padding( // Welcome All Requests is here...
       padding: EdgeInsets.all(8.0),
       child:  Text("Welcome All Requests is here..." ,
@@ -332,12 +229,12 @@ Widget _homePageUI(BuildContext context){
        padding: const EdgeInsets.only( right: 20),
        child: Divider(color: primaryColor,),
      ),
-
+*/
     /// here [list of requests from Api] it will be designed later
-     Container( // here
+/*     Container( // here
 
       child: addRequestCard()
-    ),
+    ),*/
     /*ListView.builder(itemCount: 2,
       itemBuilder: (context, index)
       {
@@ -356,16 +253,18 @@ Widget _homePageUI(BuildContext context){
             },),*/
        ),
   ),
-   
+  */ 
     ////////////////////////////////////
 
     ],    
   
    ),
+ 
+ */
   );
   
  }
-
+/*
 Widget addRequestCard(){
   
   return Padding(
@@ -410,30 +309,5 @@ Widget addRequestCard(){
     ]),
   );
 }
-
+*/
 }
-    /*
-     Center(
-              child: Center(
-                child: FlatButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> Login_page()));
-                },
-                child: const Text("login page"),
-                ),
-              ),
-            ),
-     Center(
-              child: Center(
-                child: FlatButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> Register_page()));
-                },
-                child: const Text("register page"),
-                ),
-              ),
-            ),
-    */
-    
-
-
-
- */

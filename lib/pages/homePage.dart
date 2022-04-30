@@ -1,137 +1,149 @@
 
+
+// ignore_for_file: use_key_in_widget_constructors, prefer_final_fields
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/Models/fetchAddRequestData.dart';
-import 'package:gimme/Api/fetchDataAPIRequest.dart';
-import 'package:gimme/config.dart';
-import 'package:gimme/pages/trash/IgnoredHome.dart';
-import 'package:gimme/pages/addRequest.dart';
-import 'package:gimme/widget/Pdrawer.dart';
-import 'package:gimme/widget/customInputTextField.dart';
+import 'package:gimme/Api/Models/requestModel.dart';
+
 import 'package:gimme/main.dart';
+import 'package:gimme/pages/HomeController.dart';
 
-//home in home page contain search
+import 'package:http/http.dart' as http;
+import 'package:jwt_decode/jwt_decode.dart';
+import '../requestItem/requestItem.dart';
 
-
-// ignore: use_key_in_widget_constructors
 class Home extends StatefulWidget {  
   @override
   _HomeState createState() =>_HomeState();  
 
 }
-
-
 class _HomeState extends State<Home>{
-  final TextEditingController _searchTextEditingController= TextEditingController();
+  
+
+  RequestItem _fetchRequest = RequestItem();
+  List <RequestModel> requests = [] ;
+
+
 
   @override
-  void dispose(){
-    _searchTextEditingController.dispose();
-    super.dispose();
+  void initState() {
+    _fetchRequest.fetchRequests();
+    super.initState();
   }
-  
+ 
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar:  AppBar(
+        toolbarHeight: 60,
+      title:const Text('Home' , style: TextStyle(color: Colors.black , fontSize: 47.5 ,fontWeight: FontWeight.bold),),
+      centerTitle: true,
       backgroundColor: Colors.white,
-      /* appBar:AppBar(
-      title: const Text('Home'),
-      backgroundColor: primaryColor,
-     ), */
-      body:SafeArea(
-/*      child:ListView.builder(itemCount: 10,   //10 going to be change to 
-      itemBuilder: (context, index)
-      {
-        return Padding(
-          padding: const EdgeInsets.all(10),
-          child: addRequestCard(),
-      );
-     }
-    ),
+      elevation:0,  
+      automaticallyImplyLeading: true,
+      leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new , color: primaryColor, size: 35,),
+      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage())) ,
+       )   
+      ),
+     body: SafeArea(
+       child: SingleChildScrollView(
+        child: Column(// 2 Parts search part & qetRequests [result of search]
+          children: [
+            RefreshIndicator(
+              onRefresh: _refresh,
+              child: FutureBuilder(
+                //initialData: [ _fetchRequest.fetchRequests(getUserID())],
+                future: _fetchRequest.fetchRequests(),
+                builder: (context , snapshot){
+                  if(snapshot.hasData){
+                  http.Response res = snapshot.data as http.Response;
+                  var body = jsonDecode(res.body()); 
+                  print("${body["data"]}");
+                  if(body["data"].isEmpty){
+                      return const Center(child: Text("\n\n\n\n\n\n\nNO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
+                  }else{
+                    List <RequestModel> requests = [] ;
+                    requests.add(RequestModel.fromJson(body)); 
+                    
+                    int x =0;
+                    for (var r in requests[0].data) {
+                    x++;
+                    }
+                    //print(r);
+                    switch(snapshot.connectionState){                        
+                      case ConnectionState.waiting:
+                        return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                        
+                      case ConnectionState.none:
+                        return const Center(child: Text("Error in connection"),);
+            
+                      case ConnectionState.active:
+                        return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+            
+                      case ConnectionState.done:
+                      return SizedBox(
+                        height: 860,
+                        width: 800,
+                        child : requests.isNotEmpty ? ListView.builder(
+                          itemCount:x ,
+                          itemBuilder: (context , index){
+                            return  RequestItem().requestCard( //sending data to request card
+                              context,
+                              index,
+                              requests[0].data[index]['body'].toString(),
+                              requests[0].data[index]['title'].toString(),
+                              requests[0].data[index]['_id'].toString(),
+                              requests[0].data[index]["timeRange"]["val"] ,
+                              requests[0].data[index]["priceRange"]["min"],
+                              requests[0].data[index]["priceRange"]["max"],
+                              "My Account",
+                            );
+                          }
+                        ):Container()
+                      );
+                    }
+                  }
+                } 
+                      return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                } 
+              ),
+            ),
+        ]),
+     )),
+   );
    
-*/   
-
-                                //after add request fetching and designed 
-
-/*      child: Column(
-        children: [
-          FutureBuilder(
-            future: addRequestCard(),
-            builder: (context, snapshot){
-             /*if (snapshot.hasData){
-               debugPrint("hhhhhhhhhhhhhhhhh");
-               Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: ListView.builder(itemCount: 10,   //10 going to be change to 
-                  itemBuilder: (context, index)
-                  {
-                    return Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: addRequestCard(),
-                  );
-                  },
-                )
-               );
-             } else{
-               return Text("null") ;
-             }*/
-            }
-        
-          ),
-      ]
-      ),*/  
-   child: Center(
-     child: Padding(
-       padding: const EdgeInsets.all(25),
-       child: Text(prefs.getString("token") as String),
-       
-     ),
-   ),
-   ) 
-  );
  }
 
-Widget addRequestCard(){
-  
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-     children: [
-       Container(
-         width: MediaQuery.of(context).size.width*0.8,
-         child: Column(
-          children: [
-           Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("datadatadatatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata " ,),
-            ),
-      
-           Card(
-            child:Image.network("https://images.unsplash.com/photo-1647960611692-39bb707eacf6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60" , width: 250, height: 250, fit: BoxFit.cover,),
-            ),      
-          ],
-      ),
-       ),
-    
-    
-       Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
-         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-           Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(45),
-              image: DecorationImage(image: NetworkImage("https://images.unsplash.com/photo-1647989818649-62012bb4c0bd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"),fit: BoxFit.cover)
-            ),
-           ),
-        Text("@username",style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold),),
-         ],
-       ),
-    ]),
-  );
-}
+  Future<void> _refresh() async {
+    return Future.delayed(
+      Duration(seconds: 2)
+    );
+  }
+
+  String getUserID(){ //method to decode the token
+    // To decode the token
+    String? token = prefs.getString("token") ;
+    Map<String, dynamic> payload = Jwt.parseJwt(token!);
+    print(payload);                                     // Print the payload
+    print(payload['_id']);                              // Print one of its property(example: email):
+    /*DateTime? expiryDate = Jwt.getExpiryDate(token);    //   To get expiry date
+                                                        //   Note: The return value from getExpiryDate function is nullable.
+    debugPrint("the expire date at : $expiryDate");    //Print the expiry date                               
+    bool isExpired = Jwt.isExpired(token);              // To check if token is expired
+
+    print(isExpired);
+    // Can be used for auth state
+    if (!isExpired) {                                   //   Token isn't expired 
+      print("token is not Expired") ;              
+
+      } else {                                          //Token is expired
+      print("token is not Expired") ;
+  }*/
+  return payload['_id'] ;
+  }
+
 }
 
 /*

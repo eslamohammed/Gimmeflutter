@@ -4,8 +4,15 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:gimme/utilies/global_library.dart' as globals ;
+
+//import 'package:gimme/Google_maps/directions.dart';
+//import 'package:gimme/Google_maps/directions_model.dart';
+
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../main.dart';
+import 'package:gimme/utilies/global_library.dart' as globals ;
 
 
 String location ='Null, Press Button';
@@ -20,54 +27,89 @@ class GoogleMaps extends StatefulWidget{
 
    
 
-  void hehe (){
-    print("hehe $myMarkers");
-    print(myMarkers);
-  //  print(fromlat);
-
-  }
-
+  
 }
-// ignore: camel_case_types
 class  GoogleMapsState extends State<GoogleMaps>{
-/*
-double ? fromLat ;
-double ? fromLong ;
-double ? toLat ;
-double ? toLong ;
-*/
-/*
-callBack(x , y){
-  setState(() {
-    fromLat = x;
-    fromLong= y;
-  });
-}
-*/
-//  List <Marker> markers = [];  // list that contain from & to markers
-//var myMarkers = HashSet<Marker>(); //collection to store all markers like array return data as a type marker
-//double get data => fromLat ;
+  static const _initialCameraPosition= CameraPosition(
+    target: LatLng(30.033333, 31.233334), //LatLng(currentLatLocation(), currentLngLocation()) , //LatLng(30.033333, 31.233334),
+    zoom: 11.0,
+  );
+
+  late GoogleMapController _googleMapController;
+
+   Marker? _from ;
+   Marker? _to ;
+   //Directions? _info;
+  
+  @override
+  void dispose(){
+    _googleMapController.dispose();
+    super.dispose();
+  } 
 
 @override
 Widget build(BuildContext context){
-  return  Scaffold(/*
+  return  Scaffold(
     appBar: AppBar(
-      title: const Text("GoogleMaps"),
-      backgroundColor: primaryColor,
-    ),*/
-    body: Stack(
-      children: [
-      GoogleMap(
-       initialCameraPosition:
-       const CameraPosition(
-         target: LatLng(30.033333, 31.233334), //LatLng(currentLatLocation(), currentLngLocation()) , //LatLng(30.033333, 31.233334),
-         zoom: 11.0,),    //lag $$ long
-       onMapCreated:onMapCreated,  //after map ready to be used
-       markers:Set<Marker>.of(myMarkers),  //array of mrakers any marker is added to on onMapCreated it will be add here
-      ),
-      Center(child: Text("lat long(${globals.fromLat} , ${globals.fromLong})"),),
+      title: const Text("GoogleMaps",style:TextStyle( color: Colors.black ,fontWeight: FontWeight.bold,fontSize:25) ,),
+      backgroundColor: Colors.white,
+      centerTitle: false,
+      actions: [
+        if(_from !=null)
+        TextButton(
+          onPressed: ()=> _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target:  _from!.position,
+              zoom: 14.5,
+              tilt: 50.0
+              )
+            )
+          ) ,
+          style: TextButton.styleFrom(
+            primary: primaryColor,
+            textStyle: const TextStyle(fontWeight: FontWeight.bold)
+          ),
+          child: const Text("From",style:TextStyle( color: primaryColor ,fontWeight: FontWeight.bold,fontSize:25) ,)
+        ),
+        if(_to != null)
+        TextButton(
+          onPressed: ()=> _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target:  _to!.position,
+              zoom: 14.5,
+              tilt: 50.0
+              )
+            )
+          ) ,
+          style: TextButton.styleFrom(
+            primary: Colors.red,
+            textStyle: const TextStyle(fontWeight: FontWeight.bold)
+          ),
+          child: const Text("To" ,style:TextStyle( color: Colors.red ,fontWeight: FontWeight.bold,fontSize:25) ,)
+        ),
       ],
+    ),
+    body: GoogleMap(
+      myLocationButtonEnabled: false,
+      zoomControlsEnabled: false,
+      initialCameraPosition:_initialCameraPosition,    //lag $$ long
+      onMapCreated: (controller) => _googleMapController = controller,
+    // onMapCreated:onMapCreated,  //after map ready to be used
+    // markers:Set<Marker>.of(myMarkers),  //array of mrakers any marker is added to on onMapCreated it will be add here
+      markers: {
+        if(_from != null) _from as Marker,
+        if(_to != null) _to as Marker,
+      },
+      onLongPress: _addMarker,
     ) ,
+    floatingActionButton: FloatingActionButton(
+      backgroundColor: primaryColor,
+      foregroundColor: Colors.black,
+      onPressed: ()=> _googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(_initialCameraPosition),
+      ),
+      child: const Icon(Icons.center_focus_strong),
+    ),
   );
  }
 
@@ -89,13 +131,7 @@ Widget build(BuildContext context){
           },
         ),
       draggable: true,
-      /*
-      onDragStart:((newPosition) {
-        debugPrint("its longtide of start drag: $newPosition...");
-        startLat = newPosition.latitude;
-        startLong = newPosition.longitude;
-      }),*/
-      //////////////////////////////////////////////////////////
+
       onDragEnd: ((newPosition) {
         debugPrint("its longtide of drag end : $newPosition...");
         setState(() {
@@ -122,6 +158,8 @@ Widget build(BuildContext context){
       //////////////////////////////////////////////////////////
       onDragEnd: ((newPosition) {
         debugPrint("Marker #2's LatLng of final drag : $newPosition...");
+        print(newPosition.latitude);
+        
 
         setState(() {
           //globals.toLatLong = newPosition;
@@ -136,6 +174,7 @@ Widget build(BuildContext context){
     myMarkers.add(toMarker);  //To Marker
   });
 }
+  
   ///*** 2 methods to bring user current location using Gps 
   Future currentLatLocation()async{  //Getting Users current Latitude
       Position position = await _getGeoLocationPosition();
@@ -189,6 +228,7 @@ Widget build(BuildContext context){
     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
+  // ignore: non_constant_identifier_names
   Future<void> GetAddressFromLatLong(Position position)async {  //methods to give more info of User location //Actually unused now, may be used later
     List placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
     print(placemarks);
@@ -197,4 +237,89 @@ Widget build(BuildContext context){
     print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
   }
 
+
+  void _addMarker(LatLng pos) async{
+    //(marker)from is not set or (marker)from/(marker)to are both set 
+    if (_from == null ||(_from != null && _to != null)){
+      //set (marker)from
+      setState(() {
+        _from = Marker(
+        markerId: const MarkerId('Origin'), 
+        position: pos ,   //current location is initial position by defualt  
+        infoWindow: InfoWindow(
+          title: "Gimme mobile  app",
+          snippet: 'From',
+          onTap: (){
+            // send lat-long to API
+            debugPrint('==================================');
+            debugPrint("----------\n from location of latlng(${_from?.position.latitude},${_from?.position.longitude})");                        
+            debugPrint("----------\n from location of latlng(${globals.fromLat},${globals.fromLong })");                        
+            debugPrint("--------------------------------");
+          },
+        ),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        /*
+        //draggable: true,
+        onDragEnd: ((newPosition) {
+          debugPrint("its longtide of drag end : $newPosition...");
+          setState(() {
+            globals.fromLat  = newPosition.latitude;
+            globals.fromLong = newPosition.longitude;
+          });
+        }),*/      
+      );
+      _to = null ; 
+      
+    //  _info = null;
+
+      globals.fromLat  = _from!.position.latitude;
+      globals.fromLong = _from!.position.longitude;
+      
+      });
+    }else{
+      setState(() {
+        _to = Marker(
+          markerId: MarkerId('2') , 
+          position: pos,        //-0.03 , 0.0 far from first marker location to avoid user see both as one marker
+          infoWindow: InfoWindow(
+            title: "Gimme mobile app",
+            snippet: 'To',
+            onTap: (){
+              // send lat-long to API
+              debugPrint('==================================');
+              debugPrint("----------\n To the location of marker 2: latlng(${_to?.position.latitude},${_to?.position.longitude})");  
+              debugPrint("----------\n To the location of marker 2: latlng(${globals.toLat},${globals.toLong})");                        
+              debugPrint("--------------------------------");
+            },
+          ),
+        //onDrag: 
+        //draggable: true,
+        //////////////////////////////////////////////////////////
+        /*onDragEnd: ((newPosition) {
+          debugPrint("Marker #2's LatLng of final drag : $newPosition...");
+          print(newPosition.latitude);
+          
+
+          setState(() {
+            //globals.toLatLong = newPosition;
+            globals.toLat = newPosition.latitude;
+            globals.toLong = newPosition.longitude;
+          });  
+        }
+        ),*/
+        
+
+
+        );
+        globals.toLat  = _to!.position.latitude;
+        globals.toLong = _to!.position.longitude;
+      });
+      /*
+      //get directions
+      final directions = await Directionss().getDirections(from: _from!.position, to: _to!.position);
+      setState(() => _info = directions );
+      */
+    }
+
+  }
 }

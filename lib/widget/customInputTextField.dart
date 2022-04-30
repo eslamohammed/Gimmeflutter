@@ -22,6 +22,7 @@ class CustomInputTextFieldWidget extends StatelessWidget {
         obscureText: secure ,                      
         decoration: InputDecoration(
         hintText: hintText,
+        hintStyle: TextStyle(fontSize: 17.5 )
         ),
       ),
     );                        

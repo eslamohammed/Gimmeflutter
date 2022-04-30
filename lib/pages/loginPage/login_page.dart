@@ -2,10 +2,10 @@
 // ignore_for_file: prefer_const_constructors, unrelated_type_equality_checks, unnecessary_null_comparison
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/sharedPrefs.dart';
+import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/sharedPrefrances/sharedPrefsToken.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/Home_page.dart';
-import 'package:gimme/pages/homePage.dart';
+
 import 'package:gimme/widget/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -477,53 +477,53 @@ Future  _loginToAccount() async{      //login to account
       var token = body["data"] as String ;
       SharedPrefs.saveToken(token);
 
-//      var tokenEmail = body["data"]["email"] as String ;
-//      SharedPrefs.saveEmail(tokenEmail);
-      ///////////////////////////////////////
- 
-      if((checkData == "User not found!!!")){
+      FormHelper.showSimpleAlertDialog(
+            context, 
+            Config.appName,
+            "Login Successfully     Now Press Ok to continue",
+            "Ok", 
+            (){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()));
+           },
+          );
+      }else if((response.statusCode == 404)){
         FormHelper.showSimpleAlertDialog(
           context, 
           Config.appName,
-          "$checkData [Invalid --Email / password] ",
+          "Can't login : User not found!!!",
           "Ok", 
           (){
           Navigator.pop(context);  
          },);
-       }else if(checkAccount == "Can't login!!!"){
+       }else if(response.statusCode == 401){
          FormHelper.showSimpleAlertDialog(
           context, 
           Config.appName,
-          "[$checkData ] ",
+          "[Can't login : Incorrect Password!!!] ",
           "Ok", 
           (){
           Navigator.pop(context);  
          },);
-        }else if(checkAccount == "Login: success"){
+        }else if(response.statusCode == 400 ){
           FormHelper.showSimpleAlertDialog(
             context, 
             Config.appName,
-            "Login Successfully     Now Press Ok to continue",
-            "Ok", 
+            "Invalid Syntax : Email and Password are required!",
+            "Try again", 
             (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-           },
+            Navigator.pop(context);
+            },
           );
-         }else if(checkAccount == "Success : User has been logged in !!!"){
-           FormHelper.showSimpleAlertDialog(
+        } else{
+          FormHelper.showSimpleAlertDialog(
             context, 
             Config.appName,
-            "Login Successfully     Now Press Ok to continue",
-            "Ok", 
+            "Something went worng",
+            "Try again", 
             (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-           },
+            Navigator.pop(context);
+            },
           );
-          }
-      }else{
-          debugPrint("Can not login to Account =============");
-          var body =jsonDecode(response.body());
-          debugPrint(body["massage"]);        
       }
   }
 }
