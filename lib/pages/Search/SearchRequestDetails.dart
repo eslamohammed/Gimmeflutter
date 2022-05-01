@@ -1,16 +1,12 @@
 
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/Commenets/addComment.dart';
-import 'package:gimme/pages/Commenets/showComments.dart';
+import 'package:gimme/pages/Commenets/showSearchedReqComments.dart';
 import 'package:gimme/pages/HomeController.dart';
-import 'package:gimme/requestItem/requestItem.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 class SearchRequestDetails extends StatefulWidget { 
@@ -247,7 +243,7 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                 ),
               
               Container( //add && show Comments
-                decoration: BoxDecoration(color:Colors.white),
+                decoration: const BoxDecoration(color:Colors.white),
                 height: MediaQuery.of(context).size.height*0.1,
                 width: MediaQuery.of(context).size.width,
                 child:Row(
@@ -270,14 +266,14 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                       height: MediaQuery.of(context).size.height*0.08,
                       width: MediaQuery.of(context).size.width*0.4,
                       child: TextButton(
-                        child:Text("Show Comments",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowComments(reqID)),),
+                        child:const Text("Show Comments",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowSearchedReqComments(reqID)),),
                         style: ButtonStyle(
                           //maximumSize: Size.infinite,
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(17.0),
-                            side: BorderSide(color: primaryColor,),
+                            side: const BorderSide(color: primaryColor,),
                           ),
                         )
                       ),
@@ -288,14 +284,14 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                       height: MediaQuery.of(context).size.height*0.08,
                       width: MediaQuery.of(context).size.width*0.4,
                       child: TextButton(
-                        child: Text("Add Comment",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),), // city name from location
+                        child: const Text("Add Comment",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),), // city name from location
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>AddComment(reqID)),
                         ),
                         style: ButtonStyle(
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(17.0),
-                            side: BorderSide(color: primaryColor),
+                            side: const BorderSide(color: primaryColor),
                           ),
                         )
                       ),

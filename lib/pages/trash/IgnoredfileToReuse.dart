@@ -7,6 +7,27 @@ class HomeX extends StatefulWidget {
   _HomeXState createState() =>_HomeXState();  
 
 }
+
+/*
+/*DropDown
+  void minDropDownCallback(double? selectedprice){
+    if(selectedprice is double){
+      setState(() {
+        _minDropDownValue = selectedprice ;
+      });
+    }
+  }
+  
+  void minTimeDropDownCallback(double? selectedprice){
+    if(selectedprice is double){
+      setState(() {
+        _mintimeDropDownValue = selectedprice ;
+      });
+    }
+  }
+*/
+ 
+ */
 /*profile builder
         Column(
         children: [

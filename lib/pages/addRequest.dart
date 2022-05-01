@@ -63,38 +63,21 @@ class _AddRequestState extends State<AddRequest>{
     super.initState();
 
   }
-/*
-  void minDropDownCallback(double? selectedprice){
-    if(selectedprice is double){
-      setState(() {
-        _minDropDownValue = selectedprice ;
-      });
-    }
-  }
-  
-  void minTimeDropDownCallback(double? selectedprice){
-    if(selectedprice is double){
-      setState(() {
-        _mintimeDropDownValue = selectedprice ;
-      });
-    }
-  }
-*/
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar:  AppBar(
-      title:Text('Add request'),
+      toolbarHeight: 60,
+      title:const Text('Add request', style: TextStyle(color: Colors.black , fontSize: 40 ,fontWeight: FontWeight.bold),),
       backgroundColor: primaryColor,
+      elevation:1,  
+      centerTitle: true,
       ),
-      body:Center(
-       child:_addRequestUI(context), 
-      )
+      body:_addRequestUI(context)
     );
   }
 
-//Map<String, dynamic> payload = Jwt.parseJwt(prefs.getString("token") as String);
-  //print(payload[]);
 
 Widget _addRequestUI(BuildContext context){
   return SingleChildScrollView(

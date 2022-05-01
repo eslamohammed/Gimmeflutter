@@ -31,7 +31,6 @@ class _SearchPageState extends State<SearchPage>{
   
   @override
   void dispose(){
-
     _From.dispose();
     _To.dispose();
     super.dispose();
@@ -158,16 +157,6 @@ class _SearchPageState extends State<SearchPage>{
                     }else{
                       List <SearchRequestModel> resultReq = [] ;
                         resultReq.add(SearchRequestModel.fromJson(body));
-                        print("==========================================================");
-                        print("${resultReq[0].data[0].isNotEmpty}");                
-                        int x =0;
-                        for (var r in resultReq[0].data) {
-                        print("==========================================================");
-                        //print("${resultReq[0].data[x]}");
-                        print("${resultReq[0].data[x].isNotEmpty}");
-                        print("==========================================================");
-                        x++;
-                        }
                         switch(snapshot.connectionState){                        
                           case ConnectionState.waiting:
                             return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -185,7 +174,7 @@ class _SearchPageState extends State<SearchPage>{
                               child:// resultReq[0].data[x].isNotEmpty
                                     //?
                                     ListView.builder(
-                                      itemCount:x ,
+                                      itemCount:resultReq[0].data.length,
                                       itemBuilder: (context , index){
                                         return reqResultCard(///routing data to request card
                                           context,
@@ -276,12 +265,8 @@ class _SearchPageState extends State<SearchPage>{
           if (snapshot.hasData){
             http.Response res = snapshot.data as http.Response;
               var body = jsonDecode(res.body()); 
-              print("=============================");
-              print("==============${jsonDecode(res.body())['data']['name']}===============");
-              print("==============${jsonDecode(res.body())['data']}===============");
-
-              //print("${commenters[0]}");
-              switch(snapshot.connectionState){                        
+              if (body["status"]==true) {
+                switch(snapshot.connectionState){                        
                 case ConnectionState.waiting:
                   return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
                   
@@ -479,14 +464,16 @@ class _SearchPageState extends State<SearchPage>{
                       ),
                     ),
                   );
-
+                }
+              } else {
+                return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
+              }
             }
-          }
-            return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
+          return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
         },
       ),
     );
- }
+  }
 
 }
 

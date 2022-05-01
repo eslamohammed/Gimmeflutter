@@ -164,7 +164,7 @@ Widget _profilePageUI(BuildContext context){
                             ),
                           ],
                         ),
-                        Center(child: Text(" Creation time Joind at : ${myAcc.createTime}",style:  TextStyle(fontSize: 20, color: Colors.black,))),
+                        Center(child: Text(" Creation time Joind at : ${myAcc.createTime}",style:  const TextStyle(fontSize: 20, color: Colors.black,))),
                         SizedBox(height:MediaQuery.of(context).size.height*0.01 ,),
                 
                         Row(//my Requests & This is my profile Requests
@@ -222,12 +222,6 @@ Widget _profilePageUI(BuildContext context){
                                   return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
                                 }else{ 
                                   requests.add(RequestModel.fromJson(body)); 
-                                  
-                                  int x =0;
-                                  for (var r in requests[0].data) {
-                                  x++;
-                                  }
-                                  //print(r);
                                   switch(snapshot.connectionState){                        
                                     case ConnectionState.waiting:
                                       return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -244,7 +238,7 @@ Widget _profilePageUI(BuildContext context){
                                       width: 800,
                                       child : requests.isNotEmpty ? ListView.builder(
                                         scrollDirection: Axis.horizontal,
-                                        itemCount:x ,
+                                        itemCount:requests[0].data.length ,
                                         itemBuilder: (context , index){
                                           return  RequestItem().requestCard( //sending data to request card
                                             context,

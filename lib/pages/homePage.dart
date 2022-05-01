@@ -60,18 +60,11 @@ class _HomeState extends State<Home>{
                   if(snapshot.hasData){
                   http.Response res = snapshot.data as http.Response;
                   var body = jsonDecode(res.body()); 
-                  print("${body["data"]}");
                   if(body["data"].isEmpty){
                       return const Center(child: Text("\n\n\n\n\n\n\nNO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
                   }else{
                     List <RequestModel> requests = [] ;
                     requests.add(RequestModel.fromJson(body)); 
-                    
-                    int x =0;
-                    for (var r in requests[0].data) {
-                    x++;
-                    }
-                    //print(r);
                     switch(snapshot.connectionState){                        
                       case ConnectionState.waiting:
                         return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -87,7 +80,7 @@ class _HomeState extends State<Home>{
                         height: 860,
                         width: 800,
                         child : requests.isNotEmpty ? ListView.builder(
-                          itemCount:x ,
+                          itemCount:requests[0].data.length ,
                           itemBuilder: (context , index){
                             return  RequestItem().requestCard( //sending data to request card
                               context,

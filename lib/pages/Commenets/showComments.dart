@@ -63,149 +63,52 @@ class ShowCommentsState extends State<ShowComments> {
                     builder: (context , snapshot){
                       if(snapshot.hasData){
                       http.Response res = snapshot.data as http.Response;
-                      List <CommentModel> comments = [] ;
                       var body = jsonDecode(res.body()); 
-                      comments.add(CommentModel.fromJson(body)); 
-
-                      int x =0;
-                      for (var r in comments[0].data) {
-                      x++;
-                      }
-                      switch(snapshot.connectionState){                        
-                        case ConnectionState.waiting:
-                          return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
-                          
-                        case ConnectionState.none:
-                          return const Center(child: Text("Error in connection"),);
-              
-                        case ConnectionState.active:
-                          return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
-              
-                        case ConnectionState.done:
-                        return SizedBox(
-                          height: 860,
-                          width: 800,
-                          child : comments.isNotEmpty ? ListView.builder(
-                            itemCount:x ,
-                            itemBuilder: (context , index){
-                              
-                              /*          
-                          //  List y = [];
-                          /*FetchAccounts().get_commenterName(comments[0].data[x]['userId']);
-                            var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
-                            var url = Uri.parse(Config.apiURl+ Config.othersProfileAPI+comments[0].data[index]['userId']);*/
-                            //await http.get(url, headers: header); 
-                           /*
-                            http.Response  res =  _fetchOthersAccount.fetchOthersAccount(comments[0].data[index]['userId']) as http.Response ;
+                      if (body['status']==true) {
+                        List <CommentModel> comments = [] ;
+                        comments.add(CommentModel.fromJson(body)); 
+                        switch(snapshot.connectionState){                        
+                          case ConnectionState.waiting:
+                            return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
                             
-                             if(res.statusCode == 200){
-                              debugPrint("----------------------------------------------");
-                              print(res.statusCode);
-                              //print(response.body());
-                              var body = jsonDecode(res.body());
-                              y.add(body);
-                             }
-                            */
-                            //List w = [];
-                            //w.add(fetchOthersAccount(comments[0].data[index]['userId']));
-                            /*http.Response rp = fetchOthersAccount(comments[0].data[index]['userId']) ;
-                            if (rp.statusCode == 200){
-                              print("sucess");
-                            } else {
-                              print("reject");
-                            }*/
-                      */
-                              /*
-                                print(comments[0]['data'][0/*insex*/]['time']['unit']);
-                                print(comments[0]['data'][0/*insex*/]['time']['val']);
-                                print(comments[0]['data'][0/*insex*/]['_id']); //user { request create by} ID
-                                print(comments[0]['data'][0/*insex*/]['userId']); //user {2nd part : current user who'm make the comment} ID
-                                print(comments[0]['data'][0/*insex*/]['text']); //
-                                print(comments[0]['data'][0/*insex*/]['price']);
-                                print(comments[0]['data'][0/*insex*/]['mod']);
-                              */
-                              
-                              return  _commentsCard( //routing the data to comment card
-                                context,
-                                comments[0].data[index]['time']['unit'],
-                                comments[0].data[index]['time']['val'],
-                                comments[0].data[index]['_id'],
-                                comments[0].data[index]['userId'],
-                                comments[0].data[index]['text'],
-                                comments[0].data[index]['price'],
-                                comments[0].data[index]['mod'],
-                              );
-                            }
-                          )
-                          :
-                          Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget> [
-                                Text('\t\t\t\t\t\t\t\t\t\t\t\tNo Comments here }' , style: TextStyle(fontSize: 22)),
-                                FloatingActionButton( //defualt for adding req  
-                                  backgroundColor: primaryColor,
-                                  child: Icon(Icons.add , color: Colors.white,),
-                                  onPressed: (){
-                                    //add request here
-                                })
-                              ]
-                            ),
-                          )
-                        
-                        );
-                      
-                      }
-                    } 
+                          case ConnectionState.none:
+                            return const Center(child: Text("Error in connection"),);
+                
+                          case ConnectionState.active:
+                            return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                
+                          case ConnectionState.done:
+                          return SizedBox(
+                            height: 860,
+                            width: 800,
+                            child :ListView.builder(
+                              itemCount:comments[0].data.length ,
+                              itemBuilder: (context , index){
+                                return  _commentsCard( //routing the data to comment card
+                                  context,
+                                  comments[0].data[index]['time']['unit'],
+                                  comments[0].data[index]['time']['val'],
+                                  comments[0].data[index]['_id'],
+                                  comments[0].data[index]['userId'],
+                                  comments[0].data[index]['text'],
+                                  comments[0].data[index]['price'],
+                                  comments[0].data[index]['mod'],
+                                );
+                              }
+                            )
+                          );
+                        }
+                      } 
+                      return const Center(child: Text("\n\n\n\n\n\n\n\n\nNo Comments : Invalid Request",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),);
+                    }else{
                       return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
+                    }
                   } 
                 ),
               ),
-             
-             Center(
-               child: TextButton(
-                 onPressed: () async{
-                   print(widget.id);
-                   var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
-                   var url = Uri.parse(Config.apiURl+ Config.commentAPI + widget.id);
-                   var res = await http.get(url, headers: header);
-                   var body = jsonDecode(res.body());
-                   List comment =[]; 
-                   if (res.statusCode == 200){
-                     comment.add(body);
-                     /*
-                     List commentersName =[];
-                              for (var x in comments[0].data) {
-                                commentersName.add(FetchAccounts().get_commenterName(comments[0].data[index]['userId']));
-                              }
-                              print(commentersName);
-                      */
-                    // print("success : statusCode = ${body}");
-                    print(comment[0]['data'][0/*insex*/]['time']['unit']);
-                    print(comment[0]['data'][0/*insex*/]['time']['val']);
-                    print(comment[0]['data'][0/*insex*/]['_id']); //user { request create by} ID
-                    print(comment[0]['data'][0/*insex*/]['userId']); //user {2nd part : current user who'm make the comment} ID
-                    print(comment[0]['data'][0/*insex*/]['text']); //
-                    print(comment[0]['data'][0/*insex*/]['price']);
-                    print(comment[0]['data'][0/*insex*/]['mod']);
-                    print("=============================");
-                    print(comment);
-                    print("============================="); 
-                    print(comment[0]['data'][0/*insex*/]['userId']);
-
-
-                    
-                   }
-                   else{
-                     print("reject");
-                   }
-                 },
-                 child: Text("check",style: TextStyle(fontSize:50,)),)
-             ),
-             
-           ],
-         ),
-      ),
+            ],
+          ),
+        ),
      ),
     ); //_commentsCard(context , widget.id);
   }
