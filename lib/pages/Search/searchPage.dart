@@ -152,6 +152,9 @@ class _SearchPageState extends State<SearchPage>{
                     http.Response res = snapshot.data as http.Response;
                     var body = jsonDecode(res.body());
                     //print("${body["data"].isEmpty}");
+                    //print("${body["data"]}");
+                    print("${body["data"][0]["timeRange"]["unit"]}");
+
                     if(body["data"].isEmpty){
                       return const Center(child: Text("\n\n\n\n   NO Result\nInvalid syntax", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
                     }else{
@@ -187,6 +190,8 @@ class _SearchPageState extends State<SearchPage>{
                                           resultReq[0].data[index]['fromAddress'],
                                           resultReq[0].data[index]['toAddress'],
                                           resultReq[0].data[index]['userId'],
+                                          resultReq[0].data[index]["timeRange"]["unit"] ,
+
                                         );
                                       }
                                     )//: Center(child: Image.asset("path/image/img.png")),
@@ -256,9 +261,11 @@ class _SearchPageState extends State<SearchPage>{
    dynamic fromAddress,
    dynamic toAddress,
    dynamic requesterID,
+   dynamic reqtimeunit,
+
    )
    {return InkWell(
-    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchRequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice))),
+    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchRequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice,reqtimeunit))),
     child: FutureBuilder(
         future: _fetchOthersAccount.fetchOthersAccount(requesterID),
         builder: (context,snapshot){
@@ -375,10 +382,10 @@ class _SearchPageState extends State<SearchPage>{
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           //title
-                                          Text("#${reqTitle} ",style: TextStyle(fontSize: 33, color: Colors.black ,fontWeight: FontWeight.bold), ),   //waiting for API data
+                                          Text("#$reqTitle ",style: const TextStyle(fontSize: 33, color: Colors.black ,fontWeight: FontWeight.bold), ),   //waiting for API data
                                           const Divider(color: primaryColor,),
                                           //body
-                                          Text( "//  ${reqBody}  ",style: TextStyle(fontSize: 20, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
+                                          Text( "//  $reqBody  ",style: const TextStyle(fontSize: 20, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
                                         ],
                                       ),
                                     ),

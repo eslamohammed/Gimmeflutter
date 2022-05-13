@@ -220,6 +220,7 @@ class OthersProfilePages extends StatelessWidget {
                           requests[0].data[index]["timeRange"]["val"] ,
                           requests[0].data[index]["priceRange"]["min"],
                           requests[0].data[index]["priceRange"]["max"],
+                          requests[0].data[index]["timeRange"]["unit"] ,
                           userName
                         );
                       }

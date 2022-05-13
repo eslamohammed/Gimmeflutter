@@ -36,7 +36,9 @@ class _AddRequestState extends State<AddRequest>{
   final TextEditingController _minPricreTextEditingController= TextEditingController();
   final TextEditingController _maxPricreTextEditingController= TextEditingController();
   final TextEditingController _timeRangeTextEditingController= TextEditingController();
-  //final TextEditingController _maxTimeTextEditingController= TextEditingController();
+  final TextEditingController _timeUnitsTextEditingController= TextEditingController();
+  final TextEditingController _fromAddressTextEditingController= TextEditingController();
+  final TextEditingController _toAddressTextEditingController= TextEditingController();
 
   //double ? _minDropDownValue; //value of price
   //double ? _mintimeDropDownValue; //value of price
@@ -50,6 +52,7 @@ class _AddRequestState extends State<AddRequest>{
     _minPricreTextEditingController.dispose();
     _maxPricreTextEditingController.dispose();
     _timeRangeTextEditingController.dispose();
+    _timeUnitsTextEditingController.dispose();
     //_maxTimeTextEditingController.dispose();
 
     super.dispose();
@@ -78,7 +81,7 @@ class _AddRequestState extends State<AddRequest>{
     );
   }
 
-
+///UI
 Widget _addRequestUI(BuildContext context){
   return SingleChildScrollView(
    child: Column(
@@ -113,69 +116,58 @@ Widget _addRequestUI(BuildContext context){
 
     SizedBox(          //title
     width: MediaQuery.of(context).size.width,
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-
-      Padding(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-          decoration: BoxDecoration(
-              color: HexColor("#E5E5E5"),
-              borderRadius: BorderRadius.only(  
-                topRight: Radius.circular(25),
-                bottomRight: Radius.circular(25),
-                topLeft: Radius.circular(25),
-                bottomLeft: Radius.circular(25),  
-                
-              )
-              /// contin
-          ),
-          
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: CustomInputTextFieldWidget(hintText: "title",
-            secure: false,ccontroller: _titleTextEditingController, 
-            icon: Icons.update,),
-          ),
-         ),
+    child: Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        decoration: BoxDecoration(
+            color: HexColor("#E5E5E5"),
+            borderRadius: const BorderRadius.only(  
+              topRight: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+              topLeft: Radius.circular(25),
+              bottomLeft: Radius.circular(25),  
+              
+            )
+            /// contin
+        ),
+        
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: CustomInputTextFieldWidget(hintText: "title",
+          secure: false,ccontroller: _titleTextEditingController, 
+          icon: Icons.update,),
+        ),
        ),
-     ]),
+     ),
     ),
     
     SizedBox(          //body
     width: MediaQuery.of(context).size.width,
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-
-      Padding(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-          decoration: BoxDecoration(
-              color: HexColor("#E5E5E5"),
-              borderRadius: BorderRadius.only(  
-                topRight: Radius.circular(25),
-                bottomRight: Radius.circular(25),
-                topLeft: Radius.circular(25),
-                bottomLeft: Radius.circular(25),  
-                
-              )
-              /// contin
-          ),
-          
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: CustomInputTextFieldWidget(hintText: "body",
-            secure: false,ccontroller: _bodyTextEditingController, 
-          ),
-         ),
+    child: Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        decoration: BoxDecoration(
+            color: HexColor("#E5E5E5"),
+            borderRadius: const BorderRadius.only(  
+              topRight: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+              topLeft: Radius.circular(25),
+              bottomLeft: Radius.circular(25),  
+              
+            )
+            /// contin
+        ),
+        
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: CustomInputTextFieldWidget(hintText: "body",
+          secure: false,ccontroller: _bodyTextEditingController, 
         ),
        ),
-     ]),
+      ),
+     ),
     ),
+   
    ]
   ),
  ),
@@ -200,52 +192,42 @@ Widget _addRequestUI(BuildContext context){
       decoration: const BoxDecoration(  //from-to box decoration 
       color:Colors.white,
     ),
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text("the delivery price range..." , style: TextStyle(color: Colors.black, fontSize: 20 , fontWeight: FontWeight.bold),),
+      child: const Padding(
+        padding: EdgeInsets.all(8.0),
+        child:  Text("the delivery price range..." , style: TextStyle(color: Colors.black, fontSize: 20 , fontWeight: FontWeight.bold),),
+      ),
     ),
-  ),
-                          //function implementaion min & max must be int 
-     Container( // price min
+                            //function implementaion min & max must be int 
+      SizedBox(width: MediaQuery.of(context).size.width*0.1,),
+     SizedBox( // price min
        width: MediaQuery.of(context).size.width/5,     //** price width it self **
-       child:Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [  //min Price
-
-       Padding(   //min
+       child:Padding(   //min
          padding: const EdgeInsets.only(right: 10 ,),
          child: Container( 
-            decoration: BoxDecoration(
-                color: HexColor("#E5E5E5"),
-                borderRadius: BorderRadius.only(  
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),  
-                  
-                )
-                /// contin...
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
-              child: CustomInputTextFieldWidget(hintText: "min",
-              secure: false,ccontroller: _minPricreTextEditingController, 
-              ),
-            ),
+             decoration: BoxDecoration(
+                 color: HexColor("#E5E5E5"),
+                 borderRadius: const BorderRadius.only(  
+                   topRight:  Radius.circular(20),
+                   bottomRight: Radius.circular(20),
+                   topLeft:  Radius.circular(20),
+                   bottomLeft:  Radius.circular(20),  
+                   
+                 )
+                 /// contin...
+             ),
+             child: Padding(
+               padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
+               child: CustomInputTextFieldWidget(hintText: "min",
+               secure: false,ccontroller: _minPricreTextEditingController, 
+               ),
+             ),
          ),
        ),
-     ]),
-    ),
-    
-     Container( // price max
+      ),
+      
+     SizedBox( // price max
        width: MediaQuery.of(context).size.width/5,     //** price width it self **
-       child:Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [  //max Price
-
-       Padding(   //max
+       child:Padding(   //max
          padding: const EdgeInsets.only(left: 10),
          child: Container( 
             decoration: BoxDecoration(
@@ -266,7 +248,6 @@ Widget _addRequestUI(BuildContext context){
             ),
          ),
        ),
-     ]),
     ),
 
 /*
@@ -314,23 +295,25 @@ Widget _addRequestUI(BuildContext context){
       ),  
 
     child: Padding(
-    padding: const EdgeInsets.all(20),
+    padding: const EdgeInsets.only(left:20),
     child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,         
+      //crossAxisAlignment: CrossAxisAlignment.center,         
     children: [
      Container(   //Choose the delivery price.     
-      width: MediaQuery.of(context).size.width/2.2,  //**delivery price Word width**
+      width: MediaQuery.of(context).size.width/2.7,  //**delivery price Word width**
       decoration: const BoxDecoration(  //from-to box decoration 
       color:Colors.white,
     ),
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text("Delivery Time range..." , style: TextStyle(color: Colors.black, fontSize: 20.5 , fontWeight: FontWeight.bold),),),),
+    child: const Padding(
+      padding: EdgeInsets.all(8.0),
+      child:  Text("Delivery Time range..." , style: TextStyle(color: Colors.black, fontSize: 20.5 , fontWeight: FontWeight.bold),),),),
     
-     Container( // time min
+      SizedBox(width: MediaQuery.of(context).size.width*0.1,),
+
+     SizedBox( // time 
        width: MediaQuery.of(context).size.width/4,     //** price width it self **
        child:
-     Padding(   //min Time
+     Padding( 
          padding: const EdgeInsets.only(right: 10 ,),
          child: Center(
            child: Container( 
@@ -353,13 +336,92 @@ Widget _addRequestUI(BuildContext context){
            ),
          ),
        ),
-    ),
+      ),
 
-    ],
-   ),
-  ),       
+     SizedBox( // time unit
+       width: MediaQuery.of(context).size.width/6.5,     //** price width it self **
+       child:Padding(   //max
+         padding: const EdgeInsets.only(left: 10),
+         child: Container( 
+                decoration: BoxDecoration(
+                  color: HexColor("#E5E5E5"),
+                  borderRadius: const BorderRadius.only(  
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),  
+                  )
+                  /// contin
+              ),
+                child: Padding(
+                  padding: const EdgeInsets.only( right: 10, left: 10 , bottom: 9),
+                  child: CustomInputTextFieldWidget(hintText: "unit",
+                  secure: false,ccontroller: _timeUnitsTextEditingController, 
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),       
+  ),
  ),
- ),
+
+    
+    SizedBox(          //address from
+    width: MediaQuery.of(context).size.width,
+    child: Padding(
+      padding: const EdgeInsets.only(right: 20,left: 20),
+      child: Container(
+        decoration: BoxDecoration(
+            color: HexColor("#E5E5E5"),
+            borderRadius: const BorderRadius.only(  
+              topRight: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+              topLeft: Radius.circular(25),
+              bottomLeft: Radius.circular(25),  
+              
+            )
+            /// contin
+        ),
+        
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: CustomInputTextFieldWidget(hintText: "From address   it will replaced by google places data",
+          secure: false,ccontroller: _fromAddressTextEditingController, 
+          icon: Icons.update,),
+        ),
+       ),
+     ),
+    ),
+    
+    SizedBox(          //address to
+    width: MediaQuery.of(context).size.width,
+    child: Padding(
+      padding: const EdgeInsets.all(20),
+      child: Container(
+        decoration: BoxDecoration(
+            color: HexColor("#E5E5E5"),
+            borderRadius: const BorderRadius.only(  
+              topRight: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+              topLeft: Radius.circular(25),
+              bottomLeft: Radius.circular(25),  
+              
+            )
+            /// contin
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: CustomInputTextFieldWidget(hintText: "To address\t\t\t\t\t\t\t\t\tit will replaced by google places data",
+          secure: false,ccontroller: _toAddressTextEditingController, 
+        ),
+       ),
+      ),
+     ),
+    ),
+   
 
     Container(      //Location
       height: MediaQuery.of(context).size.height*0.15,
@@ -373,14 +435,14 @@ Widget _addRequestUI(BuildContext context){
       height: MediaQuery.of(context).size.height*0.5,
       width: MediaQuery.of(context).size.width*0.8,
       
-      child: Center(child: Text("\t\t\t\t\t\t Select Location \n\nHint \n\nclick select Loctations [Source{from} & distination{to}] Points[Loc-Coordinantes'GoogleMaps'] Homepage Bar\n\nIf you if you are already here Just ignore this step " , style: TextStyle(color:Colors.white, fontSize:19,),)),
+      child: const Center(child: Text("\t\t\t\t\t\t Select Location \n\nHint \n\nclick select Loctations [Source{from} & distination{to}] Points[Loc-Coordinantes'GoogleMaps'] Homepage Bar\n\nIf you if you are already here Just ignore this step " , style: const TextStyle(color:Colors.white, fontSize:19,),)),
           
           ),
         ),
       color: primaryColor,
       ),
     
-    SizedBox(height : 50),
+    SizedBox(height : MediaQuery.of(context).size.height*0.04),
     
     Padding( // add request   
     padding: const EdgeInsets.only(right: 10 ,),
@@ -467,21 +529,21 @@ Widget _addRequestUI(BuildContext context){
         ),
        ),
       color: primaryColor,
-      shape: StadiumBorder(),
+      shape: const StadiumBorder(),
     ),
    ),
   ), 
  ),
 ),
     
-    SizedBox(height : 100),
+    SizedBox(height : MediaQuery.of(context).size.height*0.04),
     ],    
    ),
   );
  }
 
 
-
+///API
 Future  _addRequest() async{      
 //  var header = {"Authorization":"Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5YWJkNmQ4MzUzODMxZDI1Nzg5MmQiLCJpYXQiOjE2NDk2ODMxNTB9.4UZEwg4UvTHR6AIZ2KyHvtcDxwpPJpjFUVLO1WZrT2A"};//(prefs.getString("token") as String)};
   //var url = Uri.parse("http://192.168.1.4:8080/api/request/open"); //http://localhost:8080/api/request/open
@@ -493,6 +555,8 @@ Future  _addRequest() async{
   String bodii = json.encode({
         "title" : _titleTextEditingController.text,
         "body" : _bodyTextEditingController.text,
+        "toAddress": _toAddressTextEditingController.text,
+        "fromAddress": _fromAddressTextEditingController.text,
         "fromLocation" : {
                 "type" : "Point",
                 "coordinates" : [globals.fromLat, globals.fromLong]
@@ -506,7 +570,8 @@ Future  _addRequest() async{
             "max" : _maxPricreTextEditingController.text
         },
         "timeRange" : {
-            "val" : _timeRangeTextEditingController.text
+            "val" : _timeRangeTextEditingController.text,
+            "unit": _timeUnitsTextEditingController.text
         }
     });
 

@@ -16,7 +16,8 @@ class SearchRequestDetails extends StatefulWidget {
   final timerange;
   final minPr;
   final maxPr;
-  SearchRequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
+  final timeunit;
+  SearchRequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr,this.timeunit);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
   
     @override
   SearchRequestDetailsState createState() => SearchRequestDetailsState();
@@ -40,11 +41,12 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
       widget.reqID,
       widget.timerange,
       widget.minPr,
-      widget.maxPr
+      widget.maxPr,
+      widget.timeunit
     ) ;
  }
 
- Widget requestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr){
+ Widget requestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr,dynamic timeunit){
    return Scaffold(
       appBar:  AppBar(
       title:const Text('Request Details' , style: TextStyle(color: Colors.black , fontSize: 50 ,fontWeight: FontWeight.bold),),
@@ -142,7 +144,7 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                   //Text( "//  {reqBody}  ",style: TextStyle(fontSize: 25, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
 
                   child:Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text( "//  $body  ",style: TextStyle(fontSize: 25, color: Colors.black , fontWeight: FontWeight.bold),),
                   ),    //waiting for API data
                 ) ,
@@ -181,14 +183,14 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                       ),
 
                       Container(//Just for UI
-                      decoration: BoxDecoration(color:Colors.white),
+                      decoration: const BoxDecoration(color:Colors.white),
                       height: MediaQuery.of(context).size.height*0.08,
                       width: MediaQuery.of(context).size.width*0.04,),
                       SizedBox(//timerange
                         height: MediaQuery.of(context).size.height*0.06,
                         width: MediaQuery.of(context).size.width*0.15,
                         child: TextButton(
-                          child:Text("${timerange} hour " ,style: TextStyle(fontSize: 20, color: Colors.black ,),),
+                          child:Text("$timerange\t\t[$timeunit] " ,style: const TextStyle(fontSize: 20, color: Colors.black ,),),
                           //Icon(Icons.ac_unit_sharp), // city name from location
                           onPressed: (){
                             print(reqID);

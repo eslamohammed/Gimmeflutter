@@ -33,10 +33,11 @@ class RequestItem extends StatelessWidget {
    dynamic reqtimerange,
    dynamic reqminPrice,
    dynamic reqmaxPrice,
+   dynamic timeUnits,
    dynamic username,
    )
    {return InkWell(
-    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice))),
+    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice,timeUnits))),
   
   /* onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context){
       return RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice);

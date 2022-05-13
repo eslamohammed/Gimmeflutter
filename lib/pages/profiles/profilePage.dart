@@ -135,9 +135,9 @@ Widget _profilePageUI(BuildContext context){
                           ],
                         ),
                         SizedBox(height:MediaQuery.of(context).size.height*0.04 ,),
-                        Center(child: Text("${myAcc.name}",style:  TextStyle(fontSize: 35, color: Colors.black, fontWeight: FontWeight.bold))),
+                        Center(child: Text("${myAcc.name}",style:  const TextStyle(fontSize: 35, color: Colors.black, fontWeight: FontWeight.bold))),
                         //@:${myAcc.email}
-                        Center(child: Text("Mail : ${myAcc.email}\nPhone : ${myAcc.phone}",style:  TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold))),
+                        Center(child: Text("Mail : ${myAcc.email}\nPhone : ${myAcc.phone}",style:  const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold))),
                         SizedBox(height:MediaQuery.of(context).size.height*0.02 ,),
                         Stack(//rating
                           children: [
@@ -145,11 +145,11 @@ Widget _profilePageUI(BuildContext context){
                               offset: const Offset(1,1),
                               child: Column(
                                 children: [
-                                  Text("Rating: ${rating}",style:  TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold)),
+                                  Text("Rating: $rating",style:  const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold)),
                                   RatingBar.builder(
                                     minRating: 1,
                                     itemSize: 35 ,
-                                    itemBuilder: (context,_)=>Icon(Icons.star, color: Colors.amber,),
+                                    itemBuilder: (context,_)=>const Icon(Icons.star, color: Colors.amber,),
                                     updateOnDrag: true,
                                     onRatingUpdate: (rating){
                                       //review here
@@ -249,6 +249,7 @@ Widget _profilePageUI(BuildContext context){
                                             requests[0].data[index]["timeRange"]["val"] ,
                                             requests[0].data[index]["priceRange"]["min"],
                                             requests[0].data[index]["priceRange"]["max"],
+                                            requests[0].data[index]["timeRange"]["unit"] ,
                                             myAcc.name
                                           );
                                         }
@@ -266,7 +267,15 @@ Widget _profilePageUI(BuildContext context){
                     );
                   }
                 } 
-                      return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                      //return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                      return  Center(child: Column(
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          const Text("\n\nLoading...\n\n",style :TextStyle(fontSize: 20),),
+                          const CircularProgressIndicator(backgroundColor: primaryColor,),
+                          const Text("\n\n\n\n Please check Your Connection...",style :TextStyle(fontSize: 30),)
+                        ],
+                      ),);
               }
             ),
           )

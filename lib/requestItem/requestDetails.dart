@@ -21,7 +21,8 @@ class RequestDetails extends StatefulWidget {
   final timerange;
   final minPr;
   final maxPr;
-  RequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
+  final timeUnit;
+  RequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr,this.timeUnit);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
   
     @override
   RequestDetailsState createState() => RequestDetailsState();
@@ -45,11 +46,12 @@ class  RequestDetailsState extends State<RequestDetails>{
       widget.reqID,
       widget.timerange,
       widget.minPr,
-      widget.maxPr
+      widget.maxPr,
+      widget.timeUnit
     ) ;
  }
 
- Widget requestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr){
+ Widget requestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr,dynamic timeUnit){
    return Scaffold(
       appBar:  AppBar(
       title:const Text('Request Details' , style: TextStyle(color: Colors.black , fontSize: 50 ,fontWeight: FontWeight.bold),),
@@ -199,14 +201,14 @@ class  RequestDetailsState extends State<RequestDetails>{
                       ),
 
                       Container(//Just for UI
-                      decoration: BoxDecoration(color:Colors.white),
+                      decoration: const BoxDecoration(color:Colors.white),
                       height: MediaQuery.of(context).size.height*0.08,
                       width: MediaQuery.of(context).size.width*0.04,),
                       SizedBox(//timerange
                         height: MediaQuery.of(context).size.height*0.06,
                         width: MediaQuery.of(context).size.width*0.15,
                         child: TextButton(
-                          child:Text("${timerange} hour " ,style: TextStyle(fontSize: 20, color: Colors.black ,),),
+                          child:Text("$timerange\t\t[$timeUnit] " ,style: const TextStyle(fontSize: 20, color: Colors.black ,),),
                           //Icon(Icons.ac_unit_sharp), // city name from location
                           onPressed: (){
                             print(reqID);

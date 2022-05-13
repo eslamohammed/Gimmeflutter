@@ -105,7 +105,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                           );
                         }
                       } 
-                      return Center(child: Text("\n\n\n\n\n\n\n\n\nNo Comments : Invalid Request",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),);
+                      return const Center(child: Text("\n\n\n\n\n\n\n\n\nNo Comments : Invalid Request",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),);
                     }else{
                       return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
                     }
@@ -152,7 +152,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                      print("reject");
                    }
                  },
-                 child: Text("check",style: TextStyle(fontSize:50,)),)
+                 child: const Text("check",style: TextStyle(fontSize:50,)),)
              ),
              
            ],
