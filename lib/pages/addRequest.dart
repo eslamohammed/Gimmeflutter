@@ -368,7 +368,8 @@ Widget _addRequestUI(BuildContext context){
   ),
  ),
 
-    
+    /// now putting address manually until gitting googlePlaces key 
+    /// it just replaced with address comes from google instead inserttimg it manually
     SizedBox(          //address from
     width: MediaQuery.of(context).size.width,
     child: Padding(
@@ -421,7 +422,7 @@ Widget _addRequestUI(BuildContext context){
       ),
      ),
     ),
-   
+   /// end of UI address never forgett to git me key
 
     Container(      //Location
       height: MediaQuery.of(context).size.height*0.15,
