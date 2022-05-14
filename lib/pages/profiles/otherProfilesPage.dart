@@ -8,7 +8,7 @@ import 'package:gimme/Api/Models/requestModel.dart';
 
 
 import 'package:gimme/main.dart';
-import 'package:gimme/requestItem/requestItem.dart';
+import 'package:gimme/pages/request/requestItem/requestItem.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -221,6 +221,9 @@ class OthersProfilePages extends StatelessWidget {
                           requests[0].data[index]["priceRange"]["min"],
                           requests[0].data[index]["priceRange"]["max"],
                           requests[0].data[index]["timeRange"]["unit"] ,
+                          
+                          requests[0].data[index]["fromAddress"] ,
+                          requests[0].data[index]["toAddress"] ,
                           userName
                         );
                       }

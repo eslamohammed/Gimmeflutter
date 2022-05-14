@@ -296,7 +296,7 @@ Map<String,String> header = {
         FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
-            "Something worng, try again",
+            "Something went woring, try again",
             "Ok", 
             (){
               Navigator.pop(context);

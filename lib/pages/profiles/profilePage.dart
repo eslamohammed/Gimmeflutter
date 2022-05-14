@@ -10,8 +10,9 @@ import 'package:gimme/config.dart';
 import 'package:gimme/main.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:gimme/pages/profiles/editProfile.dart';
 import 'package:gimme/pages/profiles/fetchAccountsData.dart';
-import 'package:gimme/requestItem/requestItem.dart';
+import 'package:gimme/pages/request/requestItem/requestItem.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../../Api/Models/requestModel.dart';
@@ -117,8 +118,8 @@ Widget _profilePageUI(BuildContext context){
                                   ),
                                   TextButton(
                                       child:const Text("Edit profile",style: TextStyle(fontSize: 17.5, color: Colors.white ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-                                      onPressed: (){
-                                      },
+                                      onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfile(myAcc.name,myAcc.email,myAcc.phone,myAcc.createTime))),
+
                                       style: ButtonStyle(
                                         //maximumSize: Size.infinite,
                                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -250,6 +251,9 @@ Widget _profilePageUI(BuildContext context){
                                             requests[0].data[index]["priceRange"]["min"],
                                             requests[0].data[index]["priceRange"]["max"],
                                             requests[0].data[index]["timeRange"]["unit"] ,
+                                            
+                                            requests[0].data[index]["fromAddress"],
+                                            requests[0].data[index]["toAddress"],
                                             myAcc.name
                                           );
                                         }

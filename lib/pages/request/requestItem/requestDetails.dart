@@ -4,15 +4,17 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/Commenets/addComment.dart';
+
 import 'package:gimme/pages/Commenets/showComments.dart';
 import 'package:gimme/pages/HomeController.dart';
-import 'package:gimme/requestItem/requestItem.dart';
+import 'package:gimme/pages/request/editRequest.dart';
+import 'package:gimme/pages/request/requestItem/requestItem.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-import '../Google_maps/googleMap.dart';
 
 class RequestDetails extends StatefulWidget { 
   final body ;
@@ -22,7 +24,9 @@ class RequestDetails extends StatefulWidget {
   final minPr;
   final maxPr;
   final timeUnit;
-  RequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr,this.timeUnit);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
+  final fromAddress;
+  final toAddress;
+  RequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr,this.timeUnit,this.fromAddress,this.toAddress);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
   
     @override
   RequestDetailsState createState() => RequestDetailsState();
@@ -47,23 +51,48 @@ class  RequestDetailsState extends State<RequestDetails>{
       widget.timerange,
       widget.minPr,
       widget.maxPr,
-      widget.timeUnit
+      widget.timeUnit,
+      widget.fromAddress,
+      widget.toAddress
     ) ;
  }
 
- Widget requestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr,dynamic timeUnit){
-   return Scaffold(
+ Widget requestDetails(
+   BuildContext context, 
+   String body, 
+   String title,
+   String reqID,
+   dynamic timerange,
+   dynamic minPr,
+   dynamic maxPr,
+   dynamic timeUnit,
+   dynamic fromAddress,
+   dynamic toAddress
+   )
+    {
+     return Scaffold(
       appBar:  AppBar(
       title:const Text('Request Details' , style: TextStyle(color: Colors.black , fontSize: 50 ,fontWeight: FontWeight.bold),),
       toolbarHeight: 65,
       centerTitle: true,
       actions:[
         TextButton(
-          onPressed:(){} ,//route to edit page,
+          onPressed:()=> Navigator.pushReplacement(context, MaterialPageRoute(
+            builder:(context)=>EditRequest(
+                body,
+                title,
+                reqID,
+                timerange,
+                minPr,
+                maxPr,
+                timeUnit,
+                fromAddress,
+                toAddress
+              )
+            )
+          ) ,//route to edit page,
           //()=> _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
             
-            
-          
           style: TextButton.styleFrom(
             primary: primaryColor,
             textStyle: const TextStyle(fontWeight: FontWeight.bold)
@@ -264,7 +293,7 @@ class  RequestDetailsState extends State<RequestDetails>{
               ),
       
               Container( //add && show Comments
-                decoration: BoxDecoration(color:Colors.white),
+                decoration: const BoxDecoration(color:Colors.white),
                 height: MediaQuery.of(context).size.height*0.1,
                 width: MediaQuery.of(context).size.width,
                 child:Row(
@@ -287,14 +316,14 @@ class  RequestDetailsState extends State<RequestDetails>{
                       height: MediaQuery.of(context).size.height*0.08,
                       width: MediaQuery.of(context).size.width*0.4,
                       child: TextButton(
-                        child:Text("Show Comments",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
+                        child:const Text("Show Comments",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowComments(reqID)),),
                         style: ButtonStyle(
                           //maximumSize: Size.infinite,
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(17.0),
-                            side: BorderSide(color: primaryColor,),
+                            side: const BorderSide(color: primaryColor,),
                           ),
                         )
                       ),

@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/pages/HomeController.dart';
-import 'package:gimme/pages/addRequest.dart';
-import 'package:gimme/pages/chatPage.dart';
+import 'package:gimme/pages/request/addRequest.dart';
+import 'package:gimme/pages/Chats/chatPage.dart';
 import 'package:gimme/pages/homePage.dart';
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';

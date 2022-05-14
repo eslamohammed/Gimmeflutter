@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/main.dart';
 
-class ChatPage extends StatefulWidget {  
+class ChatDetails extends StatefulWidget {  
+  final userID ;
+  ChatDetails(this.userID);
+  
   @override
-  _ChatPageState createState() =>_ChatPageState();
+  _ChatDetailsState createState() =>_ChatDetailsState();
 }
-class _ChatPageState extends State<ChatPage>{
+class _ChatDetailsState extends State<ChatDetails>{
   int count = 0;
   
   @override

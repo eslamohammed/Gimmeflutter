@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 
-import 'package:gimme/Api/Models/fetchAddRequestData.dart';
+import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/sharedPrefrances/sharedPrefsReqID.dart';
 import 'package:gimme/config.dart';
 import 'package:gimme/widget/customInputTextField.dart';
@@ -15,7 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:gimme/utilies/global_library.dart' as globals;
 
 import 'package:gimme/main.dart';
-import 'HomeController.dart';
+import '../HomeController.dart';
 
 //final GoogleMaps x = GoogleMaps(); 
 
@@ -26,9 +26,6 @@ class AddRequest extends StatefulWidget {
 }
 
 class _AddRequestState extends State<AddRequest>{
-
-  final TextEditingController _pointToTextEditingController= TextEditingController();   //e.g: menouf
-  final TextEditingController _pointFromTextEditingController= TextEditingController(); //e.g: Benha
 
   final TextEditingController _titleTextEditingController= TextEditingController();
   final TextEditingController _bodyTextEditingController= TextEditingController();
@@ -45,26 +42,17 @@ class _AddRequestState extends State<AddRequest>{
 
   @override
   void dispose(){
-    _pointToTextEditingController.dispose();
-    _pointFromTextEditingController.dispose();
     _bodyTextEditingController.dispose();
     _titleTextEditingController.dispose();
     _minPricreTextEditingController.dispose();
     _maxPricreTextEditingController.dispose();
     _timeRangeTextEditingController.dispose();
     _timeUnitsTextEditingController.dispose();
+    _fromAddressTextEditingController.dispose();
+    _toAddressTextEditingController.dispose();
     //_maxTimeTextEditingController.dispose();
 
     super.dispose();
-  }
-  //  String checkRequestData = "";
-
-   FetchAddRequestData _fetchDataAPIRequest = FetchAddRequestData();
-
-  void iniState(){
-    _fetchDataAPIRequest.fetchRequests("624e9ebce96ec076cbce6e53");
-    super.initState();
-
   }
 
   @override
@@ -598,6 +586,7 @@ Future  _addRequest() async{
       print("your request id is :$id");
       print("${prefsRequestID.getString("id")}");
 
+      if (body["status"] == true) {
         FormHelper.showSimpleAlertDialog(
           context, 
         "["+Config.appName+"]",
@@ -607,6 +596,17 @@ Future  _addRequest() async{
             Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeControllerPage()));
           },
         );
+      }else {
+        FormHelper.showSimpleAlertDialog(
+            context, 
+          "["+Config.appName+"]",
+            "Faild: Something went woring !!!\ntry again",
+            "Ok", 
+            (){
+              Navigator.pop(context);
+            },
+          );
+        }
       }else if(response.statusCode == 400){
             FormHelper.showSimpleAlertDialog(
             context, 
@@ -720,39 +720,5 @@ Future  deleteRequest(String id) async{
     }
   
   }
-
-
-Future editRequest(String id) async {  
-  Map<String, String>header = {'Content-Type': 'application/json; charset=UTF-8',};
-   String bodii = json.encode({
-        "title" : _titleTextEditingController.text,
-        "body" : _bodyTextEditingController.text,
-        "fromLocation" : {
-                "type" : "Point",
-                "coordinates" : [globals.fromLat, globals.fromLong]
-        },
-        "toLocation" : {
-                "type" : "Point",
-                "coordinates" : [globals.toLat, globals.toLong]
-        },
-        "priceRange" : {
-            "min" : _minPricreTextEditingController.text,
-            "max" : _maxPricreTextEditingController.text
-        },
-        "timeRange" : {
-            "val" : _timeRangeTextEditingController.text
-        }
-    });
-  var url = Uri.parse(Config.apiURl+Config.requestAPI+Config.editRequestAPI + id);
-  var response = await http.put(url,body: bodii,headers: header);
-  if (response.statusCode == 200) {
-    print("success");
-  } else {
-    print("faild");
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to update album.');
-  }
-}  
 
 }

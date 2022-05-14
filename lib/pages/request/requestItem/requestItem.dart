@@ -1,19 +1,19 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable
 
-import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
-import 'package:gimme/requestItem/requestDetails.dart';
+import 'package:gimme/pages/request/requestItem/requestDetails.dart';
+
+import 'package:gimme/config.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 
-import '../config.dart';
 
 class RequestItem extends StatelessWidget { 
 
@@ -34,10 +34,12 @@ class RequestItem extends StatelessWidget {
    dynamic reqminPrice,
    dynamic reqmaxPrice,
    dynamic timeUnits,
+   dynamic fromAddress,
+   dynamic toAddress,
    dynamic username,
    )
    {return InkWell(
-    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice,timeUnits))),
+    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice,timeUnits,fromAddress,toAddress))),
   
   /* onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context){
       return RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice);
@@ -194,13 +196,13 @@ class RequestItem extends StatelessWidget {
                           children: [
                             SizedBox(
                               height: MediaQuery.of(context).size.height*0.06,
-                              width: MediaQuery.of(context).size.width*0.3,
+                              width: MediaQuery.of(context).size.width*0.4,
                               child: TextButton(
                                 child:Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                  const Text("From{'/'/'} ",style: TextStyle(fontSize: 15,color: primaryColor ,),),
-                                  SizedBox(width:MediaQuery.of(context).size.width*0.05,),
+                                  Text("${fromAddress} ",style: TextStyle(fontSize: 15,color: primaryColor ,),),
+                                  SizedBox(width:MediaQuery.of(context).size.width*0.01,),
                                   const Icon(Icons.arrow_forward , color: primaryColor,),
                                 ],) ,//Icon(Icons.ac_unit_sharp), // city name from location
                                 onPressed: (){
@@ -224,7 +226,7 @@ class RequestItem extends StatelessWidget {
                                 height: MediaQuery.of(context).size.height*0.06,
                                 width: MediaQuery.of(context).size.width*0.3,
                                 child: TextButton(
-                                  child: const Text("To {'/'x/'}",style: TextStyle( fontSize: 20,color: primaryColor ,),), // city name from location
+                                  child: Text("$toAddress",style: TextStyle( fontSize: 20,color: primaryColor ,),), // city name from location
                                   onPressed: ()async{
                                     print("=============="); 
                                   },

@@ -11,10 +11,10 @@ import 'package:gimme/Api/Models/requestModel.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/pages/profiles/fetchAccountsData.dart';
+import 'package:gimme/pages/request/requestItem/requestItem.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
-import '../requestItem/requestItem.dart';
 
 class Home extends StatefulWidget {  
   @override
@@ -50,7 +50,7 @@ class _HomeState extends State<Home>{
       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage())) ,
        )   
       ),
-     body: SafeArea(
+      body: SafeArea(
        child: SingleChildScrollView(
         child: RefreshIndicator(
           onRefresh: _refresh,
@@ -61,7 +61,7 @@ class _HomeState extends State<Home>{
               if(snapshot.hasData){
               http.Response res = snapshot.data as http.Response;
               var body = jsonDecode(res.body()); 
-              print(body["data"][4]["timeRange"]["unit"]);
+              //print(body["data"][4]);
               if(body["data"].isEmpty){
                   return const Center(child: Text("\n\n\n\n\n\n\nNO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
               }else{
@@ -94,7 +94,7 @@ class _HomeState extends State<Home>{
                                 ProfileModel myAcc;
                                 var body = jsonDecode(res.body());
                                 myAcc = ProfileModel.fromJson(body);
-                                print("hallo its my name ${myAcc.name}");
+                                //print("hallo its my name ${myAcc.name}");
                                 switch(snapshot.connectionState){                        
                                   case ConnectionState.waiting:
                                     return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -116,6 +116,9 @@ class _HomeState extends State<Home>{
                                     requests[0].data[index]["priceRange"]["min"],
                                     requests[0].data[index]["priceRange"]["max"],
                                     requests[0].data[index]["timeRange"]["unit"] ,
+                                    requests[0].data[index]["fromAddress"] ,
+                                    requests[0].data[index]["toAddress"] ,
+
                                     myAcc.name,
                                   );
                                 }
