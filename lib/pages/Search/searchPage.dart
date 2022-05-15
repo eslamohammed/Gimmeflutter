@@ -151,13 +151,11 @@ class _SearchPageState extends State<SearchPage>{
                     if(snapshot.hasData){
                     http.Response res = snapshot.data as http.Response;
                     var body = jsonDecode(res.body());
-                    //print("${body["data"].isEmpty}");
+                    print("${body["data"].isNotEmpty}");
                     //print("${body["data"]}");
-                    print("${body["data"][0]["timeRange"]["unit"]}");
+                    print("${body["data"]}");
 
-                    if(body["data"].isEmpty){
-                      return const Center(child: Text("\n\n\n\n   NO Result\nInvalid syntax", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
-                    }else{
+                    if(body["data"].isNotEmpty){
                       List <SearchRequestModel> resultReq = [] ;
                         resultReq.add(SearchRequestModel.fromJson(body));
                         switch(snapshot.connectionState){                        
@@ -222,7 +220,10 @@ class _SearchPageState extends State<SearchPage>{
                               }
                             }
                           } 
-                          return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                          return const Padding(
+                            padding: EdgeInsets.all(75.0),
+                            child: Center(child: Text("\n     NO Request Exist\n\nPlease wait untill users add ones", style :TextStyle(fontSize: 40 , fontWeight: FontWeight.bold),)),
+                          );
                     } 
                   ),
                 ):const Center(child: Text("\n\n\n\nNo Result", style :TextStyle(fontSize: 45),)),
@@ -273,6 +274,7 @@ class _SearchPageState extends State<SearchPage>{
           if (snapshot.hasData){
             http.Response res = snapshot.data as http.Response;
               var body = jsonDecode(res.body()); 
+              print(body);
               if (body["status"]==true) {
                 switch(snapshot.connectionState){                        
                 case ConnectionState.waiting:
@@ -334,7 +336,7 @@ class _SearchPageState extends State<SearchPage>{
                                               ///User infos
                                               ///The data comming from API
                                               body['data']['name'],
-                                              "rate",
+                                              "4.7",
                                               body['data']['isTrusted'],
                                               body['data']['createTime']
                                               )));
@@ -490,3 +492,11 @@ class _SearchPageState extends State<SearchPage>{
 
 
  */
+
+/*
+
+{
+                      return const Center(child: Text("\n\n\n\n   NO Result\nInvalid syntax", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
+                    }else
+
+*/

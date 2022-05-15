@@ -251,19 +251,6 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                 child:Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [ 
-                    /*Padding(//deleteRequest 
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        child: FloatingActionButton(
-                        child: Icon(Icons.delete,color: Colors.white, ),
-                        backgroundColor: primaryColor,
-                        onPressed: (){
-                          //print(reqID);
-                          //deleteRequest(context,reqID); //sending object id to be deleted
-                        })
-                      ),
-                    ),*/
-
                     SizedBox(//Show Comments
                       height: MediaQuery.of(context).size.height*0.08,
                       width: MediaQuery.of(context).size.width*0.4,

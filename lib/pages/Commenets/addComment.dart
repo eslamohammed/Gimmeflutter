@@ -263,13 +263,13 @@ Map<String,String> header = {
           FormHelper.showSimpleAlertDialog(
               context, 
             "["+Config.appName+"]",
-              "Faild: You are already commented !!!",
+              "Faild: ${body["message"]}",
               "Ok", 
               (){
                 Navigator.pop(context);
               },
-            );}
-
+            );
+          }
       }else if (response.statusCode == 403){
           debugPrint("not Forbidden");
           FormHelper.showSimpleAlertDialog(

@@ -36,12 +36,15 @@ class OthersProfilePages extends StatelessWidget {
     return SafeArea(
     child: Scaffold(
      
-     body:  _profilePageUI( context),
+     body:  _profilePageUI( context ),
     ),
   );
   }
 
-  Widget _profilePageUI(BuildContext context){
+  Widget _profilePageUI(
+    BuildContext context,
+    
+    ){
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -102,9 +105,10 @@ class OthersProfilePages extends StatelessWidget {
           ],
         ),
         SizedBox(height:MediaQuery.of(context).size.height*0.04 ,),
-        Center(child: Text("${userName}",style:  TextStyle(fontSize: 35, color: Colors.black, fontWeight: FontWeight.bold))),
+        Center(child: Text("$userName",style:  const TextStyle(fontSize: 35, color: Colors.black, fontWeight: FontWeight.bold))),
         //@:${myAcc.email}
-        Center(child: Text("Mail : {user.email}\nPhone : {user.phone}",style:  TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold))),
+        //Center(child: Text("Mail : {user.email}\nPhone : {user.phone}",style:  TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold))),
+        Center(child: Text("Is Trusted : $isTrusted",style:  const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold))),
         SizedBox(height:MediaQuery.of(context).size.height*0.02 ,),
         Stack(//rating
           children: [
@@ -173,8 +177,16 @@ class OthersProfilePages extends StatelessWidget {
           ),
         ],
         ),
-
-        SizedBox(//my Requests
+        ///this part will be hidden to keep on privacy
+        ///it work put for now i will put it as a comment
+        ///here i have some problems [api able me to get only current user all requests]
+        ///if wanna do it for others i cant
+        ///in my app i developed this part and waiting to add this feature 
+        ///after added this feature all i have to do => just adding other profile ${id} to routes [Url]
+        ///for now and on, i will put it as a comment waiting for adding this feature 
+  
+    /*  //profile Requests
+        SizedBox(//profile Requests
           height:MediaQuery.of(context).size.height*0.33 ,
           child: RefreshIndicator(
             onRefresh: _refresh,
@@ -236,6 +248,9 @@ class OthersProfilePages extends StatelessWidget {
             ),
           ),
         )
+      */
+
+        const Center(child: Text("this feature is not added yet, it will be displayed after back end add it ", style: TextStyle(fontSize: 15 ,fontWeight: FontWeight.bold),),)
       ],
     );
 
