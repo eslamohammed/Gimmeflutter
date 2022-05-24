@@ -132,7 +132,11 @@ class RequestDetailsState extends State<RequestDetails> {
               onPressed: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomeControllerPage())))),
+                      builder: (context) => HomeControllerPage()
+                      ),
+                    ),
+                  ),
+                ),
       body: Card(
         color: Colors.white,
         shape: RoundedRectangleBorder(
@@ -403,7 +407,8 @@ class RequestDetailsState extends State<RequestDetails> {
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ShowComments(reqID)),
+                              builder: (context) => ShowComments(reqID),
+                              ),
                         ),
                         style: ButtonStyle(//maximumSize: Size.infinite,
                             shape: MaterialStateProperty.all<

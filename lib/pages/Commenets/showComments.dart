@@ -64,9 +64,11 @@ class ShowCommentsState extends State<ShowComments> {
                       if(snapshot.hasData){
                       http.Response res = snapshot.data as http.Response;
                       var body = jsonDecode(res.body()); 
+                      print(body);
                       if (body['status']==true) {
                         List <CommentModel> comments = [] ;
                         comments.add(CommentModel.fromJson(body)); 
+                        print(comments[0].data[0]['mod']);
                         switch(snapshot.connectionState){                        
                           case ConnectionState.waiting:
                             return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -92,7 +94,7 @@ class ShowCommentsState extends State<ShowComments> {
                                   comments[0].data[index]['userId'],
                                   comments[0].data[index]['text'],
                                   comments[0].data[index]['price'],
-                                  comments[0].data[index]['mod'],
+                                //  comments[0].data[index]['mod'],
                                 );
                               }
                             )
@@ -130,11 +132,10 @@ class ShowCommentsState extends State<ShowComments> {
     String commenterUserID, //user {2nd part : current user who'm make the comment} ID
     String text,
     dynamic price,
-    bool mod,
+    //bool mod,
 
     ){
     return Card(
-     
       elevation: 6,
       margin: const EdgeInsets.all(12.5),
       child: FutureBuilder(
@@ -145,8 +146,6 @@ class ShowCommentsState extends State<ShowComments> {
             List commenters = [] ;
               var body = jsonDecode(res.body()); 
               commenters.add(CommentModel.fromJson(body)); 
-              print("=============================");
-              print("${commenters[0]}");
               switch(snapshot.connectionState){                        
                 case ConnectionState.waiting:
                   return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -182,9 +181,9 @@ class ShowCommentsState extends State<ShowComments> {
                                 ),
                               ),
 
-                            SizedBox(width: 5,),
+                            const SizedBox(width: 5,),
                             Container(//*** title && body
-                            decoration: BoxDecoration(color:Colors.white,),
+                            decoration: const BoxDecoration(color:Colors.white,),
                             height: MediaQuery.of(context).size.height*0.4,
                             width: MediaQuery.of(context).size.width*0.535,
                             child: Padding(
@@ -193,10 +192,10 @@ class ShowCommentsState extends State<ShowComments> {
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text( "${commenters[0].data['name']}  ",style: TextStyle(fontSize: 25, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
+                                  Text( "${commenters[0].data['name']}  ",style: const TextStyle(fontSize: 25, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
                                   const Divider(color: primaryColor,),
                                   //comment text
-                                  Text( "${text} ${userID}  ",style: TextStyle(fontSize: 15, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
+                                  Text( "${text} ${userID}  ",style: const TextStyle(fontSize: 15, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
                                 ],
                               ),
                             ),
@@ -251,7 +250,7 @@ class ShowCommentsState extends State<ShowComments> {
                                       height: MediaQuery.of(context).size.height*0.075,
                                       width: MediaQuery.of(context).size.width*0.2,
                                       child: TextButton(
-                                        child: Text("${price}  EGP",style: TextStyle(fontSize: 15 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
+                                        child: Text("${price}  EGP",style: const TextStyle(fontSize: 15 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                                         onPressed: (){
 
                                         },
@@ -273,7 +272,7 @@ class ShowCommentsState extends State<ShowComments> {
                                         height: MediaQuery.of(context).size.height*0.075,
                                         width: MediaQuery.of(context).size.width*0.1,
                                         child: TextButton(
-                                          child:  Text("${timeValue} ${timeUnits} ",style: TextStyle( fontSize: 20,color: primaryColor ,),), // city name from location
+                                          child:  Text("${timeValue} ${timeUnits} ",style: const TextStyle( fontSize: 20,color: primaryColor ,),), // city name from location
                                           onPressed: (){
                                             print("${commenters[0].data}");
                                           },
@@ -344,7 +343,7 @@ Future<String> get_commenterName(String id) async{
 */
 Future<void> _refresh() async {
     return Future.delayed(
-      Duration(seconds: 2)
+      const Duration(seconds: 2)
     );
   }
 

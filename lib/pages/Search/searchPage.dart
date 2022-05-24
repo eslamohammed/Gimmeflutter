@@ -75,8 +75,7 @@ class _SearchPageState extends State<SearchPage> {
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                Padding(
-                  //From
+                Padding(//From
                   padding: const EdgeInsets.all(15),
                   child: Container(
                       decoration: BoxDecoration(
@@ -87,26 +86,27 @@ class _SearchPageState extends State<SearchPage> {
                         child: CustomInputTextFieldWidget(
                             hintText: "\t\t From ",
                             secure: false,
-                            ccontroller: _From),
-                      )),
+                            ccontroller: _From,
+                          ),
+                        ),
+                      ),
                 ),
-                Padding(
-                  //To
+                Padding(//To
                   padding: const EdgeInsets.all(15),
                   child: Container(
-                      decoration: BoxDecoration(
-                          color: HexColor("#E5E5E5"),
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: CustomInputTextFieldWidget(
-                            hintText: "\t\t To ",
-                            secure: false,
-                            ccontroller: _To),
-                      )),
+                    decoration: BoxDecoration(
+                        color: HexColor("#E5E5E5"),
+                        borderRadius: BorderRadius.circular(25)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: CustomInputTextFieldWidget(
+                        hintText: "\t\t To ",
+                        secure: false,
+                        ccontroller: _To),
+                      ),
+                    ),
                 ),
-                Center(
-                  //search
+                Center(//search
                   child: Container(
                     width: MediaQuery.of(context).size.width / 2,
                     height: MediaQuery.of(context).size.height * 0.075,
@@ -166,17 +166,15 @@ class _SearchPageState extends State<SearchPage> {
                             future: getSearchedRequest(_To.text, _From.text),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
-                                http.Response res =
-                                    snapshot.data as http.Response;
+                                http.Response res =snapshot.data as http.Response;
                                 var body = jsonDecode(res.body());
-                                print("${body["data"].isNotEmpty}");
+                              //  print("${body["data"].isNotEmpty}");
                                 //print("${body["data"]}");
-                                print("${body["data"]}");
+                              //  print("${body["data"]}");
 
                                 if (body["data"].isNotEmpty) {
                                   List<SearchRequestModel> resultReq = [];
-                                  resultReq
-                                      .add(SearchRequestModel.fromJson(body));
+                                  resultReq.add(SearchRequestModel.fromJson(body));
                                   switch (snapshot.connectionState) {
                                     case ConnectionState.waiting:
                                       return const Center(
@@ -185,30 +183,16 @@ class _SearchPageState extends State<SearchPage> {
                                         ),
                                       );
 
-                                    case ConnectionState.none:
-                                      return const Center(
-                                        child: Text("Error in connection"),
-                                      );
+                                    case ConnectionState.none:return const Center(child: Text("Error in connection"),);
 
-                                    case ConnectionState.active:
-                                      return const Center(
-                                        child: CircularProgressIndicator(
-                                          backgroundColor: primaryColor,
-                                        ),
-                                      );
+                                    case ConnectionState.active:return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
 
-                                    case ConnectionState.done:
-                                      return SizedBox(
-                                        height: 720,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: // resultReq[0].data[x].isNotEmpty
-                                            //?
-                                            ListView.builder(
+                                    case ConnectionState.done:return SizedBox(height: 720,
+                                        width:MediaQuery.of(context).size.width,
+                                        child:ListView.builder(
                                           itemCount: resultReq[0].data.length,
                                           itemBuilder: (context, index) {
-                                            return reqResultCard(
-                                              ///routing data to request card
+                                            return reqResultCard(///routing data to request card
                                               context,
                                               resultReq[0].data[index]['body'].toString(),
                                               resultReq[0].data[index]['title'].toString(),
@@ -313,16 +297,19 @@ class _SearchPageState extends State<SearchPage> {
     return InkWell(
       onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => SearchRequestDetails(reqBody, reqTitle,
-                  reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit))),
+          MaterialPageRoute(builder: (context) => SearchRequestDetails(
+            reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit
+            ),
+          ),
+        ),
       child: FutureBuilder(
         future: _fetchOthersAccount.fetchOthersAccount(requesterID),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             http.Response res = snapshot.data as http.Response;
             var body = jsonDecode(res.body());
-            print(body);
+            //print(body);
+            print("Done..");
             if (body["status"] == true) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:

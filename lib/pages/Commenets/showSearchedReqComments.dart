@@ -7,11 +7,16 @@ import 'package:gimme/main.dart';
 import 'package:gimme/pages/Commenets/CommentsModel.dart';
 
 import 'package:gimme/pages/Commenets/fetchMyComment.dart';
+import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/pages/profiles/fetchAccountsData.dart';
 
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
+import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:snippet_coder_utils/FormHelper.dart';
+
 
 
 class ShowSearchedReqComments extends StatefulWidget {
@@ -65,13 +70,17 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                       if(snapshot.hasData){
                       http.Response res = snapshot.data as http.Response;
                       var body = jsonDecode(res.body()); 
-                      print("${body}");
-                      if (body['status']==true) {
-                        print("okkkkkkkkkkk");
+                      //print("${body}");
+                      if (body['data'].isEmpty){
+                        print("no comments");
+                      }else{
+                        print("showSearchedReqComments");
                         //List <SearchedReqCommentsModel> comments = [] ;
                         //comments.add(SearchedReqCommentsModel.fromJson(body)); 
                         List comments =[];
                         comments.add(body);
+                        //globals.getUserID() == "624ea47be96ec076cbce6e5b"
+                        print("${comments[0]['data'][0]['userId']}");
                         switch(snapshot.connectionState){                        
                           case ConnectionState.waiting:
                             return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -90,7 +99,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                               itemCount:comments[0]['data'].length ,
                               itemBuilder: (context , index){
 
-                                return  _commentsCard( //routing the data to comment card
+                                return comments[0]['data'][index]['userId'] == globals.getUserID()? _ownCommentsCard( //routing the data to comment card
                                   context,
                                   comments[0]['data'][index]['time']['unit'],
                                   comments[0]['data'][index]['time']['val'],
@@ -99,62 +108,35 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                                   comments[0]['data'][index]['text'],
                                   comments[0]['data'][index]['price'],
                                   comments[0]['data'][index]['mod'],
-                                );
+                                ):_commentsCard( //routing the data to comment card
+                                  context,
+                                  comments[0]['data'][index]['time']['unit'],
+                                  comments[0]['data'][index]['time']['val'],
+                                  comments[0]['data'][index]['_id'],
+                                  comments[0]['data'][index]['userId'],
+                                  comments[0]['data'][index]['text'],
+                                  comments[0]['data'][index]['price'],
+                                  comments[0]['data'][index]['mod'],
+                                )
+                                ;
                               }
                             )
                           );
                         }
                       } 
-                      return const Center(child: Text("\n\n\n\n\n\n\n\n\nNo Comments : Invalid Request",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),);
+                      return Center(child: Column(
+                        children: [
+                          const Text("\n\n\n\n\n\n\n\n\nNo Comments Exist...",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
+                          const Text("Add one to be first Commenter",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
+
+                        ],
+                      ),);
                     }else{
                       return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
                     }
                   } 
                 ),
               ),
-             
-             Center(
-               child: TextButton(
-                 onPressed: () async{
-                   print("======================================");
-                   print(widget.id);
-                   var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
-                   var url = Uri.parse(Config.apiURl+ Config.commentAPI + widget.id);
-                   var res = await http.get(url, headers: header);
-                   var body = jsonDecode(res.body());
-                   List comment =[]; 
-                   if (res.statusCode == 200){
-                     comment.add(body);
-                     /*
-                     List commentersName =[];
-                              for (var x in comments[0].data) {
-                                commentersName.add(FetchAccounts().get_commenterName(comments[0].data[index]['userId']));
-                              }
-                              print(commentersName);
-                      */
-                    // print("success : statusCode = ${body}");
-                    print(comment[0]['data'][0/*insex*/]['time']['unit']);
-                    print(comment[0]['data'][0/*insex*/]['time']['val']);
-                    print(comment[0]['data'][0/*insex*/]['_id']); //user { request create by} ID
-                    print(comment[0]['data'][0/*insex*/]['userId']); //user {2nd part : current user who'm make the comment} ID
-                    print(comment[0]['data'][0/*insex*/]['text']); //
-                    print(comment[0]['data'][0/*insex*/]['price']);
-                  //  print(comment[0]['data'][0/*insex*/]['mod']);
-                    print("=============================");
-                    print(comment[0]);
-                    print("============================="); 
-                    print(comment[0]['data'][0/*insex*/]['userId']);
-                    print("${comment[0]['data'].length}");
-
-                    
-                   }
-                   else{
-                     print("reject");
-                   }
-                 },
-                 child: const Text("check",style: TextStyle(fontSize:50,)),)
-             ),
-             
            ],
          ),
       ),
@@ -162,7 +144,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
     ); //_commentsCard(context , widget.id);
   }
   
-
+  
   Widget _commentsCard(
     BuildContext context, /*, String id*/
     String timeUnits,
@@ -175,7 +157,6 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
 
     ){
     return Card(
-     
       elevation: 6,
       margin: const EdgeInsets.all(12.5),
       child: FutureBuilder(
@@ -240,7 +221,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                             ),
                           ),
                         ),
-                          
+                        /*  
                           Padding(//Accept
                               padding: const EdgeInsets.only(top:5.0 , right: 5),
                               child: SizedBox(//Accept
@@ -249,6 +230,12 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                                 child: TextButton(
                                   child:const Text("Accept",style: TextStyle(fontSize: 15 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                                   onPressed: (){
+                                    print(globals.getUserID());
+                                    if (globals.getUserID() == "624ea47be96ec076cbce6e5b"){
+                                      print(true);
+                                    }else{
+                                      print(false);
+                                    }
                                     //Accept method || close request method
                                   },
                                   style: ButtonStyle(
@@ -263,6 +250,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                               ),
                             ),
                           ),
+                        */
                         ],
                       ) ,
                     ),
@@ -330,11 +318,12 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                                   Container(//for UI
                                     decoration: BoxDecoration(color:Colors.white,
                                     borderRadius: BorderRadius.circular(10),),
-                                  width: MediaQuery.of(context).size.width*0.425),
+                                    width: MediaQuery.of(context).size.width*0.425
+                                  ),
                                   const SizedBox(width: 17.5,),
                                   Center(
                                     child: IconButton(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                       iconSize: 39,
                                       icon: const Icon(Icons.email),
                                       onPressed: ()=>{
@@ -359,26 +348,257 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
     );
   }
   
+  Widget _ownCommentsCard(
+    BuildContext context, /*, String id*/
+    String timeUnits,
+    dynamic timeValue,
+    String userID,//user { request owner/created by} ID
+    String commenterUserID, //user {2nd part : current user who'm make the comment} ID
+    String text,
+    dynamic price,
+    dynamic mod,
+
+    ){
+    return Card(  
+      elevation: 6,
+      margin: const EdgeInsets.all(12.5),
+      child: FutureBuilder(
+        future: _fetchOthersAccount.fetchOthersAccount(commenterUserID),
+        builder: (context,snapshot){
+          if (snapshot.hasData){
+            http.Response res = snapshot.data as http.Response;
+            List commenters = [] ;
+              var body = jsonDecode(res.body()); 
+              commenters.add(CommentModel.fromJson(body));
+              print(body);
+              print(commenters[0].data);
+              switch(snapshot.connectionState){                        
+                case ConnectionState.waiting:
+                  return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                  
+                case ConnectionState.none:
+                  return const Center(child: Text("Error in connection"),);
+
+                case ConnectionState.active:
+                  return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+
+                case ConnectionState.done:
+                return Column(
+                  children:[
+                    Container(
+                      decoration: BoxDecoration(
+                        color:Colors.white ,
+                        border: Border.all(color: primaryColor),
+                        borderRadius: BorderRadius.circular(10),),
+                        height: MediaQuery.of(context).size.height*0.1,
+                        width: MediaQuery.of(context).size.width,
+                        child:Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding( //photo
+                                padding: const EdgeInsets.only(top: 8 , left: 8 ,bottom: 8),
+                                child:Container(//profile photo
+                                width: MediaQuery.of(context).size.width*0.17,
+                                height: MediaQuery.of(context).size.height*0.06,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(image: NetworkImage(Config.user2ndImageURL,scale:10 ), fit: BoxFit.fill
+                                  )
+                                ),
+                              ),
+                            ),
+
+                          const SizedBox(width: 5,),
+                          Container(//*** title && body
+                          decoration: const BoxDecoration(color:Colors.white,),
+                          height: MediaQuery.of(context).size.height*0.4,
+                          width: MediaQuery.of(context).size.width*0.535,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text( "${commenters[0].data['name']}  ",style: const TextStyle(fontSize: 25, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
+                                const Divider(color: primaryColor,),
+                                //comment text
+                                Text( "${text}  ",style: const TextStyle(fontSize: 15, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
+                              ],
+                            ),
+                          ),
+                        ),
+                          
+                          Padding(//Edit
+                              padding: const EdgeInsets.only(top:5.0 , right: 5),
+                              child: SizedBox(//Accept
+                                height: MediaQuery.of(context).size.height*0.04,
+                                width: MediaQuery.of(context).size.width*0.2,
+                                child: TextButton(
+                                  child:const Text("Edit",style: TextStyle(fontSize: 20 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
+                                  onPressed: (){
+                                    //Edit method
+                                  },
+                                  style: ButtonStyle(
+                                    //maximumSize: Size.infinite,
+                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(color: primaryColor),
+                                    ),
+                                  )
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ) ,
+                    ),
+                    
+                    Container( 
+                      decoration: const BoxDecoration(color:Colors.white),
+                      height: MediaQuery.of(context).size.height*0.05,
+                      width: MediaQuery.of(context).size.width,
+                      child:Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                        
+                          Padding(
+                          padding: const EdgeInsets.only(bottom: 5.0 ,top: 5),
+                          child: Container(
+                            decoration: BoxDecoration(color:Colors.white,
+                            borderRadius: BorderRadius.circular(10),),
+                            height: MediaQuery.of(context).size.height*0.12,
+                            width: MediaQuery.of(context).size.width*0.9,
+                              child: Row(
+                                //crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(// EGP
+                                    height: MediaQuery.of(context).size.height*0.075,
+                                    width: MediaQuery.of(context).size.width*0.2,
+                                    child: TextButton(
+                                      child: Text("${price}  EGP",style: const TextStyle(fontSize: 15 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
+                                      onPressed: (){
+
+                                      },
+                                      style: ButtonStyle(
+                                        //maximumSize: Size.infinite,
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          side: const BorderSide(color: primaryColor),
+                                        ),
+                                      )
+                                    ),
+                                  ),
+                                ),    
+
+                                  const SizedBox(width: 5,),
+
+                                  SizedBox(//Time value & unit
+                                      height: MediaQuery.of(context).size.height*0.075,
+                                      width: MediaQuery.of(context).size.width*0.1,
+                                      child: TextButton(
+                                        child:  Text("${timeValue} ${timeUnits} ",style: const TextStyle( fontSize: 20,color: primaryColor ,),), // city name from location
+                                        onPressed: (){
+                                          print("${commenters[0].data}");
+                                        },
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            side: const BorderSide(color: primaryColor),
+                                          ),
+                                        )
+                                      ),
+                                    ),
+                                  ),
+
+                                  Container(//for UI
+                                    decoration: BoxDecoration(color:Colors.white,
+                                    borderRadius: BorderRadius.circular(10),),
+                                  width: MediaQuery.of(context).size.width*0.425),
+                                  const SizedBox(width: 17.5,),
+                                  Center(//Delete comment
+                                    child: IconButton(
+                                      color: Colors.black,
+                                      iconSize: 39,
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: ()=>{ ///calling delete comment method
+                                        _deleteComment(context,widget.id)
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ) ,
+                    ),
+                  ],
+                );
+              }
+            }
+            return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
+        },
+      ),
+    );
+  }
+
+
 Future  <http.Response> fetchOthersAccount(String id) async{
     var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
     var url = Uri.parse(Config.apiURl+ Config.othersProfileAPI+id);
     return await http.get(url, headers: header); 
  }
 
+Future  _deleteComment(BuildContext context ,String id) async{ 
+  
+  Map<String,String> header = { "Authorization":"Bearer " + (prefs.getString("token") as String),};
+
+    var url = Uri.parse(Config.apiURl+Config.commentAPI+ id);
+    var response = await http.delete(url , headers: header);
+
+    if(response.statusCode == 200){
+    var body = jsonDecode(response.body());
+    print(body["status"]);
+      if (body["status"]== true){
+      FormHelper.showSimpleAlertDialog(
+        context, 
+        Config.appName,
+        "Success : Comment has been deleted !!!",
+        "Ok", 
+        (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()));  
+      },);
+      } else {
+        FormHelper.showSimpleAlertDialog(
+        context, 
+        Config.appName,
+        "Faild : Something went Error !!!",
+        "Ok", 
+        (){
+        Navigator.pop(context);  
+        //Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()));  
+      },);
+      }
+      
+    }else if (response.statusCode == 404){
+      FormHelper.showSimpleAlertDialog(
+      context, 
+      Config.appName,
+      "Error ${response.statusCode}: Comment doens't exist ",
+      "Ok", 
+      (){
+      Navigator.pop(context);  
+    },);
+    }  
+  }
+
 Future<void> _refresh() async {
     return Future.delayed(
-      Duration(seconds: 2)
+      const Duration(seconds: 2)
     );
   }
 
 }
-
-
-
-
-/*
-
-
-
-
- */

@@ -203,8 +203,7 @@ class RequestItem extends StatelessWidget {
                           backgroundColor: primaryColor,
                           onPressed: () {
                             print(reqID);
-                            deleteRequest(context,
-                                reqID); //sending object id to be deleted
+                            deleteRequest(context,reqID); //sending object id to be deleted
                           }),
                     ),
                     /* Padding(//just for margin

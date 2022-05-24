@@ -59,9 +59,9 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
       elevation:0,  
       automaticallyImplyLeading: true,
       leading: TextButton(
-      child:const Text("Back",style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 22, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
+      child:const Text("Back",style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 22, color: primaryColor ,),),//Icon(Icons.ac_unit_sharp), // city name from location
       onPressed: 
-        ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()))          
+        ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeControllerPage(),),)          
        )   
       ),
      body: Card(

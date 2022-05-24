@@ -54,7 +54,9 @@ class _AddCommentState extends State<AddComment> {
     automaticallyImplyLeading: true,
     leading: TextButton(
     child:const Text("Back",style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 22, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-    onPressed: ()=>{},
+    onPressed: ()=>{
+      
+    },
       //()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RequestDetails()))          
       )   
     ),
