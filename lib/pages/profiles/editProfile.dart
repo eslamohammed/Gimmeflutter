@@ -1,18 +1,15 @@
-// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
+// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/Models/requestModel.dart';
 import 'package:gimme/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/widget/customInputTextField.dart';
 
 import 'package:jwt_decode/jwt_decode.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-import '../../Api/Models/requestModel.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -74,7 +71,9 @@ Widget _editProfilePageUI(BuildContext context){
                       image: DecorationImage(image: NetworkImage("https://images.unsplash.com/photo-1568043210943-0e8aac4b9734?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")) ,  //DecorationImage(image: NetworkImage(Config.ImageURL,),
                       borderRadius:  BorderRadius.only(
                         bottomRight: Radius.circular(50),
-                        bottomLeft: Radius.circular(50))),  
+                        bottomLeft: Radius.circular(50),
+                        ),
+                      ),  
                       child: const Center(), //photo
                     ),
                     IconButton(//editing profile pic

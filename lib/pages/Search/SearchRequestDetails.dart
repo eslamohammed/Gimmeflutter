@@ -3,10 +3,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
+
 import 'package:gimme/main.dart';
+
 import 'package:gimme/pages/Commenets/addComment.dart';
 import 'package:gimme/pages/Commenets/showSearchedReqComments.dart';
 import 'package:gimme/pages/HomeController.dart';
+
 import 'package:snippet_coder_utils/hex_color.dart';
 
 class SearchRequestDetails extends StatefulWidget { 
@@ -88,7 +91,7 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                      Container(//title
-                      decoration: BoxDecoration(color:Colors.white),
+                      decoration: const BoxDecoration(color:Colors.white),
                       height: MediaQuery.of(context).size.height*0.08,
                       width: MediaQuery.of(context).size.width*0.56,
                       child:Padding(

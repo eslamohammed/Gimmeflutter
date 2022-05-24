@@ -1,64 +1,16 @@
 // ignore_for_file: file_names
 
-import 'dart:convert';
-
 import 'package:gimme/config.dart';
 import 'package:gimme/main.dart';
 import 'package:http/http.dart' as http;
 
 class FetchAccounts{
   
-/*
-  Future <ProfileModel?> fetchMyAccounts() async{
-
-    var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
-    var url = Uri.parse(Config.apiURl+ Config.userProfileAPI);
-    http.Response  response = await http.get(url, headers: header); 
-
-    ProfileModel myAcc;
-    if(response.statusCode == 200){
-      print(response.statusCode);
-      print(response.body());
-      print("=============================");
-      var body = jsonDecode(response.body());
-      
-      myAcc = ProfileModel.fromJson(body);
-      print("=============================");
-      print("${myAcc.phone}");
-      print("=============================");
-
-      
-
-        return myAcc;
-    }
-    
-    
-  }
-  */
-  
   Future  <http.Response> fetchMyAccount() async{
     var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
     var url = Uri.parse(Config.apiURl+ Config.userProfileAPI);
     return await http.get(url, headers: header); 
 
-  
-/*
-    ProfileModel myAcc;
-    if(response.statusCode == 200){
-      print(response.statusCode);
-      print(response.body());
-      print("=============================");
-      var body = jsonDecode(response.body());
-      
-      myAcc = ProfileModel.fromJson(body);
-      print("=============================");
-      print("${myAcc.phone}");
-      print("=============================");
-
-      
-
-        return myAcc;
-    */
   }
  Future  <http.Response> fetchOthersAccount(String id) async{
     var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
@@ -66,6 +18,17 @@ class FetchAccounts{
     return await http.get(url, headers: header); 
  }
 
+
+
+
+
+
+
+
+
+
+
+/*for test
  get_commenterName(String id) async{
   var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
   var url = Uri.parse(Config.apiURl+ Config.othersProfileAPI+id);
@@ -79,6 +42,7 @@ class FetchAccounts{
     
   }
 } 
+*/
 /*
 Future<List<Map<String, dynamic>>> get_commenterName(String id) async{
     List <Map<String,dynamic>> commenters = [];

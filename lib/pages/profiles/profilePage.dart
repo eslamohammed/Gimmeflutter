@@ -15,7 +15,6 @@ import 'package:gimme/pages/profiles/fetchAccountsData.dart';
 import 'package:gimme/pages/request/requestItem/requestItem.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
-import '../../Api/Models/requestModel.dart';
 import 'package:http/http.dart' as http;
 
 

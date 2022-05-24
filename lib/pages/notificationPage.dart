@@ -4,29 +4,20 @@ import 'package:gimme/main.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 class NotificationPage extends StatefulWidget {
-  
   @override
-  _NotificationPageState createState() =>_NotificationPageState();  
-
+  _NotificationPageState createState() => _NotificationPageState();
 }
 
-
-class _NotificationPageState extends State<NotificationPage>{
+class _NotificationPageState extends State<NotificationPage> {
   @override
-
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title : Text("Notification Page"),
-      centerTitle: true,
-      backgroundColor: primaryColor,
-      
-    ),
-
-    body: Center(
-      child: GetLatLong(),   
-    ),
-
-  );
-     
-
+        appBar: AppBar(
+          title: Text("Notification Page"),
+          centerTitle: true,
+          backgroundColor: primaryColor,
+        ),
+        body: Center(
+          child: GetLatLong(),
+        ),
+      );
 }

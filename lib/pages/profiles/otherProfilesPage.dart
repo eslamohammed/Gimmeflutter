@@ -4,19 +4,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:gimme/Api/Models/requestModel.dart';
 
 
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/request/requestItem/requestItem.dart';
 
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:gimme/config.dart';
 
 
 class OthersProfilePages extends StatelessWidget {
-    final RequestItem _fetchRequest = RequestItem();
+    //final RequestItem _fetchRequest = RequestItem();
 
   final userName;
   final rate;
@@ -258,7 +254,7 @@ class OthersProfilePages extends StatelessWidget {
 
    Future<void> _refresh() async {
     return Future.delayed(
-      Duration(seconds: 2)
+      const Duration(seconds: 2)
     );
   }
 }
