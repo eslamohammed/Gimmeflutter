@@ -42,9 +42,10 @@ class _SearchPageState extends State<SearchPage> {
           title: const Text(
             'Home',
             style: TextStyle(
-                color: Colors.black,
-                fontSize: 47.5,
-                fontWeight: FontWeight.bold),
+              color: Colors.black,
+              fontSize: 47.5,
+              fontWeight: FontWeight.bold
+            ),
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
@@ -56,8 +57,9 @@ class _SearchPageState extends State<SearchPage> {
                 color: primaryColor,
                 size: 35,
               ),
-              onPressed: () => {} //Navigator.pop(context , false),
-              )),
+              onPressed: ()=>{}//Navigator.pop(context , false),
+              ),
+            ),
       body: _searchUI(context),
       //////////////////
     );

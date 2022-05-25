@@ -1,24 +1,24 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_typing_uninitialized_variables
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gimme/config.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/main.dart';
+
 import 'package:gimme/widget/customInputTextField.dart';
+
 import 'package:snippet_coder_utils/FormHelper.dart';
 
-import '../../main.dart';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 
 
-class AddComment extends StatelessWidget {
+class EditComment extends StatelessWidget {
   final reqID;
-  AddComment(this.reqID);
+  EditComment(this.reqID);
 
  /*
-
   @override
   _AddCommentState createState() => _AddCommentState();
 }
@@ -29,9 +29,9 @@ class _AddCommentState extends State<AddComment> {
   final TextEditingController _timeTextEditingController= TextEditingController(); 
   final TextEditingController _unitsTextEditingController= TextEditingController(); 
   final TextEditingController _commentTextEditingController= TextEditingController(); 
-  
+
   @override
-  void dispose(){
+  void dispose() {
     _priceTextEditingController.dispose();
     _timeTextEditingController.dispose();
     _unitsTextEditingController.dispose();
@@ -47,16 +47,16 @@ class _AddCommentState extends State<AddComment> {
   return  Scaffold(
     appBar:  AppBar(
       toolbarHeight: 75,
-    title:const Text('AddComment' , style: TextStyle(color: Colors.black , fontSize: 40 ,fontWeight: FontWeight.bold),),
+    title:const Text('Edit Comment' , style: TextStyle(color: Colors.black , fontSize: 40 ,fontWeight: FontWeight.bold),),
     centerTitle: true,
     backgroundColor: Colors.white,
     elevation:0,  
     automaticallyImplyLeading: true,
     leading: TextButton(
     child:const Text("Back",style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 22, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-    onPressed: ()=> Navigator.pop(context,false),
+    onPressed: ()=> Navigator.pop(context),
       //()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RequestDetails()))          
-      )   
+      ),
     ),
     body:SingleChildScrollView(
       child: Padding(
@@ -77,26 +77,25 @@ class _AddCommentState extends State<AddComment> {
           SizedBox(//price
             width: MediaQuery.of(context).size.width*0.9,
             //height: MediaQuery.of(context).size.height/9 ,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child : Container(
-                decoration:  BoxDecoration(
-                  border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
-                  color: Colors.white,
-                  borderRadius:  const BorderRadius.only(  
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),  
-                    
-                  )
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: CustomInputTextFieldWidget(hintText: "price",secure: false ,ccontroller: _priceTextEditingController, icon: Icons.update,),
-                  ),
-                ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child : Container(
+              decoration:  BoxDecoration(
+                border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
+                color: Colors.white,
+                borderRadius:  const BorderRadius.only(  
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),  
+                  
+                )
               ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: CustomInputTextFieldWidget(hintText: "price",secure: false ,ccontroller: _priceTextEditingController, icon: Icons.update,),
+              )),
+             ),
             ),
           
           const Padding(//Time word
@@ -110,28 +109,28 @@ class _AddCommentState extends State<AddComment> {
           Row(//time & units
             children: [
               SizedBox(
-              width: MediaQuery.of(context).size.width*0.45,
-              //height: MediaQuery.of(context).size.height/9 ,
-              child: Padding(//time
-                padding: const EdgeInsets.all(20),
-                child : Container(
-                  decoration:  BoxDecoration(
-                    border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
-                    color: Colors.white,
-                    borderRadius:  const BorderRadius.only(  
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                    )
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CustomInputTextFieldWidget(hintText: "time",secure: false ,ccontroller: _timeTextEditingController, icon: Icons.update,),
-                    )
-                  ),
-                ),
+            width: MediaQuery.of(context).size.width*0.45,
+            //height: MediaQuery.of(context).size.height/9 ,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child : Container(
+              decoration:  BoxDecoration(
+                border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
+                color: Colors.white,
+                borderRadius:  const BorderRadius.only(  
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),  
+                  
+                )
               ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: CustomInputTextFieldWidget(hintText: "time",secure: false ,ccontroller: _timeTextEditingController, icon: Icons.update,),
+              )),
+             ),
+            ),
             SizedBox(
             width: MediaQuery.of(context).size.width*0.45,
             //height: MediaQuery.of(context).size.height/9 ,
@@ -186,10 +185,10 @@ class _AddCommentState extends State<AddComment> {
               height: MediaQuery.of(context).size.height*0.08,
               width: MediaQuery.of(context).size.width*0.3,
               child: TextButton(
-                child:Text("Submit",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
+                child:const Text("Submit",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                 onPressed: (){
                   //addComment function here
-                  _addComment(context);
+                  _editComment(context);
                 print(reqID);
                 },
                 style: ButtonStyle(
@@ -212,7 +211,7 @@ class _AddCommentState extends State<AddComment> {
   }
 
 
-Future  _addComment(BuildContext context) async{      
+Future  _editComment(BuildContext context) async{      
 Map<String,String> header = {
    "Authorization":"Bearer " + (prefs.getString("token") as String),
    'Content-type' : 'application/json', 
@@ -228,33 +227,19 @@ Map<String,String> header = {
     });
 
   var url = Uri.parse(Config.apiURl+Config.commentAPI+ reqID);
-  var response = await http.post(url, body: bodii, headers: header);
+  var response = await http.put(url, body: bodii, headers: header);
       // if condition to check if account already exited or created and if then send user to login page
       if(response.statusCode == 200){
-        print("success");
-        print("success $url");
         debugPrint('Response body: ${response.body()}');
         debugPrint("=======================================");
         debugPrint('Response status: ${response.statusCode}');
 
       var body =jsonDecode(response.body());
-      /*
-       FormHelper.showSimpleAlertDialog(
-            context, 
-          "["+Config.appName+"]",
-            "Success: Comment has been added !!!",
-            "Ok", 
-            (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeControllerPage()));
-            },
-          );
-       */
-        print("${body["status"]}");
         if (body["status"]==true) {
           FormHelper.showSimpleAlertDialog(
               context, 
             "["+Config.appName+"]",
-              "Success: Comment has been added !!!",
+              "Success: Your Comment has been Edited !!!",
               "Ok", 
               (){
                 Navigator.pop(context);
@@ -306,33 +291,5 @@ Map<String,String> header = {
       }
   }
 
-//id=CommentID/RequestID
-Future  deleteComment(BuildContext context ,String id) async{ 
-  
-  Map<String,String> header = { "Authorization":"Bearer " + (prefs.getString("token") as String),};
-
-    var url = Uri.parse(Config.apiURl+Config.commentAPI+ id);
-    var response = await http.delete(url , headers: header);
-
-    if(response.statusCode == 200){
-    FormHelper.showSimpleAlertDialog(
-      context, 
-      Config.appName,
-      "Success : Comment has been deleted !!!",
-      "Ok", 
-      (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()));  
-    },);
-    }else if (response.statusCode == 404){
-      FormHelper.showSimpleAlertDialog(
-      context, 
-      Config.appName,
-      "Error ${response.statusCode}: Comment doens't exist ",
-      "Ok", 
-      (){
-      Navigator.pop(context);  
-    },);
-    }  
-  }
 
 }

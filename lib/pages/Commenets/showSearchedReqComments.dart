@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/Commenets/CommentsModel.dart';
+import 'package:gimme/pages/Commenets/editComment.dart';
 
 import 'package:gimme/pages/Commenets/fetchMyComment.dart';
 import 'package:gimme/pages/HomeController.dart';
@@ -53,7 +54,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
       automaticallyImplyLeading: true,
       leading: TextButton(
       child:const Text("Back",style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 22, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-      onPressed: (){}
+      onPressed: ()=> Navigator.pop(context),
         //()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()))          
        )   
       ),
@@ -73,14 +74,20 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                       //print("${body}");
                       if (body['data'].isEmpty){
                         print("no comments");
+                        return Center(child: Column(
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          const Text("\n\n\n\n\n\n\n\n\nNo Comments Exist...",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
+                          const Text("Add one to be first Commenter",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
+
+                        ],
+                      ),);
                       }else{
                         print("showSearchedReqComments");
                         //List <SearchedReqCommentsModel> comments = [] ;
                         //comments.add(SearchedReqCommentsModel.fromJson(body)); 
                         List comments =[];
                         comments.add(body);
-                        //globals.getUserID() == "624ea47be96ec076cbce6e5b"
-                        print("${comments[0]['data'][0]['userId']}");
                         switch(snapshot.connectionState){                        
                           case ConnectionState.waiting:
                             return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -124,13 +131,6 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                           );
                         }
                       } 
-                      return Center(child: Column(
-                        children: [
-                          const Text("\n\n\n\n\n\n\n\n\nNo Comments Exist...",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
-                          const Text("Add one to be first Commenter",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
-
-                        ],
-                      ),);
                     }else{
                       return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
                     }
@@ -429,14 +429,18 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                           
                           Padding(//Edit
                               padding: const EdgeInsets.only(top:5.0 , right: 5),
-                              child: SizedBox(//Accept
+                              child: SizedBox(
                                 height: MediaQuery.of(context).size.height*0.04,
                                 width: MediaQuery.of(context).size.width*0.2,
                                 child: TextButton(
                                   child:const Text("Edit",style: TextStyle(fontSize: 20 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-                                  onPressed: (){
-                                    //Edit method
-                                  },
+                                  onPressed: () =>//Edit [methods] page
+                                    Navigator.push(context , MaterialPageRoute( builder: (context) => EditComment(
+                                          widget.id
+                                        ),
+                                      ),
+                                    ),//routing to edit page,
+                                  
                                   style: ButtonStyle(
                                     //maximumSize: Size.infinite,
                                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -460,7 +464,6 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                       child:Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                        
                           Padding(
                           padding: const EdgeInsets.only(bottom: 5.0 ,top: 5),
                           child: Container(
@@ -545,7 +548,6 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
     );
   }
 
-
 Future  <http.Response> fetchOthersAccount(String id) async{
     var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
     var url = Uri.parse(Config.apiURl+ Config.othersProfileAPI+id);
@@ -582,7 +584,6 @@ Future  _deleteComment(BuildContext context ,String id) async{
         //Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()));  
       },);
       }
-      
     }else if (response.statusCode == 404){
       FormHelper.showSimpleAlertDialog(
       context, 

@@ -86,7 +86,7 @@ class RequestDetailsState extends State<RequestDetails> {
           centerTitle: true,
           actions: [
             TextButton(
-                onPressed: () => Navigator.pushReplacement(
+                onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => EditRequest(
@@ -107,9 +107,7 @@ class RequestDetailsState extends State<RequestDetails> {
                 style: TextButton.styleFrom(
                     primary: primaryColor,
                     textStyle: const TextStyle(fontWeight: FontWeight.bold)),
-                child: const Text(
-                  "Edit",
-                  style: TextStyle(
+                child: const Text("Edit", style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 25),
@@ -120,21 +118,15 @@ class RequestDetailsState extends State<RequestDetails> {
           elevation: 0,
           automaticallyImplyLeading: true,
           leading: TextButton(
-              child: const Text(
-                "Back",
-                style: TextStyle(
+              child: const Text("Back", style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
                   color: primaryColor,
                 ),
               ), //Icon(Icons.ac_unit_sharp), // city name from location
               ///here it will change .close
-              onPressed: () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeControllerPage()
-                      ),
-                    ),
+              onPressed: () => Navigator.pop(context),
+              //Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomeControllerPage(),),),
                   ),
                 ),
       body: Card(
