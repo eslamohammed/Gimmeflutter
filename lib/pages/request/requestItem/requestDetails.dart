@@ -388,19 +388,15 @@ class RequestDetailsState extends State<RequestDetails> {
                       height: MediaQuery.of(context).size.height * 0.08,
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: TextButton(
-                        child: const Text(
-                          "Show Comments",
-                          style: TextStyle(
+                        child: const Text("Show Comments",  style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22.5,
                             color: primaryColor,
                           ),
                         ), //Icon(Icons.ac_unit_sharp), // city name from location
                         onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ShowComments(reqID),
-                              ),
+                          context, MaterialPageRoute(builder: (context) => ShowComments(reqID),
+                          ),
                         ),
                         style: ButtonStyle(//maximumSize: Size.infinite,
                             shape: MaterialStateProperty.all<

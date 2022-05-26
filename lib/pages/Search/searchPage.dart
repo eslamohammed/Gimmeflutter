@@ -172,7 +172,7 @@ class _SearchPageState extends State<SearchPage> {
                                 var body = jsonDecode(res.body());
                               //  print("${body["data"].isNotEmpty}");
                                 //print("${body["data"]}");
-                              //  print("${body["data"]}");
+                                print("${body["data"][0]}");
 
                                 if (body["data"].isNotEmpty) {
                                   List<SearchRequestModel> resultReq = [];
@@ -282,7 +282,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   ///UI widget to show the result data
-  ///Data mapping card in UI
+  /// Card Mapping data to result request Card
   Widget reqResultCard(
     BuildContext context,
     String reqBody,
@@ -297,11 +297,9 @@ class _SearchPageState extends State<SearchPage> {
     dynamic reqtimeunit,
   ) {
     return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SearchRequestDetails(
-            reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit
-            ),
+      onTap: () => Navigator.push(context,MaterialPageRoute(
+        builder: (context) => SearchRequestDetails(
+          reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit,requesterID),
           ),
         ),
       child: FutureBuilder(

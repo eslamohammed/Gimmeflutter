@@ -14,17 +14,17 @@ import 'package:http/http.dart' as http;
 
 
 
-class EditComment extends StatelessWidget {
+class EditComment extends StatefulWidget {
   final reqID;
-  EditComment(this.reqID);
+  const EditComment(this.reqID);
 
- /*
+ 
   @override
-  _AddCommentState createState() => _AddCommentState();
+  _EditCommentState createState() => _EditCommentState();
 }
 
-class _AddCommentState extends State<AddComment> {
-*/
+class _EditCommentState extends State<EditComment> {
+
   final TextEditingController _priceTextEditingController= TextEditingController(); 
   final TextEditingController _timeTextEditingController= TextEditingController(); 
   final TextEditingController _unitsTextEditingController= TextEditingController(); 
@@ -36,6 +36,7 @@ class _AddCommentState extends State<AddComment> {
     _timeTextEditingController.dispose();
     _unitsTextEditingController.dispose();
     _commentTextEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -189,7 +190,7 @@ class _AddCommentState extends State<AddComment> {
                 onPressed: (){
                   //addComment function here
                   _editComment(context);
-                print(reqID);
+                print(widget.reqID);
                 },
                 style: ButtonStyle(
                   //maximumSize: Size.infinite,
@@ -226,7 +227,7 @@ Map<String,String> header = {
       "text" : _commentTextEditingController.text
     });
 
-  var url = Uri.parse(Config.apiURl+Config.commentAPI+ reqID);
+  var url = Uri.parse(Config.apiURl+Config.commentAPI+ widget.reqID);
   var response = await http.put(url, body: bodii, headers: header);
       // if condition to check if account already exited or created and if then send user to login page
       if(response.statusCode == 200){

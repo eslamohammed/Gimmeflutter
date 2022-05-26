@@ -47,71 +47,67 @@ class ShowCommentsState extends State<ShowComments> {
       automaticallyImplyLeading: true,
       leading: TextButton(
       child:const Text("Back",style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 22, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-      onPressed: (){}
-        //()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()))          
-       )   
+      onPressed: ()=> Navigator.pop(context),
+        )   
       ),
-     body:SafeArea(
-       child: SingleChildScrollView(
-         child: Column(
-           children: [
-             RefreshIndicator(
-                  onRefresh: _refresh,
-                  child: FutureBuilder(
-                    future: _fetchComments.fetchMyComment(widget.id),
-                    //future: fetchMyComment(widget.id),
-                    builder: (context , snapshot){
-                      if(snapshot.hasData){
-                      http.Response res = snapshot.data as http.Response;
-                      var body = jsonDecode(res.body()); 
-                      print(body);
-                      if (body['status']==true) {
-                        List <CommentModel> comments = [] ;
-                        comments.add(CommentModel.fromJson(body)); 
-                        print(comments[0].data[0]['mod']);
-                        switch(snapshot.connectionState){                        
-                          case ConnectionState.waiting:
-                            return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
-                            
-                          case ConnectionState.none:
-                            return const Center(child: Text("Error in connection"),);
-                
-                          case ConnectionState.active:
-                            return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
-                
-                          case ConnectionState.done:
-                          return SizedBox(
-                            height: 860,
-                            width: 800,
-                            child :ListView.builder(
-                              itemCount:comments[0].data.length ,
-                              itemBuilder: (context , index){
-                                return  _commentsCard( //routing the data to comment card
-                                  context,
-                                  comments[0].data[index]['time']['unit'],
-                                  comments[0].data[index]['time']['val'],
-                                  comments[0].data[index]['_id'],
-                                  comments[0].data[index]['userId'],
-                                  comments[0].data[index]['text'],
-                                  comments[0].data[index]['price'],
-                                //  comments[0].data[index]['mod'],
-                                );
-                              }
-                            )
-                          );
-                        }
-                      } 
-                      return const Center(child: Text("\n\n\n\n\n\n\n\n\nNo Comments : Invalid Request",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),);
-                    }else{
-                      return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
-                    }
-                  } 
-                ),
+     body:SingleChildScrollView(
+       child: Column(
+         children: [
+           RefreshIndicator(
+                onRefresh: _refresh,
+                child: FutureBuilder(
+                  future: _fetchComments.fetchMyComment(widget.id),
+                  builder: (context , snapshot){
+                    if(snapshot.hasData){
+                    http.Response res = snapshot.data as http.Response;
+                    var body = jsonDecode(res.body()); 
+                    //print(body);
+                    if (body['status']==true) {
+                      List <CommentModel> comments = [] ;
+                      comments.add(CommentModel.fromJson(body)); 
+                      //print(comments[0].data[0]['mod']);
+                      switch(snapshot.connectionState){                        
+                        case ConnectionState.waiting:
+                          return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                          
+                        case ConnectionState.none:
+                          return const Center(child: Text("Error in connection"),);
+              
+                        case ConnectionState.active:
+                          return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+              
+                        case ConnectionState.done:
+                        return SizedBox(
+                          height: 860,
+                          width: 800,
+                          child :ListView.builder(
+                            itemCount:comments[0].data.length ,
+                            itemBuilder: (context , index){
+                              return  _commentsCard( //routing the data to comment card
+                                context,
+                                comments[0].data[index]['time']['unit'],
+                                comments[0].data[index]['time']['val'],
+                                comments[0].data[index]['_id'],
+                                comments[0].data[index]['userId'],
+                                comments[0].data[index]['text'],
+                                comments[0].data[index]['price'],
+                              //  comments[0].data[index]['mod'],
+                              );
+                            }
+                          )
+                        );
+                      }
+                    } 
+                    return const Center(child: Text("\n\n\n\n\n\n\n\n\nNo Comments : Invalid Request",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),);
+                  }else{
+                    return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
+                  }
+                } 
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-     ),
+      ),
     ); //_commentsCard(context , widget.id);
   }
   
@@ -195,7 +191,7 @@ class ShowCommentsState extends State<ShowComments> {
                                   Text( "${commenters[0].data['name']}  ",style: const TextStyle(fontSize: 25, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
                                   const Divider(color: primaryColor,),
                                   //comment text
-                                  Text( "${text} ${userID}  ",style: const TextStyle(fontSize: 15, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
+                                  Text( "${text}   ",style: const TextStyle(fontSize: 15, color: Colors.black , fontWeight: FontWeight.bold),),    //waiting for API data
                                 ],
                               ),
                             ),
@@ -272,7 +268,7 @@ class ShowCommentsState extends State<ShowComments> {
                                         height: MediaQuery.of(context).size.height*0.075,
                                         width: MediaQuery.of(context).size.width*0.1,
                                         child: TextButton(
-                                          child:  Text("${timeValue} ${timeUnits} ",style: const TextStyle( fontSize: 20,color: primaryColor ,),), // city name from location
+                                          child:  Text("${timeValue} ${timeUnits}",style: const TextStyle( fontSize: 20,color: primaryColor ,),), // city name from location
                                           onPressed: (){
                                             print("${commenters[0].data}");
                                           },

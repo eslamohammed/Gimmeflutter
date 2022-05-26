@@ -13,18 +13,18 @@ import 'package:http/http.dart' as http;
 
 
 
-class AddComment extends StatelessWidget {
+class AddComment extends StatefulWidget {
   final reqID;
-  AddComment(this.reqID);
+  const AddComment(this.reqID);
 
- /*
+ 
 
   @override
   _AddCommentState createState() => _AddCommentState();
 }
 
 class _AddCommentState extends State<AddComment> {
-*/
+
   final TextEditingController _priceTextEditingController= TextEditingController(); 
   final TextEditingController _timeTextEditingController= TextEditingController(); 
   final TextEditingController _unitsTextEditingController= TextEditingController(); 
@@ -36,6 +36,7 @@ class _AddCommentState extends State<AddComment> {
     _timeTextEditingController.dispose();
     _unitsTextEditingController.dispose();
     _commentTextEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -190,7 +191,7 @@ class _AddCommentState extends State<AddComment> {
                 onPressed: (){
                   //addComment function here
                   _addComment(context);
-                print(reqID);
+                print(widget.reqID);
                 },
                 style: ButtonStyle(
                   //maximumSize: Size.infinite,
@@ -227,7 +228,7 @@ Map<String,String> header = {
       "text" : _commentTextEditingController.text
     });
 
-  var url = Uri.parse(Config.apiURl+Config.commentAPI+ reqID);
+  var url = Uri.parse(Config.apiURl+Config.commentAPI+ widget.reqID);
   var response = await http.post(url, body: bodii, headers: header);
       // if condition to check if account already exited or created and if then send user to login page
       if(response.statusCode == 200){

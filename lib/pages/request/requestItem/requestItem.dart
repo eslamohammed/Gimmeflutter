@@ -45,7 +45,10 @@ class RequestItem extends StatelessWidget {
                   reqmaxPrice,
                   timeUnits,
                   fromAddress,
-                  toAddress))),
+                  toAddress
+                  ),
+                ),
+              ),
 
       /* onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context){
       return RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice);
@@ -107,11 +110,7 @@ class RequestItem extends StatelessWidget {
                                       ..onTap = () {
                                         // route to this account page
                                         //  Navigator.pushNamed(context, "/login");
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProfilePages()));
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) =>ProfilePages(),),);
                                       }),
                               ],
                             ),
