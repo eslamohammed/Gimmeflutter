@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
 
-import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +12,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gimme/pages/profiles/editProfile.dart';
 import 'package:gimme/pages/profiles/fetchAccountsData.dart';
 import 'package:gimme/pages/request/requestItem/requestItem.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 
@@ -64,11 +63,6 @@ Widget _profilePageUI(BuildContext context){
                   http.Response res = snapshot.data as http.Response;
                   ProfileModel myAcc;
                   var body = jsonDecode(res.body());
-                  
-                  print("=========================");
-                  print(body);
-                  print("=========================");
-
                   myAcc = ProfileModel.fromJson(body);
                   switch(snapshot.connectionState){                        
                     case ConnectionState.waiting:

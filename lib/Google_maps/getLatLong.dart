@@ -44,13 +44,7 @@ class _GetLatLongState extends State<GetLatLong> {
               location ='Lat: ${position.latitude} , Long: ${position.longitude}';
               GetAddressFromLatLong(position);
             }, child: Text('Get Location')),
-            
-            SizedBox(height:100),
-            
-            ElevatedButton(onPressed: () async{
-              _fetchMyAccount.fetchMyAccount();
-            }, child: Text('test'))
-            
+
             
           ],
         ),

@@ -1,7 +1,6 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
-
-import 'package:gimme/sharedPrefrances/sharedPrefsReqID.dart';
+import 'package:gimme/Google_maps/googleMap.dart';
 
 import 'package:gimme/widget/customInputTextField.dart';
 
@@ -362,7 +361,7 @@ class _AddRequestState extends State<AddRequest> {
                               padding: const EdgeInsets.only(
                                   right: 10, left: 10, bottom: 9),
                               child: CustomInputTextFieldWidget(
-                                hintText: "Time in hour",
+                                hintText: "Time",
                                 secure: false,
                                 ccontroller: _timeRangeTextEditingController,
                               ),
@@ -479,18 +478,15 @@ class _AddRequestState extends State<AddRequest> {
             child: TextButton(
               onPressed: () async {
                 //navigation to GoogleMaps to place marker
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomeControllerPage()));
+                Navigator.push(context,  MaterialPageRoute( builder: (context) => GoogleMaps()));
               },
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
                 width: MediaQuery.of(context).size.width * 0.8,
-                child: const Center(
-                    child: Text(
+                child: Center(
+                  child: Text(
                   "\t\t\t\t\t\t Select Location \n\nHint \n\nclick select Loctations [Source{from} & distination{to}] Points[Loc-Coordinantes'GoogleMaps'] Homepage Bar\n\nIf you if you are already here Just ignore this step ",
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontSize: 19,
                   ),
@@ -652,11 +648,11 @@ class _AddRequestState extends State<AddRequest> {
         "coordinates": [globals.toLat, globals.toLong]
       },
       "priceRange": {
-        "min": _minPricreTextEditingController.text,
-        "max": _maxPricreTextEditingController.text
+        "min": int.parse(_minPricreTextEditingController.text),
+        "max": int.parse(_maxPricreTextEditingController.text)
       },
       "timeRange": {
-        "val": _timeRangeTextEditingController.text,
+        "val": int.parse(_timeRangeTextEditingController.text),
         "unit": _timeUnitsTextEditingController.text
       }
     });
@@ -673,22 +669,13 @@ class _AddRequestState extends State<AddRequest> {
 
       var body = jsonDecode(response.body());
 
-      debugPrint(body["message"]);
-      //  checkRequestData = body["message"];
-      print(body['data']['_id']);
-      ///////////////// saving Id ///////////////////
-      var id = body['data']['_id'] as String; //  requestId
-      SharedPrefsId.saveRequestID(id);
-      //SharedPrefs.saveToken(id);         // save id of request
+      
       ////////////////////////////////////////////////
-      print("your request id is :$id");
-      print("${prefsRequestID.getString("id")}");
-
       if (body["status"] == true) {
         FormHelper.showSimpleAlertDialog(
           context,
           "[" + Config.appName + "]",
-          "Request has been created !!!",
+          "${body["message"]}",
           "Ok",
           () {
             Navigator.push(context,
@@ -699,7 +686,7 @@ class _AddRequestState extends State<AddRequest> {
         FormHelper.showSimpleAlertDialog(
           context,
           "[" + Config.appName + "]",
-          "Faild: Something went woring !!!\ntry again",
+          "${body["message"]}\ntry again",
           "Ok",
           () {
             Navigator.pop(context);
@@ -707,26 +694,29 @@ class _AddRequestState extends State<AddRequest> {
         );
       }
     } else if (response.statusCode == 400) {
+      var body = jsonDecode(response.body());
+
+      print("${body}");
       FormHelper.showSimpleAlertDialog(
         context,
         Config.appName,
-        "Invalid Syntax : ... \nEnsure that u inserted the right data press OK to try again",
+        "${body["message"]}\n",
         "OK",
         () {
           Navigator.pop(context);
         },
       );
     } else {
+      var body = jsonDecode(response.body());
       FormHelper.showSimpleAlertDialog(
         context,
         Config.appName,
-        "not successed : ... \nSomething went woring, try again",
+        "${body["message"]}",
         "OK",
         () {
           Navigator.pop(context);
         },
       );
-      debugPrint("not successed =============");
     }
   }
 

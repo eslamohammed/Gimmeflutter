@@ -1,261 +1,64 @@
-// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, non_constant_identifier_names, unused_field
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/Search/SearchRequestDetails.dart';
-import 'package:gimme/pages/Search/requestResultCard.dart';
-import 'package:gimme/pages/Search/searchRequestModel.dart';
 import 'package:gimme/pages/profiles/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/otherProfilesPage.dart';
-import 'package:snippet_coder_utils/hex_color.dart';
 
-import 'package:gimme/widget/customInputTextField.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class SearchPage extends StatefulWidget {
-  @override
-  _SearchPageState createState() => _SearchPageState();
-}
 
-class _SearchPageState extends State<SearchPage> {
-  final TextEditingController _From = TextEditingController();
-  final TextEditingController _To = TextEditingController();
+class RequestResultCard extends StatelessWidget {
+   RequestResultCard(
+     //{ Key? key }
+     this.reqBody,
+     this.reqTitle,
+     this.reqID,
+     this.reqtimerange,
+     this.reqminPrice,
+     this.reqmaxPrice,
+     this.fromAddress,
+     this.toAddress,
+     this.requesterID,
+     this.reqtimeunit, {Key? key}
+     ) : super(key: key);
+
+
+
 
   final FetchAccounts _fetchOthersAccount = FetchAccounts();
-  String searchString = "";
-  int filter = 0;
-
-  @override
-  void dispose() {
-    _From.dispose();
-    _To.dispose();
-    super.dispose();
-  }
+  final  String reqBody;
+  final  String reqTitle;
+  final  String reqID;
+  final  dynamic reqtimerange;
+  final  dynamic reqminPrice;
+  final  dynamic reqmaxPrice;
+  final  dynamic fromAddress;
+  final  dynamic toAddress;
+  final  dynamic requesterID;
+  final  dynamic reqtimeunit;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text(
-            'Home',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 47.5,
-              fontWeight: FontWeight.bold
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          automaticallyImplyLeading: true,
-          leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: primaryColor,
-                size: 35,
-              ),
-              onPressed: ()=>{}//Navigator.pop(context , false),
-              ),
-            ),
-      body: _searchUI(context),
-      //////////////////
-    );
+    return reqResultCard(
+      context,
+      reqBody,
+      reqTitle,
+      reqID,
+      reqtimerange,
+      reqminPrice,
+      reqmaxPrice,
+      fromAddress,
+      toAddress,
+      requesterID,
+      reqtimeunit
+      );
   }
 
-  ///The first part search screen
-  ///it used for inserting & Controlling inserted data By user
-  Widget _searchUI(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: [
-                Padding(//From
-                  padding: const EdgeInsets.all(15),
-                  child: Container(
-                      decoration: BoxDecoration(
-                          color: HexColor("#E5E5E5"),
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: CustomInputTextFieldWidget(
-                            hintText: "\t\t From ",
-                            secure: false,
-                            ccontroller: _From,
-                          ),
-                        ),
-                      ),
-                ),
-                Padding(//To
-                  padding: const EdgeInsets.all(15),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: HexColor("#E5E5E5"),
-                        borderRadius: BorderRadius.circular(25)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CustomInputTextFieldWidget(
-                        hintText: "\t\t To ",
-                        secure: false,
-                        ccontroller: _To),
-                      ),
-                    ),
-                ),
-                Center(//search
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    height: MediaQuery.of(context).size.height * 0.075,
-                    decoration: const BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(50),
-                        topLeft: Radius.circular(50),
-                      ),
-                    ),
-                    child: Center(
-                      //Search button & calling ;
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          onPressed: () async {
-                            //Calling search() function
-                            setState(() {
-                              filter++;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.5),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              child: const Center(
-                                child: Text(
-                                  "  Search",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          color: primaryColor,
-                          shape: const StadiumBorder(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: SizedBox(
-                child: filter != 0
-                    ? RefreshIndicator(
-                        onRefresh: _refresh,
-                        child: FutureBuilder(
-                            //initialData: [ _fetchRequest.fetchRequests(getUserID())],
-                            future: getSearchedRequest(_To.text, _From.text),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                http.Response res =snapshot.data as http.Response;
-                                var body = jsonDecode(res.body());
-                                //print("${body["data"].isNotEmpty}");
-                                //print("${body["data"]}");
-                                //print("${body["data"]}");
-                                if (body["data"].isNotEmpty) {
-                                  List<SearchRequestModel> resultReq = [];
-                                  resultReq.add(SearchRequestModel.fromJson(body));
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return const Center(
-                                        child: CircularProgressIndicator(
-                                          backgroundColor: primaryColor,
-                                        ),
-                                      );
-
-                                    case ConnectionState.none:return const Center(child: Text("Error in connection"),);
-
-                                    case ConnectionState.active:return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
-
-                                    case ConnectionState.done:return SizedBox(height: 720,
-                                        width:MediaQuery.of(context).size.width,
-                                        child:ListView.builder(
-                                          itemCount: resultReq[0].data.length,
-                                          itemBuilder: (context, index) {
-                                            return RequestResultCard(///routing data to request card
-                                              resultReq[0].data[index]['body'].toString(),
-                                              resultReq[0].data[index]['title'].toString(),
-                                              resultReq[0].data[index]['_id'].toString(),
-                                              resultReq[0].data[index]["timeRange"]["val"],
-                                              resultReq[0].data[index]["priceRange"]["min"],
-                                              resultReq[0].data[index]["priceRange"]["max"],
-                                              resultReq[0].data[index]['fromAddress'],
-                                              resultReq[0].data[index]['toAddress'],
-                                              resultReq[0].data[index]['userId'],
-                                              resultReq[0].data[index]["timeRange"]["unit"],
-                                              //key: null ,
-                                            );
-                                          },
-                                        ) 
-                                      );
-                                  }
-                                }
-                              }
-                              return const Padding(
-                                padding: EdgeInsets.all(75.0),
-                                child: Center(
-                                    child: Text(
-                                  "\n     NO Request Exist\n\nPlease wait untill users add ones",
-                                  style: TextStyle(
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                              );
-                            }),
-                      )
-                    : const Center(
-                        child: Text(
-                        "\n\n\n\nNo Result",
-                        style: TextStyle(fontSize: 45),
-                      )),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  ///featching all result requests from search
-  Future<http.Response> getSearchedRequest(String to, String from) async {
-    var header = {
-      "Authorization": "Bearer " + (prefs.getString("token") as String)
-    };
-
-    var url = Uri.parse(Config.apiURl + Config.requestAPI + Config.searchRequestAPI + to + Config.searchFromRequestAPI + from); //payload['_id']);//Config.apiURl+ Config.getRequestAPI);
-    return await http.get(url, headers: header);
-  }
-
-  ///waiting untill refreshing
-  Future<void> _refresh() async {
-    return Future.delayed(const Duration(seconds: 2));
-  }
-
-  ///UI widget to show the result data
-  /// Card Mapping data to result request Card
-  Widget reqResultCard(
+Widget reqResultCard(
     BuildContext context,
     String reqBody,
     String reqTitle,
@@ -271,7 +74,7 @@ class _SearchPageState extends State<SearchPage> {
     return InkWell(
       onTap: () => Navigator.push(context,MaterialPageRoute(
         builder: (context) => SearchRequestDetails(
-          reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit,requesterID ,),
+          reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit,requesterID),
           ),
         ),
       child: FutureBuilder(
@@ -567,5 +370,9 @@ class _SearchPageState extends State<SearchPage> {
         },
       ),
     );
+  
   }
+
+
 }
+

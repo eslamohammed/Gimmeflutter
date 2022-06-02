@@ -1,5 +1,4 @@
 
-// ignore_for_file: prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:gimme/pages/Commenets/showComments.dart';
@@ -24,7 +23,7 @@ class SearchRequestDetails extends StatefulWidget {
   final maxPr;
   final timeunit;
   final userId;
-  SearchRequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr,this.timeunit,this.userId);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
+  SearchRequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr,this.timeunit,this.userId, {Key? key}) : super(key: key);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
   
     @override
   SearchRequestDetailsState createState() => SearchRequestDetailsState();
@@ -61,30 +60,6 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
       widget.maxPr,
       widget.timeunit
     );
-    /*
-    _otherRequestDetails(
-      context,
-      widget.body,
-      widget.title,
-      widget.reqID,
-      widget.timerange,
-      widget.minPr,
-      widget.maxPr,
-      widget.timeunit
-    ) 
-    
-    _userRequestDetails(
-      context,
-      widget.body,
-      widget.title,
-      widget.reqID,
-      widget.timerange,
-      widget.minPr,
-      widget.maxPr,
-      widget.timeunit
-    )
-    
-    ;*/
  }
 
  Widget _otherRequestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr,dynamic timeunit){

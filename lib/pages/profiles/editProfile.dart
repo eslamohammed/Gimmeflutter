@@ -5,9 +5,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gimme/config.dart';
 import 'package:gimme/main.dart';
+import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/widget/customInputTextField.dart';
 
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 import 'package:http/http.dart' as http;
@@ -171,10 +173,10 @@ Widget _editProfilePageUI(BuildContext context){
                       child: CustomInputTextFieldWidget(hintText: "User name [${widget.name}]",
                       secure: false,ccontroller: _userNameTextEditingController, 
                       icon: Icons.update,),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
                 ]
               ),
               
@@ -196,7 +198,6 @@ Widget _editProfilePageUI(BuildContext context){
                             bottomRight: Radius.circular(25),
                             topLeft: Radius.circular(25),
                             bottomLeft: Radius.circular(25),  
-                            
                           )
                     ),
                     
@@ -271,64 +272,48 @@ Map<String,String> header = {
   }
   );
 
-  var url = Uri.parse(Config.apiURl+Config.editProfileAPI+id);
+  var url = Uri.parse(Config.apiURl+Config.editProfileAPI);
   print(url);
-  var response = await http.put(url, body: bodii,);
-      // if condition to check if account already exited or created and if then send user to login page
+  var response = await http.put(url, body: bodii, headers: header);
+      // if condition to check if account already edited
       if(response.statusCode == 200){
-        print("success");
-        print("success $url");
-        debugPrint('Response body: ${response.body()}');
-        debugPrint("=======================================");
-        debugPrint('Response status: ${response.statusCode}');
-
-      var body =jsonDecode(response.body());
-      /*
-       FormHelper.showSimpleAlertDialog(
+        var body =jsonDecode(response.body());
+        if (body["status"] == true)
+        {
+         FormHelper.showSimpleAlertDialog(
+            context, 
+            "["+Config.appName+"]",
+            "${body["message"]}",
+            "Ok", 
+            (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeControllerPage()));
+            },
+          ); 
+        } else{
+          FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
             "Success: Comment has been added !!!",
             "Ok", 
             (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeControllerPage()));
+              Navigator.pop(context);
             },
           );
-       */
-        print("${body["status"]}");
-        /*if (body["status"]==true) {
-          FormHelper.showSimpleAlertDialog(
-              context, 
-            "["+Config.appName+"]",
-              "Success: Comment has been added !!!",
-              "Ok", 
-              (){
-                Navigator.pop(context);
-              },
-            );
-        }else {
-          FormHelper.showSimpleAlertDialog(
-              context, 
-            "["+Config.appName+"]",
-              "Faild: You are already commented !!!",
-              "Ok", 
-              (){
-                Navigator.pop(context);
-              },
-            );}*/
+        }
 
       }else{
-        print("not succssed");
+        var body =jsonDecode(response.body());
         print(response.body());
         print("Status code :${response.statusCode}");
-        /*FormHelper.showSimpleAlertDialog(
+        FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
-            "Something worng, try again",
+            "${body["message"]}",
             "Ok", 
             (){
               Navigator.pop(context);
             },
-          );*/
+          );
       }
   }
 

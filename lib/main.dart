@@ -28,7 +28,6 @@ final screens = [
 
 const primaryColor = Color.fromARGB(255, 93, 176, 116);
 SharedPreferences prefs = "null" as SharedPreferences;
-SharedPreferences prefsRequestID = "null" as SharedPreferences;
 
 void main() async {
   //global_library.fromLat ;
@@ -38,7 +37,6 @@ void main() async {
   prefs = await SharedPreferences.getInstance();
   String? token = prefs.getString("token"); //getting token value
 
-  prefsRequestID = await SharedPreferences.getInstance();
 
   Widget
       _screen; ///initial screen ==> if user have allready token / logged in before then send him to home page directly

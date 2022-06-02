@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
@@ -304,26 +303,21 @@ class _EditRequestState extends State<EditRequest> {
                       ),
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          "Delivery Time range...",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.5,
-                              fontWeight: FontWeight.bold),
+                        child: Text("Delivery Time range...", style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.5,
+                          fontWeight: FontWeight.bold
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.1,
                     ),
-                    SizedBox(
-                      // time
-                      width: MediaQuery.of(context).size.width /
-                          4, //** price width it self **
+                    SizedBox(// time
+                      width: MediaQuery.of(context).size.width/4, //** price width it self **
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          right: 10,
-                        ),
+                        padding: const EdgeInsets.only(right: 10,),
                         child: Center(
                           child: Container(
                             decoration: BoxDecoration(
@@ -335,8 +329,7 @@ class _EditRequestState extends State<EditRequest> {
                                   bottomLeft: Radius.circular(20),
                                 )),
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 10, left: 10, bottom: 9),
+                              padding: const EdgeInsets.only(right: 10, left: 10, bottom: 9),
                               child: CustomInputTextFieldWidget(
                                 hintText: "Time : ${widget.timerange}",
                                 secure: false,
@@ -348,8 +341,7 @@ class _EditRequestState extends State<EditRequest> {
                       ),
                     ),
                     SizedBox(// time unit
-                      width: MediaQuery.of(context).size.width /
-                          6.5, //** price width it self **
+                      width: MediaQuery.of(context).size.width /6.5, //** price width it self **
                       child: Padding(//max
                         padding: const EdgeInsets.only(left: 10),
                         child: Container(
@@ -360,9 +352,7 @@ class _EditRequestState extends State<EditRequest> {
                                 bottomRight: Radius.circular(20),
                                 topLeft: Radius.circular(20),
                                 bottomLeft: Radius.circular(20),
-                              )
-
-                              /// contin
+                                ) 
                               ),
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -503,68 +493,13 @@ class _EditRequestState extends State<EditRequest> {
 
                       print("${widget.reqID}");
                       editRequest(widget.reqID);
-                      /*if (_titleTextEditingController.text.isNotEmpty){
-            if(_bodyTextEditingController.text.isNotEmpty){
-              if(_minPricreTextEditingController.text.isNotEmpty && _maxPricreTextEditingController.text.isNotEmpty){
-                  if(_timeRangeTextEditingController.text.isNotEmpty){
-                    if(globals.fromLat != null && globals.fromLong !=null && globals.toLat != null && globals.toLong !=null){
-                      // _addRequest();  //function to add Request
-                    }else  {FormHelper.showSimpleAlertDialog(//location
-                      context, 
-                      Config.appName,
-                      "Set {From & To} markers on Google maps blow, uh baka!!",
-                      "OK", 
-                      (){
-                        Navigator.pop(context);
-                        //Navigator.push(context, MaterialPageRoute(builder: (context)=>GoogleMaps()));                      
-                      },);
-                    }  
-                  }else  {FormHelper.showSimpleAlertDialog( //time
-                    context, 
-                    Config.appName,
-                    "Time[unit] in hour \nCheck inserted Time, press OK to try again",
-                    "OK", 
-                    (){
-                        Navigator.pop(context);
-                    },);
-                  }  
-                }else  {FormHelper.showSimpleAlertDialog(//price
-                context, 
-                Config.appName,
-                "inserted worng data , price and try again",
-                "OK", 
-                (){
-                    Navigator.pop(context);
-                },);
-              }            
-            }else  {FormHelper.showSimpleAlertDialog(//body
-              context, 
-              Config.appName,
-              "inserted worng data , body and try again",
-              "OK", 
-              (){
-                  Navigator.pop(context);
-                  debugPrint("");
-              },);
-            }
-          }else  {FormHelper.showSimpleAlertDialog(//all data
-            context, 
-            Config.appName,
-            "Request data is required and can not be Empty press OK to try again",
-            "OK", 
-            (){
-                Navigator.pop(context);
-                debugPrint("");
-            },
-          );
-        }
-        */
+                      
                     },
                     child: Padding(//Edit Request
                       padding: const EdgeInsets.all(12.5),
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             "   Edit  ",
                             style: TextStyle(
@@ -577,7 +512,7 @@ class _EditRequestState extends State<EditRequest> {
                       ),
                     ),
                     color: primaryColor,
-                    shape: const StadiumBorder(),
+                    shape: StadiumBorder(),
                   ),
                 ),
               ),
@@ -612,10 +547,13 @@ class _EditRequestState extends State<EditRequest> {
         "coordinates": [globals.toLat, globals.toLong]
       },
       "priceRange": {
-        "min": _minPricreTextEditingController.text,
-        "max": _maxPricreTextEditingController.text
+        "min": int.parse(_minPricreTextEditingController.text),
+        "max": int.parse(_maxPricreTextEditingController.text)
       },
-      "timeRange": {"val": _timeRangeTextEditingController.text}
+      "timeRange": {
+        "val": int.parse(_timeRangeTextEditingController.text),
+        "unit": _timeUnitsTextEditingController.text
+        }
     });
     var url = Uri.parse(
         Config.apiURl + Config.requestAPI + Config.editRequestAPI + id);
@@ -629,7 +567,7 @@ class _EditRequestState extends State<EditRequest> {
         FormHelper.showSimpleAlertDialog(
           context,
           "[" + Config.appName + "]",
-          "Success : request has been edited !!!",
+          "${body["message"]}",
           "Ok",
           () {
             Navigator.push(context,
@@ -640,7 +578,7 @@ class _EditRequestState extends State<EditRequest> {
         FormHelper.showSimpleAlertDialog(
           context,
           "[" + Config.appName + "]",
-          "Faild: Something went woring !!!",
+          "${body["message"]}",
           "Ok",
           () {
             Navigator.pop(context);
@@ -648,10 +586,11 @@ class _EditRequestState extends State<EditRequest> {
         );
       }
     } else if (response.statusCode == 400) {
+      var body = jsonDecode(response.body());
       FormHelper.showSimpleAlertDialog(
         context,
         "[" + Config.appName + "]",
-        "Faild\nInvalid Syntax : ...",
+        "${body["message"]}",
         "Ok",
         () {
           Navigator.pop(context);
@@ -662,11 +601,12 @@ class _EditRequestState extends State<EditRequest> {
       // then throw an exception.
       //throw Exception('Failed to update album.');
     } else if (response.statusCode == 403) {
+      var body = jsonDecode(response.body());
       debugPrint("not Forbidden");
       FormHelper.showSimpleAlertDialog(
         context,
         "[" + Config.appName + "]",
-        "Can't perform this action !!!",
+        "${body["message"]}",
         "Ok",
         () {
           Navigator.pop(context);
@@ -674,20 +614,22 @@ class _EditRequestState extends State<EditRequest> {
       );
     } else if (response.statusCode == 404) {
       debugPrint("not Forbidden");
+      var body = jsonDecode(response.body());
       FormHelper.showSimpleAlertDialog(
         context,
         "[" + Config.appName + "]",
-        "Error : Not found",
+        "${body["message"]}",
         "Ok",
         () {
           Navigator.pop(context);
         },
       );
     } else {
+      var body = jsonDecode(response.body());
       FormHelper.showSimpleAlertDialog(
         context,
         "[" + Config.appName + "]",
-        "Something went woring, try again",
+        "${body["message"]}",
         "Ok",
         () {
           Navigator.pop(context);

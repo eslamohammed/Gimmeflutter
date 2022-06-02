@@ -26,7 +26,7 @@ class _HomeControllerPageState extends State<HomeControllerPage>{
       title: Text(Config.appName),
       backgroundColor: primaryColor,
       ),
-      drawer:PDrawer().widgetBuildDrawer(context , "eslam" , "eslam@gmail.com" , Config.ImageURL),
+      drawer:PDrawer().widgetBuildDrawer(context , Config.ImageURL),
       body:IndexedStack(
        index : globals.currnetIndex,
        children : screens,          //from main class

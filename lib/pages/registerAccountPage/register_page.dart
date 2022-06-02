@@ -254,7 +254,9 @@ class _Register_pageState extends State<Register_page> {
                       child: FlatButton(
                         onPressed: () async {
                           //registeration function
-                          registerAccount();
+                          //registerAccount();
+                          //_register();
+                          _register_user();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(12.5),
@@ -324,7 +326,9 @@ class _Register_pageState extends State<Register_page> {
       ),
     );
   }
-var x = 20;
+
+
+  ///API
   Future registerAccount() async {
     ///Register/create account Method
     var url = Uri.parse(Config.apiURl + Config.registerAPI);
@@ -390,4 +394,76 @@ var x = 20;
       );
     }
   }
+  
+  Future _register_user() async {
+    var url = Uri.parse(Config.apiURl + Config.registerAPI);
+    var req_body = new Map();
+
+     req_body["name"]  = _nameTextEditingController.text;
+     req_body["email"] = _emailTextEditingController.text;
+     req_body["phone"] = _phoneTextEditingController.text;
+     req_body["age"] = int.parse(_ageTextEditingController.text) ;
+     req_body["password"] = _passwordTextEditingController.text;
+
+  var response = await http.post(url, headers: {'Content-Type': 'application/json'}, body: jsonEncode(req_body));
+
+
+if (response.statusCode == 200) {
+      var body = jsonDecode(response.body());
+      print("Data body : ${body["status"]}");
+      print("Data body : ${body}");
+      ///////////////////////////////////////
+      SharedPrefs.saveToken(body["data"]);
+      if (body["status"] == true) {
+        FormHelper.showSimpleAlertDialog(
+          context,
+          Config.appName,
+          "${body["message"]}",
+          "Ok",
+          () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Login_page()));
+          },
+        );
+      } else {
+        FormHelper.showSimpleAlertDialog(
+          context,
+          Config.appName,
+          "${body["message"]}",
+          "Ok",
+          () {
+            Navigator.pop(context);
+          },
+        );
+      }
+    } else if (response.statusCode == 400) {
+      var body = jsonDecode(response.body());
+      print("Data body : ${body["status"]}");
+      print("Data body : ${body["message"]}");
+      FormHelper.showSimpleAlertDialog(
+        context,
+        Config.appName,
+        "Error:${body["message"]["fieldErrors"]}",
+        "Ok",
+        () {
+          Navigator.pop(context);
+        },
+      );
+    } else {
+      var body = jsonDecode(response.body());
+      print("Data body : ${body["status"]}");
+      print("Data body : ${body["message"]}");
+      debugPrint("try again");
+      FormHelper.showSimpleAlertDialog(
+        context,
+        Config.appName,
+        "${body["message"]}",
+        "try again",
+        () {
+          Navigator.pop(context);
+        },
+      );
+    }
+}
+
 }
