@@ -1,7 +1,8 @@
 class Config {
   static const String appName = "Gimme app";
-  static const apiURl = "http://192.168.1.4:8080/api";
-  //static const apiURl = "http://localhost:8080/api";
+  //static const apiURl = "http://192.168.1.4:8080/api";
+  //static const apiURl = "http://localhost:8080/api"; //192.168.1.5
+  static const apiURl = "http://192.168.1.5:8080/api"; //192.168.1.5
   //http://192.168.1.4:8080/api/request/requests?id=
 
   ///profiles

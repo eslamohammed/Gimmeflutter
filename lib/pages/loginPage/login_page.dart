@@ -1,5 +1,5 @@
 //import 'package:flutter/cupertino.dart';
-// ignore_for_file: prefer_const_constructors, unrelated_type_equality_checks, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, unrelated_type_equality_checks, unnecessary_null_comparison, deprecated_member_use
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/pages/HomeController.dart';
@@ -38,8 +38,8 @@ class _Login_pageState extends State<Login_page> {
 
   bool isAPIcallProcess = false;
   bool hidepassword = true;
-  String checkAccount = "";
-  String checkData = "";
+  //String checkAccount = "";
+  //String checkData = "";
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +91,8 @@ class _Login_pageState extends State<Login_page> {
             ),
           ),
 */
-            //login Word
-            Padding(
+           
+            Padding( //login Word
               padding: const EdgeInsets.all(15),
               child: Column(
                 children: [
@@ -138,7 +138,7 @@ class _Login_pageState extends State<Login_page> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
+                  Padding(//email
                     padding: const EdgeInsets.all(10),
                     child: Container(
                       decoration: BoxDecoration(
@@ -165,9 +165,7 @@ class _Login_pageState extends State<Login_page> {
                     ),
                   ),
 
-                  //password
-
-                  Padding(
+                  Padding(//password
                     padding: const EdgeInsets.all(10),
                     child: Container(
                         decoration: BoxDecoration(
@@ -189,7 +187,7 @@ class _Login_pageState extends State<Login_page> {
                         )),
                   ),
 
-                  Padding(
+                  Padding(//Login
                     padding: const EdgeInsets.all(15),
                     child: Center(
                       //login button & calling _loginToAccount() function;
@@ -219,12 +217,12 @@ class _Login_pageState extends State<Login_page> {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),
 
-            Align(
-              //Don't have an account ==> Sign Up
+            Align( //Forget your password
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -264,8 +262,7 @@ class _Login_pageState extends State<Login_page> {
               height: 30,
             ),
 
-            Center(
-              //OR
+            Center(//OR
               child: Text(
                 "OR",
                 style: TextStyle(
@@ -280,8 +277,7 @@ class _Login_pageState extends State<Login_page> {
               height: 20,
             ),
 
-            Align(
-              //Don't have an account ==> Sign Up
+            Align(//Don't have an account ==> Sign Up
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.only(right: 20, top: 10),
@@ -312,7 +308,13 @@ class _Login_pageState extends State<Login_page> {
                   ),
                 ),
               ),
-            )
+            ),
+
+            SizedBox(
+              height: 30,
+            ),
+
+            _buildSocialLoginRow(context),
           ],
         ),
       ),
@@ -338,8 +340,6 @@ class _Login_pageState extends State<Login_page> {
 
       debugPrint(body["message"]);
       debugPrint(body["data"]);
-      checkAccount = body["message"];
-      checkData = body["data"];
       ////////////////////////////////////
       var token = body["data"] as String;
       SharedPrefs.saveToken(token);
@@ -355,10 +355,13 @@ class _Login_pageState extends State<Login_page> {
         },
       );
     } else if ((response.statusCode == 404)) {
+      var body = jsonDecode(response.body());
+      debugPrint(body["message"]);
+      debugPrint(body["data"]);
       FormHelper.showSimpleAlertDialog(
         context,
         Config.appName,
-        "Can't login : User not found!!!",
+        "Can't login : User not found!!! \n${body["message"]} ",
         "Ok",
         () {
           Navigator.pop(context);
@@ -397,3 +400,58 @@ class _Login_pageState extends State<Login_page> {
     }
   }
 }
+
+
+
+Widget _buildSocialLoginRow(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20, left: 20, bottom: 20),
+      child: Row(
+        children: <Widget>[
+          __buildFacebookButtonWidget(context),
+          __buildTwitterButtonWidget(context)
+        ],
+      ),
+    );
+  }
+
+  Widget __buildTwitterButtonWidget(BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: RaisedButton(
+            color: Color.fromRGBO(29, 161, 242, 1.0),
+            child: Image.asset(
+              "assets/images/ic_twitter.png",
+              width: 35*3,
+              height: 35*1.5,
+            ),
+            onPressed: () {},
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0))),
+      ),
+    );
+  }
+
+  Widget __buildFacebookButtonWidget(BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: RaisedButton(
+            color: Color.fromRGBO(42, 82, 151, 1.0),
+            child: Image.asset(
+              "assets/images/ic_fb.png",
+              width: 35*3,
+              height: 35*1.5,
+            ),
+            onPressed: () {},
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0))),
+      ),
+    );
+  }
+
+
+ 

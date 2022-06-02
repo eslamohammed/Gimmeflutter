@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:gimme/config.dart';
+import 'package:gimme/pages/profiles/fetchAccountsData.dart';
 
 
 class GetLatLong extends StatefulWidget {
@@ -14,6 +15,8 @@ class GetLatLong extends StatefulWidget {
 }
 
 class _GetLatLongState extends State<GetLatLong> {
+
+  final FetchAccounts _fetchMyAccount = FetchAccounts();
 
   String location ='Null, Press Button';
   String address = 'search';
@@ -40,7 +43,15 @@ class _GetLatLongState extends State<GetLatLong> {
               Position position = await _getGeoLocationPosition();
               location ='Lat: ${position.latitude} , Long: ${position.longitude}';
               GetAddressFromLatLong(position);
-            }, child: Text('Get Location'))
+            }, child: Text('Get Location')),
+            
+            SizedBox(height:100),
+            
+            ElevatedButton(onPressed: () async{
+              _fetchMyAccount.fetchMyAccount();
+            }, child: Text('test'))
+            
+            
           ],
         ),
       ),

@@ -32,10 +32,10 @@ class PDrawer {
     );
   }
 
-  Widget widgetBuildDrawer(BuildContext context) {
-    const String name = "eslam";
-    String email = "eslam@gmail.com";
-    const urlImage = Config.ImageURL;
+  Widget widgetBuildDrawer(BuildContext context , String name ,String email , urlImage) {
+    //const String name = "eslam";
+    //String email = "eslam@gmail.com";
+    //const urlImage = Config.ImageURL;
 
     return Drawer(
       child: Material(
@@ -43,22 +43,22 @@ class PDrawer {
         child: ListView(
           children: [
             buildHeader(
-              urlImage: urlImage,
+              UrlImage: urlImage,
               name: name,
               email: email,
               onClicked: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ProfilePages())),
             ),
 
-            /*
+            
     UserAccountsDrawerHeader(
-       accountName: Text(x.profileEmail),   //FetchDataAPIRequest().profileEmail as String,      //from account token
-       accountEmail: Text(x.profileName),
+       accountName: Text(name),   //FetchDataAPIRequest().profileEmail as String,      //from account token
+       accountEmail: Text(email),
        arrowColor: Colors.black,
        currentAccountPicture :  CircleAvatar(
-       backgroundImage:  NetworkImage('https://images.unsplash.com/photo-1648869190057-4a2e50d0395b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60'),          
+       backgroundImage:  NetworkImage(urlImage),          
      ),
-    ),*/
+    ),
             /*const UserAccountsDrawerHeader(
          
        accountName:  Text("eslam") ,   //FetchDataAPIRequest().profileEmail as String,      //from account token
@@ -157,7 +157,7 @@ class PDrawer {
   }
 
   buildHeader({
-    required String urlImage,
+    required String UrlImage,
     required String name,
     required String email,
     required VoidCallback onClicked,
@@ -171,7 +171,7 @@ class PDrawer {
           child: Row(children: [
             CircleAvatar(
               radius: 30,
-              backgroundImage: NetworkImage(urlImage),
+              backgroundImage: NetworkImage(UrlImage),
             ),
             const SizedBox(
               width: 20,

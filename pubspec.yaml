@@ -79,6 +79,8 @@ flutter:
     - assets/        
     - jsonfile/
     - assets/gimmeMoblieApp.png
+    - assets/images/ic_twitter.png
+    - assets/images/ic_fb.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

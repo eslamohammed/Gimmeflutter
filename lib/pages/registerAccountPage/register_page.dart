@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:gimme/sharedPrefrances/sharedPrefsToken.dart';
 import 'package:gimme/main.dart';
+import 'package:gimme/widget/customInputNumberField.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -31,6 +32,8 @@ class _Register_pageState extends State<Register_page> {
       TextEditingController();
   final TextEditingController _passwordTextEditingController =
       TextEditingController();
+  final TextEditingController _ageTextEditingController =
+      TextEditingController();
 
   //every controller must be disposed (deleted from memory for avoiding memory problems)
   @override
@@ -40,11 +43,9 @@ class _Register_pageState extends State<Register_page> {
     _phoneTextEditingController.dispose();
     _ganderTextEditingController.dispose();
     _passwordTextEditingController.dispose();
+    _ageTextEditingController.dispose();
     super.dispose();
   }
-
-  bool checkIfAccountCreated = false;
-  String checkMassage = "";
 
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
 
@@ -120,7 +121,7 @@ class _Register_pageState extends State<Register_page> {
             ),
             SizedBox(// username , email , password , phone... //Register
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2,
+              height: MediaQuery.of(context).size.height*0.55,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,6 +195,30 @@ class _Register_pageState extends State<Register_page> {
                           secure: false,
                           ccontroller: _phoneTextEditingController,
                           icon: Icons.phone,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Padding(//age
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: HexColor("#E5E5E5"),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                          topLeft: Radius.circular(25),
+                          bottomLeft: Radius.circular(25),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: CustomInputNumberField(
+                          labelText: "Enter your age",
+                          hintText: "age",
+                          controller: _ageTextEditingController,
+                          //icon: Icons //Icons.phone,
                         ),
                       ),
                     ),
@@ -299,16 +324,18 @@ class _Register_pageState extends State<Register_page> {
       ),
     );
   }
-
+var x = 20;
   Future registerAccount() async {
     ///Register/create account Method
     var url = Uri.parse(Config.apiURl + Config.registerAPI);
     var response = await http.post(url, body: {
-      "name": _nameTextEditingController.text,
-      "email": _emailTextEditingController.text,
-      "phone": _phoneTextEditingController.text,
-      "password": _passwordTextEditingController.text,
-    });
+        "name": _nameTextEditingController.text,
+        "email": _emailTextEditingController.text,
+        "phone": _phoneTextEditingController.text,
+        "age": 20,
+        "password": _passwordTextEditingController.text,
+      },
+    );
 
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body());
@@ -338,10 +365,13 @@ class _Register_pageState extends State<Register_page> {
         );
       }
     } else if (response.statusCode == 400) {
+      var body = jsonDecode(response.body());
+      print("Data body : ${body["status"]}");
+      print("Data body : ${body["message"]}");
       FormHelper.showSimpleAlertDialog(
         context,
         Config.appName,
-        "Error Bad Request : User validation failed: ... is required.",
+        "Error:${body["message"]["fieldErrors"]}",
         "Ok",
         () {
           Navigator.pop(context);

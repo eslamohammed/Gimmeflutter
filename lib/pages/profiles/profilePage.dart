@@ -65,6 +65,10 @@ Widget _profilePageUI(BuildContext context){
                   ProfileModel myAcc;
                   var body = jsonDecode(res.body());
                   
+                  print("=========================");
+                  print(body);
+                  print("=========================");
+
                   myAcc = ProfileModel.fromJson(body);
                   switch(snapshot.connectionState){                        
                     case ConnectionState.waiting:
