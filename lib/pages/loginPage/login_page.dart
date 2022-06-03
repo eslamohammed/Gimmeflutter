@@ -1,5 +1,5 @@
-//import 'package:flutter/cupertino.dart';
-// ignore_for_file: prefer_const_constructors, unrelated_type_equality_checks, unnecessary_null_comparison, deprecated_member_use
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/pages/HomeController.dart';
@@ -405,7 +405,7 @@ class _Login_pageState extends State<Login_page> {
 
 Widget _buildSocialLoginRow(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 20, left: 20, bottom: 20),
+      padding: EdgeInsets.only(right: 20, left: 20, bottom: 20),
       child: Row(
         children: <Widget>[
           __buildFacebookButtonWidget(context),

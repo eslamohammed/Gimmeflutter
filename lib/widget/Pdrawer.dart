@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/Api/Models/profileModel.dart';
+import 'package:gimme/Payment/PaymentScreen%20.dart';
 
 import 'package:gimme/main.dart';
 
@@ -184,7 +185,7 @@ class PDrawer {
                     ),
                       
 
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(right: 15, left: 15),
                       child: Divider(
                         color: Colors.black,
@@ -197,7 +198,7 @@ class PDrawer {
                           MaterialPageRoute(builder: (context) => ProfilePages())),
                     ),
 
-                    const SizedBox(
+                    SizedBox(
                       height: 24,
                     ),
                     buildMenuItem(
@@ -208,7 +209,7 @@ class PDrawer {
                             MaterialPageRoute(builder: (context) => NotificationPage()))
                       },
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 24,
                     ),
                     buildMenuItem(
@@ -218,16 +219,25 @@ class PDrawer {
 
                       //waiting for next version updates on app store
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 24,
                     ),
-                    const Padding(
+                    buildMenuItem(
+                      text: 'Payment',
+                      icon: Icons.update,
+                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentScreen(key: Key("hi"),))),
+
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    Padding(
                       padding: EdgeInsets.only(right: 15, left: 15),
                       child: Divider(
                         color: Colors.black,
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 24,
                     ),
                     buildMenuItem(
@@ -235,7 +245,7 @@ class PDrawer {
                       icon: Icons.settings,
                       //onCliced: ()=>()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>Home())),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 24,
                     ),
                     ListTile(

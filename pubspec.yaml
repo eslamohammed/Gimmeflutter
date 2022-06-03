@@ -47,12 +47,15 @@ dependencies:
   flutter_google_places: ^0.3.0
   jaguar_jwt: ^3.0.0
   provider: ^6.0.2
-  get: ^4.6.1
   webview_flutter: ^3.0.2
   flutter_rating_bar: ^4.0.0
   dio: ^4.0.6
   flutter_polyline_points: ^1.0.0
+  stripe: ^4.7.0
+  flutter_stripe: ^3.0.2
+  get: ^4.6.5
 
+  
 
 dev_dependencies:
   flutter_test:

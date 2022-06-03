@@ -50,14 +50,6 @@ class RequestItem extends StatelessWidget {
                 ),
               ),
 
-      /* onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context){
-      return RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice);
-    })), */
-
-      /*  onTap: (){Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context)=>RequestDetails(reqBody,reqTitle,reqID,reqtimerange,reqminPrice,reqmaxPrice))
-    );},*/
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.5),
