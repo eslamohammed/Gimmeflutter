@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/main.dart';
 
-import 'package:gimme/pages/Commenets/showComments.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/pages/Comments/showComments.dart';
 import 'package:gimme/pages/request/editRequest.dart';
 import 'package:gimme/pages/request/requestItem/requestItem.dart';
 

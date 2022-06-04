@@ -7,7 +7,7 @@ import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/pages/request/requestItem/requestDetails.dart';
 
-import 'package:gimme/config.dart';
+import 'package:gimme/utilies/config.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:snippet_coder_utils/FormHelper.dart';

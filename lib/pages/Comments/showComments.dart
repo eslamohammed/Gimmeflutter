@@ -2,10 +2,10 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gimme/config.dart';
+import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/Commenets/CommentsModel.dart';
-import 'package:gimme/pages/Commenets/fetchMyComment.dart';
+import 'package:gimme/pages/Comments/CommentsModel.dart';
+import 'package:gimme/pages/Comments/fetchMyComment.dart';
 import 'package:gimme/pages/profiles/fetchAccountsData.dart';
 
 

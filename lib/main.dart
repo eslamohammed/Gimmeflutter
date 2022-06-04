@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'package:gimme/Google_maps/googleMap.dart';
+import 'package:gimme/Chats/chatPage.dart';
+
 import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/pages/request/addRequest.dart';
-import 'package:gimme/pages/Chats/chatPage.dart';
 import 'package:gimme/pages/homePage.dart';
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/pages/registerAccountPage/register_page.dart';
-
 import 'package:gimme/pages/Search/searchPage.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:provider/provider.dart';
 
@@ -19,8 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:global_library.dart' as global_library ;
 
 //int currnetIndex = 0;  //the index that only responisible for change between home screens
+// home screens home, chat, search, add request , profile
 final screens = [
-  // home screens home, chat, search, add request , profile
   Home(),
   SearchPage(),
   ChatPage(),

@@ -8,7 +8,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:gimme/main.dart';
 
-import 'package:gimme/config.dart';
+import 'package:gimme/utilies/config.dart';
 
 
 class OthersProfilePages extends StatelessWidget {

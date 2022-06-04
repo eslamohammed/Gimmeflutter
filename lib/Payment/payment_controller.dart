@@ -13,15 +13,15 @@ class PaymentController extends GetxController {
       paymentIntentData = await createPaymentIntent(amount, currency);
       if (paymentIntentData != null) {
         await Stripe.instance.initPaymentSheet(
-            paymentSheetParameters: SetupPaymentSheetParameters(
-          applePay: true,
-          googlePay: true,
-          testEnv: true,
-          merchantCountryCode: 'US',
-          merchantDisplayName: 'Prospects',
-          customerId: paymentIntentData!['customer'],
-          paymentIntentClientSecret: paymentIntentData!['client_secret'],
-          customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
+          paymentSheetParameters: SetupPaymentSheetParameters(
+            applePay: true,
+            googlePay: true,
+            testEnv: true,
+            merchantCountryCode: 'US',
+            merchantDisplayName: 'Prospects',
+            customerId: paymentIntentData!['customer'],
+            paymentIntentClientSecret: paymentIntentData!['client_secret'],
+            customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
         ));
         displayPaymentSheet();
       }

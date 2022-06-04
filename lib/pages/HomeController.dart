@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:gimme/config.dart';
+import 'package:gimme/utilies/config.dart';
 
 import 'package:gimme/widget/Pdrawer.dart';
 import 'package:gimme/main.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
 import 'dart:convert';
 
-import 'package:gimme/config.dart';
+import 'package:gimme/utilies/config.dart';
 import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/widget/customInputTextField.dart';
 

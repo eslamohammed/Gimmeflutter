@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:gimme/config.dart';
+import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
 import 'package:http/http.dart' as http;
 

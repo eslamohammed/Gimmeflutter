@@ -1,14 +1,18 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_typing_uninitialized_variables
 
-import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gimme/config.dart';
+import 'package:gimme/pages/Comments/Stripe/createStripeAccount.dart';
+
+import '../../main.dart';
 import 'package:gimme/pages/HomeController.dart';
+
+import 'package:gimme/utilies/config.dart';
 import 'package:gimme/widget/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
-import '../../main.dart';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 
@@ -180,7 +184,7 @@ class _AddCommentState extends State<AddComment> {
             ),
           ),
 
-          SizedBox(height: MediaQuery.of(context).size.height*0.08),
+          SizedBox(height: MediaQuery.of(context).size.height*0.04),
          
           Center(//Submit button
             child: SizedBox(//Show Comments
@@ -191,7 +195,7 @@ class _AddCommentState extends State<AddComment> {
                 onPressed: (){
                   //addComment function here
                   _addComment(context);
-                print(widget.reqID);
+                  debugPrint(widget.reqID);
                 },
                 style: ButtonStyle(
                   //maximumSize: Size.infinite,
@@ -205,6 +209,43 @@ class _AddCommentState extends State<AddComment> {
                 ),
               ),
              ),    
+        
+          SizedBox(height: MediaQuery.of(context).size.height*0.04),
+        
+            Align(//Don't have an Stripe account ==> Create one
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20, top: 10),
+                child: RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 17.5,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "Don't an Stripe account?  ",
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      TextSpan(
+                          text: "Create One",
+                          style: TextStyle(
+                            color: primaryColor,
+                            decoration: TextDecoration.underline,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                            _createStripeAccount(context);
+                        }
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
           ],
         ),
       ),
@@ -232,30 +273,16 @@ Map<String,String> header = {
   var response = await http.post(url, body: bodii, headers: header);
       // if condition to check if account already exited or created and if then send user to login page
       if(response.statusCode == 200){
-        print("success");
-        print("success $url");
         debugPrint('Response body: ${response.body()}');
         debugPrint("=======================================");
         debugPrint('Response status: ${response.statusCode}');
-
       var body =jsonDecode(response.body());
-      /*
-       FormHelper.showSimpleAlertDialog(
-            context, 
-          "["+Config.appName+"]",
-            "Success: Comment has been added !!!",
-            "Ok", 
-            (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeControllerPage()));
-            },
-          );
-       */
         print("${body["status"]}");
         if (body["status"]==true) {
           FormHelper.showSimpleAlertDialog(
               context, 
             "["+Config.appName+"]",
-              "Success: Comment has been added !!!",
+              "${body["message"]}",
               "Ok", 
               (){
                 Navigator.pop(context);
@@ -273,32 +300,36 @@ Map<String,String> header = {
             );
           }
       }else if (response.statusCode == 403){
+          var body =jsonDecode(response.body());
           debugPrint("not Forbidden");
           FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
-            "Forbidden [MOD is already choosen !!!]",
+            "${body["message"]}",
             "Ok", 
             (){
               Navigator.pop(context);
             },
           );
       }else if (response.statusCode == 400){
+          var body =jsonDecode(response.body());
           debugPrint("not Forbidden");
           FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
-            "Price can't be less than the minimum range",
+            "${body["message"]} ",
             "Ok", 
             (){
               Navigator.pop(context);
             },
           );
       }else{
+        debugPrint("hiiiiii");
+        var body =jsonDecode(response.body());
         FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
-            "Something went woring, try again",
+            "${body["message"]} ",
             "Ok", 
             (){
               Navigator.pop(context);
@@ -335,5 +366,65 @@ Future  deleteComment(BuildContext context ,String id) async{
     },);
     }  
   }
+
+Future  _createStripeAccount(BuildContext context) async{    
+  var url = Uri.parse(Config.apiURl + Config.paymentAPI + Config.createStripeAcc);
+  print(url);
+
+Map<String,String> header = {
+   "Authorization":"Bearer " + (prefs.getString("token") as String),
+   //'Content-type' : 'application/json', 
+};
+  print(url);
+  var response = await http.post(url,  headers: header);
+      // if condition to check if account already exited or created and if then send user to login page
+      if(response.statusCode == 200){
+        print("sucess");
+        debugPrint('Response body: ${response.body()}');
+        debugPrint("=======================================");
+        debugPrint('Response status: ${response.statusCode}');
+
+        var body =jsonDecode(response.body());
+        if (body["status"]==true) {
+          print("${body["data"]["url"]}");
+          FormHelper.showSimpleAlertDialog(
+              context, 
+            "["+Config.appName+"]",
+              "${body["message"]}",
+              "Create Account", 
+              (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateStripeAccount(
+                  body["data"]["url"],
+                  key: Key("key"),),
+                  ),
+                );
+              },
+            );
+        } else {
+            FormHelper.showSimpleAlertDialog(
+            context, 
+            "["+Config.appName+"]",
+            "${body["message"]}",
+            "Ok", 
+            (){
+              Navigator.pop(context);
+            },
+          );
+        }
+      }else{
+        var body =jsonDecode(response.body());
+        print("${body["message"]}");
+        FormHelper.showSimpleAlertDialog(
+          context, 
+          "["+Config.appName+"]",
+          "Something went error : ${body["message"]}",
+          "Ok", 
+          (){
+            Navigator.pop(context);
+          },
+        );
+      }
+  }
+
 
 }

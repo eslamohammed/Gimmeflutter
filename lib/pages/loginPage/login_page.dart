@@ -3,8 +3,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/pages/HomeController.dart';
-import 'package:gimme/sharedPrefrances/sharedPrefsToken.dart';
 import 'package:gimme/main.dart';
+import 'package:gimme/utilies/sharedPrefrances/sharedPrefsToken.dart';
 
 import 'package:gimme/widget/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -12,7 +12,7 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:snippet_coder_utils/hex_color.dart';
-import '../../config.dart';
+import '../../utilies/config.dart';
 
 // ignore: camel_case_types
 class Login_page extends StatefulWidget {

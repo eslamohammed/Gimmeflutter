@@ -1,9 +1,9 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:gimme/config.dart';
+import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/Chats/chats_dtails.dart';
+import 'package:gimme/Chats/chats_dtails.dart';
 
 class ChatPage extends StatefulWidget {  
   @override
