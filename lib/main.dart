@@ -14,6 +14,7 @@ import 'package:gimme/pages/registerAccountPage/register_page.dart';
 import 'package:gimme/pages/Search/searchPage.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:snippet_coder_utils/hex_color.dart';
 //import 'package:provider/provider.dart';
 
 //import 'package:gimme/utilies/global_library.dart' as global_library;
@@ -29,7 +30,7 @@ final screens = [
   GoogleMaps(),
   ProfilePages(),
 ];
-
+Color fillColors = HexColor("#E5E5E5");
 const primaryColor = Color.fromARGB(255, 93, 176, 116);
 SharedPreferences prefs = "null" as SharedPreferences;
 

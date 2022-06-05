@@ -1,16 +1,16 @@
-// ignore_for_file: use_key_in_widget_constructors
 
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
+import 'package:gimme/main.dart';
+
 //import 'package:gimme/Google_maps/directions.dart';
 //import 'package:gimme/Google_maps/directions_model.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../main.dart';
 import 'package:gimme/utilies/global_library.dart' as globals;
 
 String location = 'Null, Press Button';
@@ -20,6 +20,7 @@ var myMarkers = HashSet<
     Marker>(); //collection to store all markers like array return data as a type marker
 
 class GoogleMaps extends StatefulWidget {
+  const GoogleMaps ({ Key? key }) : super(key: key);
   @override
   GoogleMapsState createState() => GoogleMapsState();
 }

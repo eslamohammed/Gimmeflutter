@@ -82,14 +82,15 @@ class _SearchPageState extends State<SearchPage> {
                   padding: const EdgeInsets.all(15),
                   child: Container(
                       decoration: BoxDecoration(
-                          color: HexColor("#E5E5E5"),
+                          color: fillColors,
                           borderRadius: BorderRadius.circular(25)),
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: CustomInputTextFieldWidget(
                             hintText: "\t\t From ",
                             secure: false,
                             ccontroller: _From,
+                            fillColor: fillColors,
                           ),
                         ),
                       ),
@@ -98,14 +99,16 @@ class _SearchPageState extends State<SearchPage> {
                   padding: const EdgeInsets.all(15),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: HexColor("#E5E5E5"),
+                        color:fillColors,
                         borderRadius: BorderRadius.circular(25)),
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: CustomInputTextFieldWidget(
                         hintText: "\t\t To ",
                         secure: false,
-                        ccontroller: _To),
+                        ccontroller: _To ,
+                        fillColor: fillColors,
+                        ),
                       ),
                     ),
                 ),
@@ -255,7 +258,7 @@ class _SearchPageState extends State<SearchPage> {
 
   ///UI widget to show the result data
   /// Card Mapping data to result request Card
-  Widget reqResultCard(
+  Widget _reqResultCard(
     BuildContext context,
     String reqBody,
     String reqTitle,

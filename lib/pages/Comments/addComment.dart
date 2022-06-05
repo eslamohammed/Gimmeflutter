@@ -98,7 +98,10 @@ class _AddCommentState extends State<AddComment> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: CustomInputTextFieldWidget(hintText: "price",secure: false ,ccontroller: _priceTextEditingController, icon: Icons.update,),
+                  child: CustomInputTextFieldWidget(hintText: "price",secure: false ,
+                  ccontroller: _priceTextEditingController, icon: Icons.update,
+                  fillColor: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -132,7 +135,10 @@ class _AddCommentState extends State<AddComment> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: CustomInputTextFieldWidget(hintText: "time",secure: false ,ccontroller: _timeTextEditingController, icon: Icons.update,),
+                    child: CustomInputTextFieldWidget(hintText: "time",secure: false ,
+                    ccontroller: _timeTextEditingController, icon: Icons.update,
+                    fillColor: Colors.white,
+                      ),
                     )
                   ),
                 ),
@@ -156,8 +162,12 @@ class _AddCommentState extends State<AddComment> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: CustomInputTextFieldWidget(hintText: "Uints                  [d/h/min]",secure: false ,ccontroller: _unitsTextEditingController, icon: Icons.update,),
-              )),
+                child: CustomInputTextFieldWidget(hintText: "Uints               [w/d/h]",secure: false ,
+                ccontroller: _unitsTextEditingController, icon: Icons.update,
+                fillColor: Colors.white,
+                  ),
+                ),
+              ),
              ),
             ),
             ],
@@ -178,9 +188,12 @@ class _AddCommentState extends State<AddComment> {
               width: MediaQuery.of(context).size.width*0.82,
               decoration: BoxDecoration(
                  border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
-                borderRadius: BorderRadius.circular(10.0),),
-              child:  CustomInputTextFieldWidget(hintText: "Put some Comment ",secure: false ,ccontroller: _commentTextEditingController,) ,
-
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child:  CustomInputTextFieldWidget(hintText: "Put some Comment ",secure: false ,
+              ccontroller: _commentTextEditingController,
+              fillColor: Colors.white,
+              ) ,
             ),
           ),
 

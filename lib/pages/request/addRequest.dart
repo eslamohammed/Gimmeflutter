@@ -478,7 +478,7 @@ class _AddRequestState extends State<AddRequest> {
             child: TextButton(
               onPressed: () async {
                 //navigation to GoogleMaps to place marker
-                Navigator.push(context,  MaterialPageRoute( builder: (context) => GoogleMaps()));
+                Navigator.push(context,  MaterialPageRoute( builder: (context) => GoogleMaps(key: Key("value"),)));
               },
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
