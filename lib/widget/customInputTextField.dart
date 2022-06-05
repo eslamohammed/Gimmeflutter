@@ -8,10 +8,12 @@ class CustomInputTextFieldWidget extends StatelessWidget {
     required this.hintText,
     required this.secure,
     required this.ccontroller,
+    this.labelText,
     this.icon,
     this.fillColor,
   }) : super(key: key);
   final String hintText;
+  final String? labelText;
   final bool secure;
   final TextEditingController ccontroller;
   final IconData? icon;
@@ -29,8 +31,10 @@ class CustomInputTextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           fillColor: fillColor == null ? fillColors : fillColor,
           filled: true,
+          labelText: labelText,
+          labelStyle: TextStyle(fontSize: 15),
           hintText: hintText,
-          hintStyle: TextStyle(fontSize: 19),
+          hintStyle: TextStyle(fontSize: 15),
           //icon: new Icon(icon)
         ),
       ),

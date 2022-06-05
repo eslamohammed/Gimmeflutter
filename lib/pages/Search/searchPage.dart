@@ -208,7 +208,7 @@ class _SearchPageState extends State<SearchPage> {
                                               resultReq[0].data[index]['toAddress'],
                                               resultReq[0].data[index]['userId'],
                                               resultReq[0].data[index]["timeRange"]["unit"],
-                                              //key: null ,
+                                              key: Key("$index") ,
                                             );
                                           },
                                         ) 

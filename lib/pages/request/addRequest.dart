@@ -114,7 +114,7 @@ class _AddRequestState extends State<AddRequest> {
                         padding: const EdgeInsets.all(10),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
+                              color: fillColors,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(25),
                                 bottomRight: Radius.circular(25),
@@ -127,6 +127,7 @@ class _AddRequestState extends State<AddRequest> {
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: CustomInputTextFieldWidget(
+                              labelText: "Title",
                               hintText: "title",
                               secure: false,
                               ccontroller: _titleTextEditingController,
@@ -142,7 +143,7 @@ class _AddRequestState extends State<AddRequest> {
                         padding: const EdgeInsets.all(10),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
+                              color: fillColors,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(25),
                                 bottomRight: Radius.circular(25),
@@ -155,6 +156,7 @@ class _AddRequestState extends State<AddRequest> {
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: CustomInputTextFieldWidget(
+                              labelText: "Body",
                               hintText: "body",
                               secure: false,
                               ccontroller: _bodyTextEditingController,
@@ -180,12 +182,9 @@ class _AddRequestState extends State<AddRequest> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      //Choose the delivery price.
-                      width: MediaQuery.of(context).size.width /
-                          2.7, //**delivery price Word width**
-                      decoration: const BoxDecoration(
-                        //from-to box decoration
+                    Container(//Choose the delivery price.
+                      width: MediaQuery.of(context).size.width/2.7, //**delivery price Word width**
+                      decoration: const BoxDecoration(//from-to box decoration
                         color: Colors.white,
                       ),
                       child: const Padding(
@@ -193,28 +192,22 @@ class _AddRequestState extends State<AddRequest> {
                         child: Text(
                           "the delivery price range...",
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                     //function implementaion min & max must be int
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.1,
-                    ),
-                    SizedBox(
-                      // price min
-                      width: MediaQuery.of(context).size.width /
-                          5, //** price width it self **
-                      child: Padding(
-                        //min
-                        padding: const EdgeInsets.only(
-                          right: 10,
-                        ),
+                    SizedBox(width: MediaQuery.of(context).size.width*0.1, ),
+                    SizedBox(// price min
+                      width: MediaQuery.of(context).size.width /5, //** price width it self **
+                      child: Padding(//min
+                        padding: const EdgeInsets.only(right: 10,),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
+                              color: fillColors,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(20),
                                 bottomRight: Radius.circular(20),
@@ -228,6 +221,7 @@ class _AddRequestState extends State<AddRequest> {
                             padding: const EdgeInsets.only(
                                 right: 10, left: 10, bottom: 9),
                             child: CustomInputTextFieldWidget(
+                              labelText: "min",
                               hintText: "min",
                               secure: false,
                               ccontroller: _minPricreTextEditingController,
@@ -237,16 +231,13 @@ class _AddRequestState extends State<AddRequest> {
                       ),
                     ),
 
-                    SizedBox(
-                      // price max
-                      width: MediaQuery.of(context).size.width /
-                          5, //** price width it self **
-                      child: Padding(
-                        //max
-                        padding: const EdgeInsets.only(left: 10),
+                    SizedBox(// price max
+                      width: MediaQuery.of(context).size.width/4.9, //** price width it self **
+                      child: Padding(//max
+                        padding: EdgeInsets.only(left: 10),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
+                              color: fillColors,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(20),
                                 bottomRight: Radius.circular(20),
@@ -257,9 +248,10 @@ class _AddRequestState extends State<AddRequest> {
                               /// contin
                               ),
                           child: Padding(
-                            padding: const EdgeInsets.only(
+                            padding: EdgeInsets.only(
                                 right: 10, left: 10, bottom: 9),
                             child: CustomInputTextFieldWidget(
+                              labelText: "max",
                               hintText: "max",
                               secure: false,
                               ccontroller: _maxPricreTextEditingController,
@@ -317,40 +309,32 @@ class _AddRequestState extends State<AddRequest> {
                 child: Row(
                   //crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      //Choose the delivery price.
-                      width: MediaQuery.of(context).size.width /
-                          2.7, //**delivery price Word width**
-                      decoration: const BoxDecoration(
-                        //from-to box decoration
+                    Container(//Choose the delivery price.
+                      width: MediaQuery.of(context).size.width/2.7, //**delivery price Word width**
+                      decoration: const BoxDecoration(//from-to box decoration
                         color: Colors.white,
                       ),
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           "Delivery Time range...",
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.5,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.black,
+                            fontSize: 20.5,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.1,
-                    ),
-                    SizedBox(
-                      // time
-                      width: MediaQuery.of(context).size.width /
-                          4, //** price width it self **
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.1,),
+                    SizedBox(// time
+                      width: MediaQuery.of(context).size.width/4, //** price width it self **
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          right: 10,
-                        ),
+                        padding: const EdgeInsets.only(right: 10, ),
                         child: Center(
                           child: Container(
                             decoration: BoxDecoration(
-                                color: HexColor("#E5E5E5"),
+                                color: fillColors,
                                 borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(20),
                                   bottomRight: Radius.circular(20),
@@ -361,6 +345,7 @@ class _AddRequestState extends State<AddRequest> {
                               padding: const EdgeInsets.only(
                                   right: 10, left: 10, bottom: 9),
                               child: CustomInputTextFieldWidget(
+                                labelText: "Time",
                                 hintText: "Time",
                                 secure: false,
                                 ccontroller: _timeRangeTextEditingController,
@@ -370,29 +355,24 @@ class _AddRequestState extends State<AddRequest> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      // time unit
-                      width: MediaQuery.of(context).size.width /
-                          6.5, //** price width it self **
-                      child: Padding(
-                        //max
+                    SizedBox(// time unit
+                      width: MediaQuery.of(context).size.width/6, //** price width it self **
+                      child: Padding(//max
                         padding: const EdgeInsets.only(left: 10),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(20),
-                                bottomRight: Radius.circular(20),
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20),
-                              )
-
-                              /// contin
-                              ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                right: 10, left: 10, bottom: 9),
+                            color: fillColors,
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                              topLeft: Radius.circular(20),
+                              bottomLeft: Radius.circular(20),
+                            ),
+                          ),
+                            child: Padding(
+                            padding: const EdgeInsets.only(right: 10, left: 10, bottom: 9),
                             child: CustomInputTextFieldWidget(
+                              labelText:"unit",
                               hintText: "unit",
                               secure: false,
                               ccontroller: _timeUnitsTextEditingController,
@@ -416,21 +396,19 @@ class _AddRequestState extends State<AddRequest> {
               padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 decoration: BoxDecoration(
-                    color: HexColor("#E5E5E5"),
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
-                      topLeft: Radius.circular(25),
-                      bottomLeft: Radius.circular(25),
-                    )
-
-                    /// contin
-                    ),
+                  color: fillColors,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                    topLeft: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                  )
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: CustomInputTextFieldWidget(
-                    hintText:
-                        "From address   it will replaced by google places data",
+                    labelText: "From address" ,
+                    hintText:"From address   it will replaced by google places data",
                     secure: false,
                     ccontroller: _fromAddressTextEditingController,
                     icon: Icons.update,
@@ -446,19 +424,19 @@ class _AddRequestState extends State<AddRequest> {
               padding: const EdgeInsets.all(20),
               child: Container(
                 decoration: BoxDecoration(
-                    color: HexColor("#E5E5E5"),
-                    borderRadius: const BorderRadius.only(
+                    color: fillColors,
+                    borderRadius: BorderRadius.only(
                       topRight: Radius.circular(25),
                       bottomRight: Radius.circular(25),
                       topLeft: Radius.circular(25),
                       bottomLeft: Radius.circular(25),
-                    )
-
-                    /// contin
                     ),
+                    /// contin
+                  ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: CustomInputTextFieldWidget(
+                    labelText: "To address",
                     hintText:
                         "To address\t\t\t\t\t\t\t\t\tit will replaced by google places data",
                     secure: false,
@@ -475,28 +453,33 @@ class _AddRequestState extends State<AddRequest> {
             height: MediaQuery.of(context).size.height * 0.15,
             width: MediaQuery.of(context).size.width * 0.9,
 
-            child: TextButton(
-              onPressed: () async {
-                //navigation to GoogleMaps to place marker
+            child: FlatButton(
+
+              onPressed: () async{ //navigation to GoogleMaps to place marker
                 Navigator.push(context,  MaterialPageRoute( builder: (context) => GoogleMaps(key: Key("value"),)));
               },
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Center(
-                  child: Text(
-                  "\t\t\t\t\t\t Select Location \n\nHint \n\nclick select Loctations [Source{from} & distination{to}] Points[Loc-Coordinantes'GoogleMaps'] Homepage Bar\n\nIf you if you are already here Just ignore this step ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 19,
+                  child: Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: Text(
+                    "\t\t\t\t\t\t Select Location \n\nHint \nclick select Loctations [Source{from} & distination{to}] Points[Loc-Coordinantes'GoogleMaps'] Homepage Bar\n\n     If you if you are already here Just ignore this step ",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      ),
+                    ),
                   ),
-                )),
+                ),
               ),
+              shape: StadiumBorder(side: BorderSide(color: fillColors,width: 9)),
+              color: primaryColor,
             ),
-            color: primaryColor,
           ),
 
-          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
           Padding( // add request
             padding: const EdgeInsets.only(
@@ -516,9 +499,7 @@ class _AddRequestState extends State<AddRequest> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FlatButton(
-                    onPressed: () async {
-                      //Calling AddRequest() function
-
+                    onPressed: () async {//Calling AddRequest() function
                       if (_titleTextEditingController.text.isNotEmpty) {
                         if (_bodyTextEditingController.text.isNotEmpty) {
                           if (_minPricreTextEditingController.text.isNotEmpty &&
@@ -619,7 +600,7 @@ class _AddRequestState extends State<AddRequest> {
             ),
           ),
 
-          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         ],
       ),
     );

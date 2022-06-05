@@ -1,4 +1,6 @@
 
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
 import 'dart:convert';
@@ -99,19 +101,19 @@ class _EditRequestState extends State<EditRequest> {
         children: [
 
           Padding(
-            padding: const EdgeInsets.only(right: 10, left: 10),
+            padding: EdgeInsets.only(right: 10, left: 10),
 
             child: Container(//"Insert new data,here"
               width: MediaQuery.of(context).size.width / 1,
               height: MediaQuery.of(context).size.height / 4,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
               ),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(//Need Something field
+                     Padding(//Need Something field
                       padding: EdgeInsets.all(10.0),
                       child: Text(
                         "Insert new data,here",
@@ -128,8 +130,8 @@ class _EditRequestState extends State<EditRequest> {
                         padding: const EdgeInsets.all(10),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
-                              borderRadius: const BorderRadius.only(
+                              color: fillColors,
+                              borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(25),
                                 bottomRight: Radius.circular(25),
                                 topLeft: Radius.circular(25),
@@ -139,9 +141,10 @@ class _EditRequestState extends State<EditRequest> {
                               /// contin
                               ),
                           child: Padding(
-                            padding: const EdgeInsets.all(10),
+                            padding: EdgeInsets.all(10),
                             child: CustomInputTextFieldWidget(
-                              hintText: "${widget.title}",
+                              labelText: "Title",
+                              hintText: "Old title : ${widget.title}",
                               secure: false,
                               ccontroller: _titleTextEditingController,
                               icon: Icons.update,
@@ -156,7 +159,7 @@ class _EditRequestState extends State<EditRequest> {
                         padding: const EdgeInsets.all(10),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
+                              color: fillColors,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(25),
                                 bottomRight: Radius.circular(25),
@@ -169,7 +172,8 @@ class _EditRequestState extends State<EditRequest> {
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: CustomInputTextFieldWidget(
-                              hintText: "${widget.body}",
+                              labelText: "Body",
+                              hintText: "Old Body :${widget.body}",
                               secure: false,
                               ccontroller: _bodyTextEditingController,
                             ),
@@ -223,7 +227,7 @@ class _EditRequestState extends State<EditRequest> {
                         ),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
+                              color: fillColors,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(20),
                                 bottomRight: Radius.circular(20),
@@ -237,7 +241,8 @@ class _EditRequestState extends State<EditRequest> {
                             padding: const EdgeInsets.only(
                                 right: 10, left: 10, bottom: 9),
                             child: CustomInputTextFieldWidget(
-                              hintText: "min : ${widget.minPr}",
+                              labelText: "min",
+                              hintText: "${widget.minPr}",
                               secure: false,
                               ccontroller: _minPricreTextEditingController,
                             ),
@@ -252,7 +257,7 @@ class _EditRequestState extends State<EditRequest> {
                         padding: const EdgeInsets.only(left: 10),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
+                              color: fillColors,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(20),
                                 bottomRight: Radius.circular(20),
@@ -266,7 +271,8 @@ class _EditRequestState extends State<EditRequest> {
                             padding: const EdgeInsets.only(
                                 right: 10, left: 10, bottom: 9),
                             child: CustomInputTextFieldWidget(
-                              hintText: "max : ${widget.maxPr}",
+                              labelText: "max",
+                              hintText: " ${widget.maxPr}",
                               secure: false,
                               ccontroller: _maxPricreTextEditingController,
                             ),
@@ -321,7 +327,7 @@ class _EditRequestState extends State<EditRequest> {
                         child: Center(
                           child: Container(
                             decoration: BoxDecoration(
-                                color: HexColor("#E5E5E5"),
+                                color: fillColors,
                                 borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(20),
                                   bottomRight: Radius.circular(20),
@@ -331,6 +337,7 @@ class _EditRequestState extends State<EditRequest> {
                             child: Padding(
                               padding: const EdgeInsets.only(right: 10, left: 10, bottom: 9),
                               child: CustomInputTextFieldWidget(
+                                labelText:"Time",
                                 hintText: "Time : ${widget.timerange}",
                                 secure: false,
                                 ccontroller: _timeRangeTextEditingController,
@@ -341,12 +348,12 @@ class _EditRequestState extends State<EditRequest> {
                       ),
                     ),
                     SizedBox(// time unit
-                      width: MediaQuery.of(context).size.width /6.5, //** price width it self **
+                      width: MediaQuery.of(context).size.width /6, //** price width it self **
                       child: Padding(//max
                         padding: const EdgeInsets.only(left: 10),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: HexColor("#E5E5E5"),
+                              color: fillColors,
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(20),
                                 bottomRight: Radius.circular(20),
@@ -355,10 +362,10 @@ class _EditRequestState extends State<EditRequest> {
                                 ) 
                               ),
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                                right: 10, left: 10, bottom: 9),
+                            padding: EdgeInsets.only( right: 10, left: 10, bottom: 9),
                             child: CustomInputTextFieldWidget(
-                              hintText: "unit : ${widget.timeUnit}",
+                              labelText: "Unit",
+                              hintText: "${widget.timeUnit}",
                               secure: false,
                               ccontroller: _timeUnitsTextEditingController,
                             ),
@@ -380,7 +387,7 @@ class _EditRequestState extends State<EditRequest> {
               padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 decoration: BoxDecoration(
-                    color: HexColor("#E5E5E5"),
+                    color: fillColors,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(25),
                       bottomRight: Radius.circular(25),
@@ -393,6 +400,7 @@ class _EditRequestState extends State<EditRequest> {
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: CustomInputTextFieldWidget(
+                    labelText: "from location[Address]",
                     hintText:
                         "from : [${widget.fromAddress}]   it will replaced by google places data",
                     secure: false,
@@ -410,7 +418,7 @@ class _EditRequestState extends State<EditRequest> {
               padding: const EdgeInsets.all(20),
               child: Container(
                 decoration: BoxDecoration(
-                    color: HexColor("#E5E5E5"),
+                    color: fillColors,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(25),
                       bottomRight: Radius.circular(25),
@@ -423,6 +431,7 @@ class _EditRequestState extends State<EditRequest> {
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: CustomInputTextFieldWidget(
+                    labelText: "To Location[Address]",
                     hintText:
                         "To : [${widget.toAddress}]\t\t\t\t\t\t\t\t\tit will replaced by google places data",
                     secure: false,
@@ -439,18 +448,16 @@ class _EditRequestState extends State<EditRequest> {
             height: MediaQuery.of(context).size.height * 0.15,
             width: MediaQuery.of(context).size.width * 0.9,
 
-            child: TextButton(
-              onPressed: () async {
-                //navigation to GoogleMaps to place marker
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => GoogleMaps()));
+            child: FlatButton(
+              onPressed: () async { //navigation to GoogleMaps to place marker
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GoogleMaps(key: Key("key"),)));
               },
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: const Center(
                     child: Text(
-                  "\t\t\t\t\t\t Select Location \n\nHint: \n\nClick here to select new [From & To] Loctations [Source{From} & distination{To}]\n",
+                  "\t\t\t\t\t\t Select Location \n\nHint: \n   Click here to select new [From & To] Loctations [Source{From} & distination{To}]\n",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 19,
@@ -458,16 +465,15 @@ class _EditRequestState extends State<EditRequest> {
                 ),
               ),
             ),
+            shape: StadiumBorder(side: BorderSide(color: fillColors,width: 9)),
+            color: primaryColor,
           ),
-          color: primaryColor,
         ),
 
           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
 
           Padding(// edit request
-            padding: const EdgeInsets.only(
-              right: 10,
-            ),
+            padding: const EdgeInsets.only(right: 10,),
             child: Container(
               width: MediaQuery.of(context).size.width / 2,
               height: MediaQuery.of(context).size.height / 10,
@@ -477,21 +483,11 @@ class _EditRequestState extends State<EditRequest> {
                     bottomRight: Radius.circular(50),
                     topLeft: Radius.circular(50),
                   )),
-              child: Center(
-                //Edit button & calling editrequest() Function function;
+              child: Center(//Edit button & calling editrequest() Function function;
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FlatButton(
-                    onPressed: () async {
-                      //Calling editRequest() function
-                      print(
-                          "From LatLong after Edit: latlng(${globals.fromLat},${globals.fromLong})");
-                      print(
-                          "=======================================================================");
-                      print(
-                          "To LatLong after Edit: latlng(${globals.toLat},${globals.toLong})");
-
-                      print("${widget.reqID}");
+                    onPressed: () async {//Calling editRequest() function
                       editRequest(widget.reqID);
                       
                     },
