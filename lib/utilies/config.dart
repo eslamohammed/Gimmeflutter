@@ -1,12 +1,19 @@
 class Config {
   static const String appName = "Gimme app";
-  //static const apiURl = "http://192.168.1.4:8080/api";
+  
+  /// To a void problem of [ERROR:flutter/lib/ui/ui_dart_state.cc(209)] Unhandled Exception: SocketException: 
+  /// No route to host (OS Error: No route to host, errno = 113), address = 192.168.1.XX, port = XXXX
+  
+  /// if you are using a physical device make sure the ip address is the ip of your computer.
+  /// you can find it by running [ipconfig] in cmd.
+  /// Remember you have to be connected to the internet to have this ip address.
+  
+  ///Main Url
   //static const apiURl = "http://localhost:8080/api"; //192.168.1.5
   static const apiURl = "http://192.168.1.5:8080/api"; //192.168.1.5
-  //http://192.168.1.4:8080/api/request/requests?id=
+  //static const apiURl = "http://192.168.174.119:8080/api"; //192.168.1.5
 
   ///profiles
-  //http://192.168.1.4:8080/api/user/profile/6215bfcc9f304e65e8e337e5'
   //http://192.168.1.4:8080/api/user/profile/+id
   static const loginAPI = "/user/login";
   static const registerAPI = "/user/register";
@@ -20,7 +27,6 @@ class Config {
   static const requestAPI = "/request";
   static const openRequestAPI = "/open";
   static const getAllRequestAPI = "/request/requests?id=";
-
   static const getRequestAPI = "/request/requests?id=";
   static const deleteRequestAPI = "/delete/";
   static const editRequestAPI = "/edit/";

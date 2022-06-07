@@ -34,7 +34,7 @@ class CustomInputTextFieldWidget extends StatelessWidget {
           labelText: labelText,
           labelStyle: TextStyle(fontSize: 15),
           hintText: hintText,
-          hintStyle: TextStyle(fontSize: 15),
+          hintStyle: TextStyle(fontSize: 16),
           //icon: new Icon(icon)
         ),
       ),

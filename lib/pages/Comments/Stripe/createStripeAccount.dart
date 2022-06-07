@@ -35,12 +35,11 @@ class _CreateStripeAccountState extends State<CreateStripeAccount> {
             },
             icon: Icon(Icons.update),
           ),
-          
         ],
       ),
       body: WebView(
         javascriptMode: JavascriptMode.unrestricted,
-        initialUrl: widget.StripeUrl,//'https://www.youtube.com/watch?v=qDl8F2MElms',//widget.StripeUrl,
+        initialUrl: widget.StripeUrl,//widget.StripeUrl, 'https://www.youtube.com/watch?v=qDl8F2MElms'
         onWebViewCreated: (controller){
           this.controller = controller;
         },

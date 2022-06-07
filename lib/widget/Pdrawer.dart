@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/Api/Models/profileModel.dart';
-import 'package:gimme/Payment/PaymentScreen%20.dart';
+import 'package:gimme/Payment/PaymentScreentest%20.dart';
+import 'package:gimme/Payment/PaymentScreen.dart';
 
 import 'package:gimme/main.dart';
 
@@ -225,8 +226,7 @@ class PDrawer {
                     buildMenuItem(
                       text: 'Payment',
                       icon: Icons.update,
-                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentScreen(key: Key("hi"),))),
-
+                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentScreen(key: Key("key"),))),
                     ),
                     SizedBox(
                       height: 24,
