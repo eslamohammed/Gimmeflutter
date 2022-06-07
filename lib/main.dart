@@ -30,6 +30,7 @@ final screens = [
   GoogleMaps(),
   ProfilePages(),
 ];
+Color grayColor= HexColor("#E8E8E8");
 Color fillColors = HexColor("#E5E5E5");
 const primaryColor = Color.fromARGB(255, 93, 176, 116);
 SharedPreferences prefs = "null" as SharedPreferences;
@@ -38,10 +39,9 @@ void main() async {
   //global_library.fromLat ;
 
   WidgetsFlutterBinding.ensureInitialized(); //because we now in main class so flutter have to ignore an some Ops
-  
+  Stripe.publishableKey = "pk_test_51KtClKF14f2L8WTnJC6sZfMJ5aKqWKDmdie98i2Lc8dPItWJFzuh22lME2ZmKpuIfNw6DUx9YImByNL65aNtR2Pc0002JlwwlV";
   prefs = await SharedPreferences.getInstance();
   String? token = prefs.getString("token"); //getting token value
-  Stripe.publishableKey = "pk_test_51KtClKF14f2L8WTnxeEc5an26Te7ZrJLngx9MOghLYjduPB8fk4qXRjPjbxQ32a36Bz89cRvfG7UEs3k3UFyFTaZ00xMmhIiBM";
 
 
   Widget

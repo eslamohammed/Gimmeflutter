@@ -276,9 +276,9 @@ Map<String,String> header = {
     {
     "time" : {
         "unit" : _unitsTextEditingController.text,
-        "val" : _timeTextEditingController.text
+        "val" : int.parse(_timeTextEditingController.text)
       },
-      "price" : _priceTextEditingController.text ,
+      "price" : int.parse(_priceTextEditingController.text),
       "text" : _commentTextEditingController.text
     });
 
@@ -337,11 +337,11 @@ Map<String,String> header = {
             },
           );
       }else{
-        debugPrint("hiiiiii");
         var body =jsonDecode(response.body());
+        debugPrint("Faild Message:$body");
         FormHelper.showSimpleAlertDialog(
             context, 
-          "["+Config.appName+"]",
+            "["+Config.appName+"]",
             "${body["message"]} ",
             "Ok", 
             (){
@@ -382,20 +382,16 @@ Future  deleteComment(BuildContext context ,String id) async{
 
 Future  _createStripeAccount(BuildContext context) async{    
   var url = Uri.parse(Config.apiURl + Config.paymentAPI + Config.createStripeAcc);
-  print(url);
-
 Map<String,String> header = {
    "Authorization":"Bearer " + (prefs.getString("token") as String),
    //'Content-type' : 'application/json', 
 };
-  print(url);
   var response = await http.post(url,  headers: header);
       // if condition to check if account already exited or created and if then send user to login page
       if(response.statusCode == 200){
-        print("sucess");
-        debugPrint('Response body: ${response.body()}');
-        debugPrint("=======================================");
+        debugPrint('Success : Response body: ${response.body()}');
         debugPrint('Response status: ${response.statusCode}');
+        debugPrint("=======================================");
 
         var body =jsonDecode(response.body());
         if (body["status"]==true) {
@@ -406,9 +402,12 @@ Map<String,String> header = {
               "${body["message"]}",
               "Create Account", 
               (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateStripeAccount(
-                  body["data"]["url"],
-                  key: Key("key"),),
+                print("${body["data"]["url"]}");
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => CreateStripeAccount(
+        /*here */   body["data"]["url"], //routing url to open in webview page
+                    key: Key("key"),
+                    ),
                   ),
                 );
               },
