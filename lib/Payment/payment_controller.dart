@@ -16,6 +16,7 @@ class PaymentController extends GetxController {
           paymentSheetParameters: SetupPaymentSheetParameters(
             applePay: true,
             googlePay: true,
+            style: ThemeMode.dark,
             testEnv: true,
             merchantCountryCode: 'US',
             merchantDisplayName: 'Prospects',
@@ -32,7 +33,12 @@ class PaymentController extends GetxController {
 
   displayPaymentSheet() async {
     try {
-      await Stripe.instance.presentPaymentSheet();
+      await Stripe.instance.presentPaymentSheet(
+        parameters: PresentPaymentSheetParameters(clientSecret: paymentIntentData!['clientSecret'],
+        confirmPayment: true
+        )
+      );
+      
       Get.snackbar('Payment', 'Payment Successful',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green,
@@ -72,7 +78,7 @@ class PaymentController extends GetxController {
   }
 
   calculateAmount(String amount) {
-    final a = (int.parse(amount)) * 100;
-    return a.toString();
+    final price = (int.parse(amount)) * 100;
+    return price.toString();
   }
 }
