@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/utilies/sharedPrefrances/sharedPrefsToken.dart';
-import 'package:gimme/widget/customInputNumberField.dart';
+import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import '../../utilies/config.dart';
-import '../../widget/customInputTextField.dart';
+import '../../widget/InputWidet/customInputTextField.dart';
 
 class Register_page extends StatefulWidget {
   @override

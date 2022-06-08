@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/Search/SearchRequestDetails.dart';
-import 'package:gimme/pages/profiles/fetchAccountsData.dart';
+import 'package:gimme/Api/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/otherProfilesPage.dart';
 
 
@@ -25,9 +25,6 @@ class RequestResultCard extends StatelessWidget {
      this.requesterID,
      this.reqtimeunit, {Key? key}
      ) : super(key: key);
-
-
-
 
   final FetchAccounts _fetchOthersAccount = FetchAccounts();
   final  String reqBody;
@@ -88,8 +85,7 @@ Widget reqResultCard(
             if (body["status"] == true) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
-                  return const Center(
-                    child: CircularProgressIndicator(
+                  return const Center(child: CircularProgressIndicator(
                       backgroundColor: primaryColor,
                     ),
                   );
@@ -234,7 +230,7 @@ Widget reqResultCard(
                                           ),
                                           //body
                                           Text(
-                                            "//  $reqBody  ",
+                                            "$reqBody  ",
                                             style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.black,

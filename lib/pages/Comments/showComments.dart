@@ -4,9 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/Comments/CommentsModel.dart';
-import 'package:gimme/pages/Comments/fetchMyComment.dart';
-import 'package:gimme/pages/profiles/fetchAccountsData.dart';
+import 'package:gimme/Models/CommentsModel.dart';
+import 'package:gimme/Api/fetchMyComment.dart';
+import 'package:gimme/Api/fetchAccountsData.dart';
 
 
 import 'dart:convert';
@@ -316,11 +316,6 @@ class ShowCommentsState extends State<ShowComments> {
     );
   }
   
-Future  <http.Response> fetchOthersAccount(String id) async{
-    var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
-    var url = Uri.parse(Config.apiURl+ Config.othersProfileAPI+id);
-    return await http.get(url, headers: header); 
- }
 
 /*
 Future<String> get_commenterName(String id) async{

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/HomeController.dart';
-import 'package:gimme/widget/customInputTextField.dart';
+import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';

@@ -6,7 +6,7 @@ import 'package:gimme/pages/HomeController.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/utilies/sharedPrefrances/sharedPrefsToken.dart';
 
-import 'package:gimme/widget/customInputTextField.dart';
+import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 import 'dart:convert';
@@ -403,7 +403,7 @@ class _Login_pageState extends State<Login_page> {
 
 
 
-Widget _buildSocialLoginRow(BuildContext context) {
+  Widget _buildSocialLoginRow(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 20, left: 20, bottom: 20),
       child: Row(

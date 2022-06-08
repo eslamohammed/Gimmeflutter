@@ -3,15 +3,15 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/Models/profileModel.dart';
-import 'package:gimme/Api/Models/requestModel.dart';
+import 'package:gimme/Models/profileModel.dart';
+import 'package:gimme/Models/requestModel.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gimme/pages/profiles/editProfile.dart';
-import 'package:gimme/pages/profiles/fetchAccountsData.dart';
-import 'package:gimme/pages/request/requestItem/requestItem.dart';
+import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/widget/Cards/requestItem.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;

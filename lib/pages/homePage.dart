@@ -5,13 +5,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/Models/profileModel.dart';
-import 'package:gimme/Api/Models/requestModel.dart';
+import 'package:gimme/Models/profileModel.dart';
+import 'package:gimme/Models/requestModel.dart';
 
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/HomeController.dart';
-import 'package:gimme/pages/profiles/fetchAccountsData.dart';
-import 'package:gimme/pages/request/requestItem/requestItem.dart';
+import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/widget/Cards/requestItem.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';

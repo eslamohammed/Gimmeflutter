@@ -4,12 +4,14 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/Comments/CommentsModel.dart';
+import 'package:gimme/Models/CommentsModel.dart';
 import 'package:gimme/pages/Comments/editComment.dart';
 
-import 'package:gimme/pages/Comments/fetchMyComment.dart';
+import 'package:gimme/Api/fetchMyComment.dart';
 import 'package:gimme/pages/HomeController.dart';
-import 'package:gimme/pages/profiles/fetchAccountsData.dart';
+import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/widget/Cards/CommentCard.dart';
+import 'package:gimme/widget/Cards/MyCommentCard.dart';
 
 
 import 'dart:convert';
@@ -76,12 +78,12 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                         print("no comments");
                         return Center(child: Column(
                         // ignore: prefer_const_literals_to_create_immutables
-                        children: [
-                          const Text("\n\n\n\n\n\n\n\n\nNo Comments Exist...",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
-                          const Text("Add one to be first Commenter",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
-
-                        ],
-                      ),);
+                          children: [
+                            const Text("\n\n\n\n\n\n\n\n\nNo Comments Exist...",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
+                            const Text("Add one to be first Commenter",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                      );
                       }else{
                         print("showSearchedReqComments");
                         //List <SearchedReqCommentsModel> comments = [] ;
@@ -105,7 +107,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                             child :ListView.builder(
                               itemCount:comments[0]['data'].length ,
                               itemBuilder: (context , index){
-
+                                /*
                                 return comments[0]['data'][index]['userId'] == globals.getUserID()? _ownCommentsCard( //routing the data to comment card
                                   context,
                                   comments[0]['data'][index]['time']['unit'],
@@ -124,8 +126,27 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                                   comments[0]['data'][index]['text'],
                                   comments[0]['data'][index]['price'],
                                   comments[0]['data'][index]['mod'],
-                                )
-                                ;
+                                );*/
+                                return comments[0]['data'][index]['userId'] == globals.getUserID()? MyCommentCard(
+                                  comments[0]['data'][index]['time']['unit'],
+                                  comments[0]['data'][index]['time']['val'],
+                                  comments[0]['data'][index]['_id'],
+                                  comments[0]['data'][index]['userId'],
+                                  comments[0]['data'][index]['text'],
+                                  comments[0]['data'][index]['price'],
+                                  comments[0]['data'][index]['mod'],
+                                  widget.id,
+                                  key: Key("${index}"),
+                                ):CommentCard(
+                                  comments[0]['data'][index]['time']['unit'],
+                                  comments[0]['data'][index]['time']['val'],
+                                  comments[0]['data'][index]['_id'],
+                                  comments[0]['data'][index]['userId'],
+                                  comments[0]['data'][index]['text'],
+                                  comments[0]['data'][index]['price'],
+                                  comments[0]['data'][index]['mod'],
+                                  key: Key("${index}"),
+                                );
                               }
                             )
                           );
@@ -548,11 +569,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
     );
   }
 
-Future  <http.Response> fetchOthersAccount(String id) async{
-    var header = {"Authorization":"Bearer " + (prefs.getString("token") as String)};
-    var url = Uri.parse(Config.apiURl+ Config.othersProfileAPI+id);
-    return await http.get(url, headers: header); 
- }
+
 
 Future  _deleteComment(BuildContext context ,String id) async{ 
   

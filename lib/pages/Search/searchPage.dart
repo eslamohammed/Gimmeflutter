@@ -2,16 +2,16 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/Api/fetchSearchedRequest.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/Search/SearchRequestDetails.dart';
-import 'package:gimme/pages/Search/requestResultCard.dart';
+import 'package:gimme/widget/Cards/requestResultCard.dart';
 import 'package:gimme/pages/Search/searchRequestModel.dart';
-import 'package:gimme/pages/profiles/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/otherProfilesPage.dart';
-import 'package:snippet_coder_utils/hex_color.dart';
 
-import 'package:gimme/widget/customInputTextField.dart';
+import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -169,7 +169,7 @@ class _SearchPageState extends State<SearchPage> {
                         onRefresh: _refresh,
                         child: FutureBuilder(
                             //initialData: [ _fetchRequest.fetchRequests(getUserID())],
-                            future: getSearchedRequest(_To.text, _From.text),
+                            future: FetchSearchedRequest().getSearchedRequest(_To.text, _From.text),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 http.Response res =snapshot.data as http.Response;
@@ -241,15 +241,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  ///featching all result requests from search
-  Future<http.Response> getSearchedRequest(String to, String from) async {
-    var header = {
-      "Authorization": "Bearer " + (prefs.getString("token") as String)
-    };
-
-    var url = Uri.parse(Config.apiURl + Config.requestAPI + Config.searchRequestAPI + to + Config.searchFromRequestAPI + from); //payload['_id']);//Config.apiURl+ Config.getRequestAPI);
-    return await http.get(url, headers: header);
-  }
+  
 
   ///waiting untill refreshing
   Future<void> _refresh() async {

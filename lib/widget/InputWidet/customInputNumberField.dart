@@ -23,13 +23,13 @@ class CustomInputNumberField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,
+          labelStyle: const TextStyle(fontSize: 16),
           hintStyle: const TextStyle(fontSize: 17.5),
           //icon: Icon(icon)
         ),
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.digitsOnly
-       ], // Only numbers can be entered
-
+        ], // Only numbers can be insterted
       ),
     );
   }

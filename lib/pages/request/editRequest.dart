@@ -7,7 +7,8 @@ import 'dart:convert';
 
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/pages/HomeController.dart';
-import 'package:gimme/widget/customInputTextField.dart';
+import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
+import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -127,7 +128,7 @@ class _EditRequestState extends State<EditRequest> {
                       height: MediaQuery.of(context).size.height*0.09,
                       width: MediaQuery.of(context).size.width,
                       child: Padding(
-                        padding: const EdgeInsets.all(5),
+                        padding: EdgeInsets.only(top:10,bottom: 10,right: 20,left: 20),
                         child: Container(
                           decoration: BoxDecoration(
                               border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
@@ -141,7 +142,7 @@ class _EditRequestState extends State<EditRequest> {
                               /// contin
                               ),
                           child: Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(8),
                             child: CustomInputTextFieldWidget(
                               labelText: "Title",
                               hintText: "Old title : ${widget.title}",
@@ -158,7 +159,7 @@ class _EditRequestState extends State<EditRequest> {
                       height: MediaQuery.of(context).size.height*0.09,
                       width: MediaQuery.of(context).size.width,
                       child: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.only(top:10,bottom: 10,right: 20,left: 20),
                         child: Container(
                           decoration: BoxDecoration(
                               border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
@@ -171,7 +172,7 @@ class _EditRequestState extends State<EditRequest> {
                               )
                               ),
                           child: Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(8),
                             child: CustomInputTextFieldWidget(
                               labelText: "Body",
                               hintText: "Old Body :${widget.body}",
@@ -219,7 +220,7 @@ class _EditRequestState extends State<EditRequest> {
                     Row(//Time & Units
                       children: [
                         SizedBox(// time
-                          width: MediaQuery.of(context).size.width*0.4, //** price width it self **
+                          width: MediaQuery.of(context).size.width*0.36, //** price width it self **
                           height: MediaQuery.of(context).size.height*0.065,
                           child: Center(
                             child: Container(
@@ -236,42 +237,39 @@ class _EditRequestState extends State<EditRequest> {
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                 right: 10, left: 10, bottom: 9),
-                                child: CustomInputTextFieldWidget(
+                                child: CustomInputNumberField(
                                   labelText: "Time",
                                   hintText: "Time : ${widget.timerange}",
-                                  secure: false,
-                                  fillColor: Colors.white,
-                                  ccontroller: _timeRangeTextEditingController,
+                                  controller: _timeRangeTextEditingController,
+                                  
                                 ),
                               ),
                             ),
                           ),
                         ),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.04,),
                         SizedBox(// unit
-                          width: MediaQuery.of(context).size.width*0.43, //** price width it self **
+                          width: MediaQuery.of(context).size.width*0.36, //** price width it self **
                           height: MediaQuery.of(context).size.height*0.065,
-                          child: Padding(//max
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
-                                borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
+                              borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
                               ),
-                                child: Padding(
-                                padding: const EdgeInsets.only(right: 10, left: 10, bottom: 9),
-                                child: CustomInputTextFieldWidget(
-                                  labelText:"unit",
-                                  hintText: "${widget.timeUnit}",
-                                  secure: false,
-                                  fillColor: Colors.white,
-                                  ccontroller: _timeUnitsTextEditingController,
-                                ),
+                            ),
+                              child: Padding(
+                              padding: const EdgeInsets.only(right: 10, left: 10, bottom: 9),
+                              child: CustomInputTextFieldWidget(
+                                labelText:"unit",
+                                hintText: "${widget.timeUnit}",
+                                secure: false,
+                                fillColor: Colors.white,
+                                ccontroller: _timeUnitsTextEditingController,
                               ),
                             ),
                           ),
@@ -300,14 +298,10 @@ class _EditRequestState extends State<EditRequest> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(//Choose the delivery price.
-                    width: MediaQuery.of(context).size.width/2.7, //**delivery price Word width**
-                    decoration: const BoxDecoration(//from-to box decoration
-                      color: Colors.white,
-                    ),
+                    height: MediaQuery.of(context).size.height*0.03, //**delivery price Word hight**
                     child: const Padding(//word Price
                       padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Price",
+                      child: Text("Price",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -319,7 +313,7 @@ class _EditRequestState extends State<EditRequest> {
                   Row(
                     children: [
                       SizedBox(// price min
-                        width: MediaQuery.of(context).size.width*0.42, //** price width it self **
+                        width: MediaQuery.of(context).size.width*0.38, //** price width it self **
                         child: Padding(//min
                           padding: const EdgeInsets.only(right: 10,),
                           child: Container(
@@ -336,41 +330,36 @@ class _EditRequestState extends State<EditRequest> {
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   right: 10, left: 10, bottom: 9),
-                              child: CustomInputTextFieldWidget(
+                              child: CustomInputNumberField(
                                 labelText: "min",
                                 hintText: "${widget.minPr}",
-                                secure: false,
-                                ccontroller: _minPricreTextEditingController,
+                                controller: _minPricreTextEditingController,
                               ),
                             ),
                           ),
                         ),
                       ),
-
+                      SizedBox(width: MediaQuery.of(context).size.width*0.025,),
                       SizedBox(// price max
-                        width: MediaQuery.of(context).size.width*0.43, //** price width it self **
-                        child: Padding(//min
-                          padding: const EdgeInsets.only(right: 10,),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: fillColors,
-                                border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                    ),
+                        width: MediaQuery.of(context).size.width*0.36, //** price width it self **
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: fillColors,
+                              border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
                                   ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  right: 10, left: 10, bottom: 9),
-                              child: CustomInputTextFieldWidget(
-                                labelText: "max",
-                                hintText: "${widget.maxPr}",
-                                secure: false,
-                                ccontroller: _maxPricreTextEditingController,
-                              ),
+                                ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                right: 10, left: 10, bottom: 9),
+                            child: CustomInputNumberField(
+                              labelText: "max",
+                              hintText: "${widget.maxPr}",
+                              controller: _maxPricreTextEditingController,
                             ),
                           ),
                         ),
@@ -391,24 +380,24 @@ class _EditRequestState extends State<EditRequest> {
         
                 
           Container(//Temperory location
-            decoration: const BoxDecoration(color: Colors.white),
-            height: MediaQuery.of(context).size.height * 0.30,
+            height: MediaQuery.of(context).size.height * 0.27,
             width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(//Location word
                   padding: EdgeInsets.all(8.0),
-                  child: Text( "  Location ",
+                  child: Text( "     Location ",
                     style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 30,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ), //waiting for API data
                 Center(//Google maps widget *** some error
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.201,
+                    height: MediaQuery.of(context).size.height * 0.22,
                     width: MediaQuery.of(context).size.width * 0.85,
                     decoration: BoxDecoration(
                       color: HexColor("#BDBDBD"),
@@ -426,14 +415,14 @@ class _EditRequestState extends State<EditRequest> {
                             padding: const EdgeInsets.only(top: 15, bottom: 10, right: 20, left: 20),
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: fillColors,
-                                  border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                  ),
+                                color: fillColors,
+                                border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                ),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(10),

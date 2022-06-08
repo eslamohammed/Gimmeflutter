@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/Models/profileModel.dart';
-import 'package:gimme/Payment/PaymentScreentest%20.dart';
-import 'package:gimme/Payment/PaymentScreen.dart';
+import 'package:gimme/Models/profileModel.dart';
+
 
 import 'package:gimme/main.dart';
 
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/pages/notificationPage.dart';
-import 'package:gimme/pages/profiles/fetchAccountsData.dart';
+import 'package:gimme/Api/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
+import 'package:gimme/Payment/PaymentScreen.dart';
 
 
 

@@ -8,7 +8,7 @@ import 'package:gimme/main.dart';
 
 import 'package:gimme/pages/Comments/showComments.dart';
 import 'package:gimme/pages/request/editRequest.dart';
-import 'package:gimme/pages/request/requestItem/requestItem.dart';
+import 'package:gimme/widget/Cards/requestItem.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snippet_coder_utils/hex_color.dart';

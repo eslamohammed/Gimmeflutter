@@ -3,13 +3,14 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gimme/pages/Comments/Stripe/createStripeAccount.dart';
+import 'package:gimme/Payment/Stripe/createStripeAccount.dart';
+import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 
 import '../../main.dart';
 import 'package:gimme/pages/HomeController.dart';
 
 import 'package:gimme/utilies/config.dart';
-import 'package:gimme/widget/customInputTextField.dart';
+import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 import 'dart:convert';
@@ -80,6 +81,7 @@ class _AddCommentState extends State<AddComment> {
           ),
                   
           SizedBox(//price
+            height: MediaQuery.of(context).size.height*0.112,
             width: MediaQuery.of(context).size.width*0.9,
             //height: MediaQuery.of(context).size.height/9 ,
             child: Padding(
@@ -98,9 +100,12 @@ class _AddCommentState extends State<AddComment> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: CustomInputTextFieldWidget(hintText: "price",secure: false ,
-                  ccontroller: _priceTextEditingController, icon: Icons.update,
-                  fillColor: Colors.white,
+                  child: CustomInputNumberField(
+                    labelText: "price",
+                    hintText: "price",
+                    controller: _priceTextEditingController, 
+                    //icon: Icons.update,
+                  //fillColor: Colors.white,
                     ),
                   ),
                 ),
@@ -118,6 +123,7 @@ class _AddCommentState extends State<AddComment> {
           Row(//time & units
             children: [
               SizedBox(
+              height: MediaQuery.of(context).size.height*0.112,
               width: MediaQuery.of(context).size.width*0.45,
               //height: MediaQuery.of(context).size.height/9 ,
               child: Padding(//time
@@ -135,9 +141,11 @@ class _AddCommentState extends State<AddComment> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: CustomInputTextFieldWidget(hintText: "time",secure: false ,
-                    ccontroller: _timeTextEditingController, icon: Icons.update,
-                    fillColor: Colors.white,
+                    child: CustomInputNumberField(
+                      labelText:"Time",
+                      hintText: "time",
+                      controller: _timeTextEditingController, icon: Icons.update,
+                    //fillColor: Colors.white,
                       ),
                     )
                   ),
@@ -162,14 +170,16 @@ class _AddCommentState extends State<AddComment> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: CustomInputTextFieldWidget(hintText: "Uints               [w/d/h]",secure: false ,
-                ccontroller: _unitsTextEditingController, icon: Icons.update,
-                fillColor: Colors.white,
+                child: CustomInputTextFieldWidget(
+                  labelText:"Unit",
+                  hintText: "[w/d/h]",secure: false ,
+                  ccontroller: _unitsTextEditingController,
+                  fillColor: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
-             ),
-            ),
             ],
           ),
           
@@ -187,12 +197,15 @@ class _AddCommentState extends State<AddComment> {
               height: MediaQuery.of(context).size.height*0.23,
               width: MediaQuery.of(context).size.width*0.82,
               decoration: BoxDecoration(
+                 color: Colors.white,
                  border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child:  CustomInputTextFieldWidget(hintText: "Put some Comment ",secure: false ,
-              ccontroller: _commentTextEditingController,
-              fillColor: Colors.white,
+              child:  CustomInputTextFieldWidget(
+                labelText:"Comment",
+                hintText: "Put a Comment ",secure: false,
+                ccontroller: _commentTextEditingController,
+                fillColor: Colors.white,
               ) ,
             ),
           ),

@@ -4,8 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
+import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 
-import 'package:gimme/widget/customInputTextField.dart';
+import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -32,10 +33,10 @@ class _EditCommentState extends State<EditComment> {
 
   @override
   void dispose() {
-    _priceTextEditingController.dispose();
-    _timeTextEditingController.dispose();
-    _unitsTextEditingController.dispose();
-    _commentTextEditingController.dispose();
+      _priceTextEditingController.dispose();
+      _timeTextEditingController.dispose();
+      _unitsTextEditingController.dispose();
+      _commentTextEditingController.dispose();
     super.dispose();
   }
 
@@ -63,10 +64,8 @@ class _EditCommentState extends State<EditComment> {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [ 
-
           const Padding(//price word
             padding:EdgeInsets.only(
               top: 15,
@@ -94,7 +93,10 @@ class _EditCommentState extends State<EditComment> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: CustomInputTextFieldWidget(hintText: "price",secure: false ,ccontroller: _priceTextEditingController, icon: Icons.update,),
+                child: CustomInputNumberField(
+                  labelText: "price",
+                  hintText: "price",
+                  controller: _priceTextEditingController, icon: Icons.update,),
               )),
              ),
             ),
@@ -106,15 +108,14 @@ class _EditCommentState extends State<EditComment> {
               ),
               child: Text("Time",style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 25, color: Colors.black ,)),
             ),
-
           Row(//time & units
             children: [
-              SizedBox(
+            SizedBox(//time
             width: MediaQuery.of(context).size.width*0.45,
             //height: MediaQuery.of(context).size.height/9 ,
-          child: Padding(
+            child: Padding(
             padding: const EdgeInsets.all(20),
-            child : Container(
+            child : Container(//time
               decoration:  BoxDecoration(
                 border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
                 color: Colors.white,
@@ -132,32 +133,37 @@ class _EditCommentState extends State<EditComment> {
               )),
              ),
             ),
-            SizedBox(
-            width: MediaQuery.of(context).size.width*0.45,
+            SizedBox(//Uints
+              width: MediaQuery.of(context).size.width*0.45,
             //height: MediaQuery.of(context).size.height/9 ,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child : Container(
-              decoration:  BoxDecoration(
-                border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
-                color: Colors.white,
-                borderRadius:  const BorderRadius.only(  
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),  
-                  
-                )
+              child: Padding(//Uints  
+              padding: const EdgeInsets.all(20),
+              child : Container(
+                decoration:  BoxDecoration(
+                  border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
+                  color: Colors.white,
+                  borderRadius:  const BorderRadius.only(  
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),  
+                  )
+                ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: CustomInputTextFieldWidget(
+                      labelText: "Uints",
+                      hintText: "[d/h/min]",secure: false ,
+                      ccontroller: _unitsTextEditingController,
+                      fillColor: Colors.white,
+                      ),
+                    )
+                  ),
+                ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: CustomInputTextFieldWidget(hintText: "Uints                  [d/h/min]",secure: false ,ccontroller: _unitsTextEditingController, icon: Icons.update,),
-              )),
-             ),
-            ),
             ],
           ),
-          
+
           const Padding(//Text word
               padding:EdgeInsets.only(
                 top: 15,
@@ -221,9 +227,9 @@ Map<String,String> header = {
     {
     "time" : {
         "unit" : _unitsTextEditingController.text,
-        "val" : _timeTextEditingController.text
+        "val" : int.parse(_timeTextEditingController.text)
       },
-      "price" : _priceTextEditingController.text ,
+      "price" : int.parse(_priceTextEditingController.text),
       "text" : _commentTextEditingController.text
     });
 
