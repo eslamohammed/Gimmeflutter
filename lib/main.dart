@@ -5,7 +5,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/Chats/chatPage.dart';
 
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/pages/request/addRequest.dart';
 import 'package:gimme/pages/homePage.dart';
 import 'package:gimme/pages/loginPage/login_page.dart';

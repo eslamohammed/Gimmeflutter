@@ -8,7 +8,7 @@ import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/pages/Search/SearchRequestDetails.dart';
 import 'package:gimme/widget/Cards/requestResultCard.dart';
-import 'package:gimme/pages/Search/searchRequestModel.dart';
+import 'package:gimme/Models/searchRequestModel.dart';
 import 'package:gimme/pages/profiles/otherProfilesPage.dart';
 
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';
@@ -245,7 +245,8 @@ class _SearchPageState extends State<SearchPage> {
 
   ///waiting untill refreshing
   Future<void> _refresh() async {
-    return Future.delayed(const Duration(seconds: 2));
+    setState(() {});
+    return Future.delayed(const Duration(milliseconds: 500));
   }
 
   ///UI widget to show the result data

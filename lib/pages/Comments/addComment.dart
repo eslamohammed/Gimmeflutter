@@ -7,7 +7,7 @@ import 'package:gimme/Payment/Stripe/createStripeAccount.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 
 import '../../main.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/controller/HomeController.dart';
 
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';

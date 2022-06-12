@@ -3,7 +3,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/pages/request/requestDetails.dart';
 
@@ -190,7 +190,7 @@ class RequestItem extends StatelessWidget {
                             Icons.delete,
                             color: Colors.black,
                           ),
-                          heroTag: "${index}}",
+                          heroTag: "hi :${index}}",
                           backgroundColor: primaryColor,
                           onPressed: () {
                             print(reqID);
@@ -299,14 +299,6 @@ class RequestItem extends StatelessWidget {
     );
   }
 
-  Future<http.Response> fetchRequests() async {
-    var header = {
-      "Authorization": "Bearer " + (prefs.getString("token") as String)
-    };
-
-    var url = Uri.parse(Config.apiURl + Config.getAllRequestAPI);
-    return await http.get(url, headers: header);
-  }
 
   Future deleteRequest(BuildContext context, String id) async {
     Map<String, String> header = {

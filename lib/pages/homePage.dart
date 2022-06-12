@@ -5,11 +5,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gimme/Api/fetchRequest.dart';
 import 'package:gimme/Models/profileModel.dart';
 import 'package:gimme/Models/requestModel.dart';
 
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/Api/fetchAccountsData.dart';
 import 'package:gimme/widget/Cards/requestItem.dart';
 
@@ -25,8 +26,8 @@ class _HomeState extends State<Home>{
     final FetchAccounts _fetchMyAccount = FetchAccounts();
 
 
-  RequestItem _fetchRequest = RequestItem();
-  List <RequestModel> requests = [] ;
+  FetchRequest _fetchRequest = FetchRequest();
+ // List <RequestModel> requests = [] ;
 
 
 
@@ -171,8 +172,9 @@ class _HomeState extends State<Home>{
 }
 
   Future<void> _refresh() async {
+    setState(() {});
     return Future.delayed(
-      const Duration(seconds: 2)
+      const Duration(seconds: 1)
     );
   }
 

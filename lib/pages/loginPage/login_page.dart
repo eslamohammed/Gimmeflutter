@@ -2,7 +2,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/utilies/sharedPrefrances/sharedPrefsToken.dart';
 
@@ -155,8 +155,8 @@ class _Login_pageState extends State<Login_page> {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: CustomInputTextFieldWidget(
-                          hintText:
-                              "email                                     forExample@email.com",
+                          labelText: "email : forExample@email.com",
+                          hintText:"email                                     forExample@email.com",
                           secure: false,
                           ccontroller: _emailTextEditingController,
                           icon: Icons.update,
@@ -179,6 +179,7 @@ class _Login_pageState extends State<Login_page> {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: CustomInputTextFieldWidget(
+                            labelText: "password",
                             hintText: "password",
                             secure: true,
                             ccontroller: _passwordTextEditingController,
@@ -191,7 +192,6 @@ class _Login_pageState extends State<Login_page> {
                     padding: const EdgeInsets.all(15),
                     child: Center(
                       //login button & calling _loginToAccount() function;
-                      // ignore: deprecated_member_use
                       child: FlatButton(
                         onPressed: () async {
                           _loginToAccount();

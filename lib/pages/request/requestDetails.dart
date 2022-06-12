@@ -437,11 +437,9 @@ class RequestDetailsState extends State<RequestDetails> {
       ),
       floatingActionButton: FloatingActionButton(
         //delete function
-        onPressed: () {
-          //calling delete function to delete request
-          RequestItem()
-              .deleteRequest(context, reqID); //sending object id to be deleted
-        },
+        //calling delete function to delete request
+        onPressed: () =>RequestItem().deleteRequest(context, reqID), //sending object id to be deleted
+        heroTag: "$reqID",
         child: const Icon(
           Icons.delete,
           color: Colors.black,

@@ -7,6 +7,7 @@ import 'package:gimme/main.dart';
 import 'package:gimme/Models/CommentsModel.dart';
 import 'package:gimme/Api/fetchMyComment.dart';
 import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/widget/Cards/CommentCard.dart';
 
 
 import 'dart:convert';
@@ -61,11 +62,9 @@ class ShowCommentsState extends State<ShowComments> {
                     if(snapshot.hasData){
                     http.Response res = snapshot.data as http.Response;
                     var body = jsonDecode(res.body()); 
-                    //print(body);
-                    if (body['status']==true) {
+                    if (body['data'].isNotEmpty) {
                       List <CommentModel> comments = [] ;
                       comments.add(CommentModel.fromJson(body)); 
-                      //print(comments[0].data[0]['mod']);
                       switch(snapshot.connectionState){                        
                         case ConnectionState.waiting:
                           return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -83,22 +82,23 @@ class ShowCommentsState extends State<ShowComments> {
                           child :ListView.builder(
                             itemCount:comments[0].data.length ,
                             itemBuilder: (context , index){
-                              return  _commentsCard( //routing the data to comment card
-                                context,
+                              return  CommentCard( //routing the data to comment card 
                                 comments[0].data[index]['time']['unit'],
                                 comments[0].data[index]['time']['val'],
                                 comments[0].data[index]['_id'],
                                 comments[0].data[index]['userId'],
                                 comments[0].data[index]['text'],
                                 comments[0].data[index]['price'],
-                              //  comments[0].data[index]['mod'],
+                                comments[0].data[index]['mod'],
+                                key: Key("${index}"),
                               );
                             }
                           )
                         );
                       }
-                    } 
+                    }else{
                     return const Center(child: Text("\n\n\n\n\n\n\n\n\nNo Comments : Invalid Request",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),);
+                    } 
                   }else{
                     return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
                   }
@@ -141,6 +141,7 @@ class ShowCommentsState extends State<ShowComments> {
             http.Response res = snapshot.data as http.Response;
             List commenters = [] ;
               var body = jsonDecode(res.body()); 
+              print(body);
               commenters.add(CommentModel.fromJson(body)); 
               switch(snapshot.connectionState){                        
                 case ConnectionState.waiting:
@@ -333,19 +334,10 @@ Future<String> get_commenterName(String id) async{
 } 
 */
 Future<void> _refresh() async {
+    setState(() {});
     return Future.delayed(
-      const Duration(seconds: 2)
+      const Duration(milliseconds: 500)
     );
   }
 
 }
-
-
-
-
-/*
-
-
-
-
- */

@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:gimme/utilies/global_library.dart' as globals;
 
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/controller/HomeController.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 

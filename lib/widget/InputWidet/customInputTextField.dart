@@ -18,14 +18,22 @@ class CustomInputTextFieldWidget extends StatelessWidget {
   final TextEditingController ccontroller;
   final IconData? icon;
   final Color? fillColor;
+          
+  final x = AutofillHints.name;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: TextFormField(
+        /*autofillHints: [
+          AutofillHints.name,
+          AutofillHints.email,
+          AutofillHints.telephoneNumber,
+        //  AutofillHints.password,
+        ],*/
         keyboardType: TextInputType.multiline,
-        minLines: 1,
-        maxLines: 5,
+        //minLines: 1,
+        //maxLines: 5,
         controller: ccontroller,
         obscureText: secure,
         decoration: InputDecoration(

@@ -8,7 +8,7 @@ import 'package:gimme/Models/CommentsModel.dart';
 import 'package:gimme/pages/Comments/editComment.dart';
 
 import 'package:gimme/Api/fetchMyComment.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/Api/fetchAccountsData.dart';
 import 'package:gimme/widget/Cards/CommentCard.dart';
 import 'package:gimme/widget/Cards/MyCommentCard.dart';
@@ -614,8 +614,9 @@ Future  _deleteComment(BuildContext context ,String id) async{
   }
 
 Future<void> _refresh() async {
+  setState(() {});
     return Future.delayed(
-      const Duration(seconds: 2)
+      const Duration(milliseconds: 500)
     );
   }
 

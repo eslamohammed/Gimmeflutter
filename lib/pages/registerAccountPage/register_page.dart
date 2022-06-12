@@ -143,6 +143,7 @@ class _Register_pageState extends State<Register_page> {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: CustomInputTextFieldWidget(
+                            labelText:"Enter your name",
                             hintText: "username",
                             secure: false,
                             ccontroller: _nameTextEditingController,
@@ -166,8 +167,8 @@ class _Register_pageState extends State<Register_page> {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: CustomInputTextFieldWidget(
-                          hintText:
-                              "email                                                                            forExample@email.com",
+                          labelText: "Enter your email : forExample@email.com",
+                          hintText: "email                                                                            forExample@email.com",
                           secure: false,
                           ccontroller: _emailTextEditingController,
                           icon: Icons.email,
@@ -191,6 +192,7 @@ class _Register_pageState extends State<Register_page> {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: CustomInputTextFieldWidget(
+                          labelText: "phone +201xxxxxxxxx",
                           hintText: "phone",
                           secure: false,
                           ccontroller: _phoneTextEditingController,
@@ -239,6 +241,7 @@ class _Register_pageState extends State<Register_page> {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: CustomInputTextFieldWidget(
+                          labelText: "Enter your password",
                           hintText: "password",
                           secure: true,
                           ccontroller: _passwordTextEditingController,

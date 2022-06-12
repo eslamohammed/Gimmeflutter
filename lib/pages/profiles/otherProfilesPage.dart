@@ -251,10 +251,4 @@ class OthersProfilePages extends StatelessWidget {
     );
 
   }
-
-   Future<void> _refresh() async {
-    return Future.delayed(
-      const Duration(seconds: 2)
-    );
-  }
 }

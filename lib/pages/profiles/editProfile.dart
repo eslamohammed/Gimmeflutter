@@ -5,12 +5,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/HomeController.dart';
+import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+
+import 'package:gimme/utilies/global_library.dart' as globals;
 
 import 'package:http/http.dart' as http;
 
@@ -232,8 +234,8 @@ Widget _editProfilePageUI(BuildContext context){
                   child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FlatButton(onPressed: () async{//Calling edit profile() function
-                  _editProfile(context ,getUserID());
-                  print(getUserID());
+                  _editProfile(context , globals.getUserID());
+                  print(globals.getUserID());
                   },
                   child: Padding(//Add Request
                   padding: const EdgeInsets.all(12.5),
@@ -317,15 +319,4 @@ Map<String,String> header = {
       }
   }
 
-  
-  String getUserID(){ //method to decode the token
-    // To decode the token
-    String? token = prefs.getString("token") ;
-    Map<String, dynamic> payload = Jwt.parseJwt(token!);
-    //print(payload);                                     // Print the payload
-    //print(payload['_id']);                              // Print one of its property(example: email):
-  return payload['_id'] ;
-  }
-  
-  
 }

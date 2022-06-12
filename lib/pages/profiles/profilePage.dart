@@ -3,6 +3,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gimme/Api/fetchRequest.dart';
 import 'package:gimme/Models/profileModel.dart';
 import 'package:gimme/Models/requestModel.dart';
 import 'package:gimme/utilies/config.dart';
@@ -30,7 +31,7 @@ class _ProfilePagesState extends State< ProfilePages >{
 
   final FetchAccounts _fetchMyAccount = FetchAccounts();
 
-  final RequestItem _fetchRequest = RequestItem();
+  final FetchRequest _fetchRequest = FetchRequest();
   List <RequestModel> requests = [] ;
 
 
@@ -55,7 +56,7 @@ Widget _profilePageUI(BuildContext context){
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           RefreshIndicator(
-             onRefresh: _refresh,
+            onRefresh: _refresh,
             child: FutureBuilder(
               future: _fetchMyAccount.fetchMyAccount(),
               builder: (context , snapshot){
@@ -307,6 +308,9 @@ Future fetchRequests(String id) async{
   
 
   Future<void> _refresh() async {
+    setState(() {
+      
+    });
     return Future.delayed(
       Duration(seconds: 2)
     );
