@@ -2,7 +2,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:gimme/Google_maps/googleMap.dart';
+import 'package:gimme/modules/Google_maps/googleMap.dart';
 import 'dart:convert';
 
 import 'package:gimme/utilies/config.dart';

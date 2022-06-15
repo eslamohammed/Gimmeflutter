@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_stripe/flutter_stripe.dart';
 
-import 'package:gimme/Google_maps/googleMap.dart';
+import 'package:gimme/modules/Google_maps/googleMap.dart';
 import 'package:gimme/Chats/chatPage.dart';
 
 import 'package:gimme/controller/HomeController.dart';

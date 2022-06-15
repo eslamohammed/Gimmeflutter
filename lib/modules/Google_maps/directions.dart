@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gimme/Google_maps/.env.dart';
-import 'package:gimme/Google_maps/directions_model.dart';
+import 'package:gimme/modules/Google_maps/.env.dart';
+import 'package:gimme/modules/Google_maps/directions_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Directionss{

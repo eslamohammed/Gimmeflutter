@@ -7,7 +7,7 @@ import 'package:snippet_coder_utils/hex_color.dart';
 
 import 'package:gimme/main.dart';
 
-import 'package:gimme/Google_maps/googleMap.dart';
+import 'package:gimme/modules/Google_maps/googleMap.dart';
 import 'package:gimme/modules/Comments/addComment.dart';
 import 'package:gimme/modules/Comments/showSearchedReqComments.dart';
 

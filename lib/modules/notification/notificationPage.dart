@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gimme/Google_maps/getLatLong.dart';
+import 'package:gimme/modules/Google_maps/getLatLong.dart';
 import 'package:gimme/main.dart';
-import 'package:snippet_coder_utils/hex_color.dart';
-
 class NotificationPage extends StatefulWidget {
   @override
   _NotificationPageState createState() => _NotificationPageState();

@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
-import 'package:gimme/Google_maps/googleMap.dart';
+import 'package:gimme/modules/Google_maps/googleMap.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';
