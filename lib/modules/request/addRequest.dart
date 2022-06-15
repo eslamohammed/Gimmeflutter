@@ -131,12 +131,7 @@ class _AddRequestState extends State<AddRequest> {
                         decoration: BoxDecoration(
                             border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
                             color: grayColor,
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
-                              ),
+                            borderRadius:  BorderRadius.circular(10),
                             /// contin
                             ),
                         child: Padding(

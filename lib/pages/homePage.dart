@@ -41,7 +41,7 @@ class _HomeState extends State<Home>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar:  AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 65,
       title:const Text('Home' , style: TextStyle(color: Colors.black , fontSize: 47.5 ,fontWeight: FontWeight.bold),),
       centerTitle: true,
       backgroundColor: Colors.white,
