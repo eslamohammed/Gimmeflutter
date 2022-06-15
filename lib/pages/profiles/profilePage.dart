@@ -239,8 +239,7 @@ Widget _profilePageUI(BuildContext context){
                                         scrollDirection: Axis.horizontal,
                                         itemCount:requests[0].data.length ,
                                         itemBuilder: (context , index){
-                                          return  RequestItem().requestCard( //sending data to request card
-                                            context,
+                                          return  RequestItem( //sending data to request card
                                             index,
                                             requests[0].data[index]['body'].toString(),
                                             requests[0].data[index]['title'].toString(),

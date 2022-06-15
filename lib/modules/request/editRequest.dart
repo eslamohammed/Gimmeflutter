@@ -524,7 +524,6 @@ class _EditRequestState extends State<EditRequest> {
                   child: FlatButton(
                     onPressed: () async {//Calling editRequest() function
                       editRequest(widget.reqID);
-                      
                     },
                     child: Padding(//Edit Request
                       padding: const EdgeInsets.all(12.5),
@@ -556,7 +555,7 @@ class _EditRequestState extends State<EditRequest> {
     );
   }
 
-  ///API
+///API
 ////http://192.168.1.4:8080/api + /request + /edit/: + id[req Id]
   Future editRequest(String id) async {
     Map<String, String> header = {

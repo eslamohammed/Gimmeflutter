@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/Models/CommentsModel.dart';
-import 'package:gimme/pages/Comments/editComment.dart';
+import 'package:gimme/modules/Comments/editComment.dart';
 
 import 'package:gimme/Api/fetchMyComment.dart';
 import 'package:gimme/controller/HomeController.dart';

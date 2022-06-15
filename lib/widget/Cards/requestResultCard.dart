@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/pages/Search/SearchRequestDetails.dart';
+import 'package:gimme/modules/Search/SearchRequestDetails.dart';
 import 'package:gimme/Api/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/otherProfilesPage.dart';
 

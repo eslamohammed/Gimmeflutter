@@ -1,15 +1,15 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gimme/pages/Comments/showComments.dart';
+import 'package:gimme/modules/Comments/showComments.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 
 import 'package:gimme/main.dart';
 
 import 'package:gimme/Google_maps/googleMap.dart';
-import 'package:gimme/pages/Comments/addComment.dart';
-import 'package:gimme/pages/Comments/showSearchedReqComments.dart';
+import 'package:gimme/modules/Comments/addComment.dart';
+import 'package:gimme/modules/Comments/showSearchedReqComments.dart';
 
 import 'package:gimme/utilies/global_library.dart' as globals;
 

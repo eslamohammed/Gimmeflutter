@@ -5,10 +5,10 @@ import 'package:gimme/Models/profileModel.dart';
 import 'package:gimme/main.dart';
 
 import 'package:gimme/pages/loginPage/login_page.dart';
-import 'package:gimme/pages/notificationPage.dart';
+import 'package:gimme/modules/notification/notificationPage.dart';
 import 'package:gimme/Api/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
-import 'package:gimme/Payment/PaymentScreen.dart';
+import 'package:gimme/modules/Payment/PaymentScreen.dart';
 
 
 

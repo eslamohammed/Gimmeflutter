@@ -1,24 +1,61 @@
-// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gimme/Api/deleteRequest.dart';
 import 'package:gimme/main.dart';
-import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
-import 'package:gimme/pages/request/requestDetails.dart';
+import 'package:gimme/modules/request/requestDetails.dart';
 
 import 'package:gimme/utilies/config.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:snippet_coder_utils/FormHelper.dart';
-
 class RequestItem extends StatelessWidget {
+  final index;
+  final reqbody;
+  final reqtitle;
+  final reqid;
+  final reqtimeRange;
+  final reqMinPrice;
+  final reqMaxPrice;
+  final unit;
+  final from;
+  final to;
+
+  final userName;
+  RequestItem(
+    this.index,
+    this.reqbody,
+    this.reqtitle,
+    this.reqid,
+    this.reqtimeRange,
+    this.reqMinPrice,
+    this.reqMaxPrice,
+    this.unit,
+    this.from,
+    this.to,
+
+    this.userName
+  );
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return _requestCard(
+      context,
+      index,
+      reqbody,
+      reqtitle,
+      reqid,
+      reqtimeRange,
+      reqMinPrice,
+      reqMaxPrice,
+      unit,
+      from,
+      to,
+
+      userName
+    );
   }
 
-  Widget requestCard(
+  Widget _requestCard(
     BuildContext context,
     int index,
     String reqBody,
@@ -194,7 +231,7 @@ class RequestItem extends StatelessWidget {
                           backgroundColor: primaryColor,
                           onPressed: () {
                             print(reqID);
-                            deleteRequest(context,reqID); //sending object id to be deleted
+                            DeleteRequest().deleteRequest(context,reqID); //sending object id to be deleted
                           }),
                     ),
                     /* Padding(//just for margin
@@ -297,63 +334,6 @@ class RequestItem extends StatelessWidget {
         ),
       ),
     );
-  }
-
-
-  Future deleteRequest(BuildContext context, String id) async {
-    Map<String, String> header = {
-      "Authorization": "Bearer " + (prefs.getString("token") as String),
-    };
-
-    var url = Uri.parse(
-        Config.apiURl + Config.requestAPI + Config.deleteRequestAPI + id);
-    var response = await http.delete(url, headers: header);
-
-    if (response.statusCode == 200) {
-      FormHelper.showSimpleAlertDialog(
-        context,
-        Config.appName,
-        " Request has been deleted !!! ",
-        "Ok",
-        () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeControllerPage()));
-        },
-      );
-    } else if (response.statusCode == 400) {
-      FormHelper.showSimpleAlertDialog(
-        context,
-        Config.appName,
-        " ${response.statusCode} Bad Request! , Invalid Syntax : request is not deleted ",
-        "Ok",
-        () {
-          Navigator.pop(context);
-        },
-      );
-      print("reject");
-    } else if (response.statusCode == 403) {
-      FormHelper.showSimpleAlertDialog(
-        context,
-        Config.appName,
-        "Eror ${response.statusCode} : Forbidden!!,\n\nCan't perform this action / Can't delete : must be closed ",
-        "Ok",
-        () {
-          Navigator.pop(context);
-        },
-      );
-      print("reject");
-    } else if (response.statusCode == 404) {
-      FormHelper.showSimpleAlertDialog(
-        context,
-        Config.appName,
-        "Error ${response.statusCode}: Not Found!,\t Request not found ",
-        "Ok",
-        () {
-          Navigator.pop(context);
-        },
-      );
-      print("reject");
-    }
   }
 
 

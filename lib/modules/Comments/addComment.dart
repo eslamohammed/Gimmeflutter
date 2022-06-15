@@ -3,7 +3,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gimme/Payment/Stripe/createStripeAccount.dart';
+import 'package:gimme/modules/Payment/Stripe/createStripeAccount.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 
 import '../../main.dart';

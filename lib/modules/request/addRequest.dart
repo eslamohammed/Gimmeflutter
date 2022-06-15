@@ -751,8 +751,8 @@ class _AddRequestState extends State<AddRequest> {
       );
     }
   }
-
-  Future getRequest(String id) async {
+/*
+  Future _getRequest(String id) async {
     bool? status;
     String? msessage;
     dynamic data;
@@ -827,7 +827,7 @@ class _AddRequestState extends State<AddRequest> {
     }
   }
 
-  Future deleteRequest(String id) async {
+  Future _deleteRequest(String id) async {
 //  var header = {"Authorization":"Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ5YWJkNmQ4MzUzODMxZDI1Nzg5MmQiLCJpYXQiOjE2NDk2ODMxNTB9.4UZEwg4UvTHR6AIZ2KyHvtcDxwpPJpjFUVLO1WZrT2A"};//(prefs.getString("token") as String)};
     //var url = Uri.parse("http://192.168.1.4:8080/api/request/open"); //http://localhost:8080/api/request/open
     Map<String, String> header = {
@@ -843,5 +843,5 @@ class _AddRequestState extends State<AddRequest> {
     } else {
       print("reject");
     }
-  }
+  }*/
 }

@@ -6,12 +6,12 @@ import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/Chats/chatPage.dart';
 
 import 'package:gimme/controller/HomeController.dart';
-import 'package:gimme/pages/request/addRequest.dart';
+import 'package:gimme/modules/request/addRequest.dart';
 import 'package:gimme/pages/homePage.dart';
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/pages/registerAccountPage/register_page.dart';
-import 'package:gimme/pages/Search/searchPage.dart';
+import 'package:gimme/modules/Search/searchPage.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';

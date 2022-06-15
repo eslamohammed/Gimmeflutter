@@ -106,8 +106,7 @@ class _HomeState extends State<Home>{
                                     return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
                         
                                   case ConnectionState.done:
-                                  return RequestItem().requestCard( //sending data to request card
-                                    context,
+                                  return RequestItem( //sending data to request card
                                     index,
                                     requests[0].data[index]['body'].toString(),
                                     requests[0].data[index]['title'].toString(),

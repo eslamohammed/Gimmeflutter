@@ -3,11 +3,12 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:gimme/Api/deleteRequest.dart';
 import 'package:gimme/Google_maps/googleMap.dart';
 import 'package:gimme/main.dart';
 
-import 'package:gimme/pages/Comments/showComments.dart';
-import 'package:gimme/pages/request/editRequest.dart';
+import 'package:gimme/modules/Comments/showComments.dart';
+import 'package:gimme/modules/request/editRequest.dart';
 import 'package:gimme/widget/Cards/requestItem.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -438,7 +439,7 @@ class RequestDetailsState extends State<RequestDetails> {
       floatingActionButton: FloatingActionButton(
         //delete function
         //calling delete function to delete request
-        onPressed: () =>RequestItem().deleteRequest(context, reqID), //sending object id to be deleted
+        onPressed: () =>DeleteRequest().deleteRequest(context, reqID), //sending object id to be deleted
         heroTag: "$reqID",
         child: const Icon(
           Icons.delete,
