@@ -139,24 +139,19 @@ class _Login_pageState extends State<Login_page> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(//email
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(left: 20 , right: 20 , bottom: 10 , top: 10),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: HexColor("#E5E5E5"),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(25),
-                            bottomRight: Radius.circular(25),
-                            topLeft: Radius.circular(25),
-                            bottomLeft: Radius.circular(25),
-                          )
-
+                          border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
+                          color: fillColors,
+                          borderRadius: BorderRadius.circular(10),
                           /// contin
                           ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: CustomInputTextFieldWidget(
-                          labelText: "email : forExample@email.com",
-                          hintText:"email                                     forExample@email.com",
+                          labelText: "Email : forExample@email.com",
+                          hintText:"Email                                     forExample@email.com",
                           secure: false,
                           ccontroller: _emailTextEditingController,
                           icon: Icons.update,
@@ -166,16 +161,12 @@ class _Login_pageState extends State<Login_page> {
                   ),
 
                   Padding(//password
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(left: 20 , right: 20 , bottom: 15 , top: 10),
                     child: Container(
                         decoration: BoxDecoration(
-                            color: HexColor("#E5E5E5"),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(25),
-                              bottomRight: Radius.circular(25),
-                              topLeft: Radius.circular(25),
-                              bottomLeft: Radius.circular(25),
-                            )),
+                            border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
+                            color: fillColors,
+                            borderRadius: BorderRadius.circular(10)),
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: CustomInputTextFieldWidget(
@@ -191,7 +182,7 @@ class _Login_pageState extends State<Login_page> {
                   Padding(//Login
                     padding: const EdgeInsets.all(15),
                     child: Center(
-                      //login button & calling _loginToAccount() function;
+                      ///login button & calling _loginToAccount() function;
                       child: FlatButton(
                         onPressed: () async {
                           _loginToAccount();
@@ -203,7 +194,7 @@ class _Login_pageState extends State<Login_page> {
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: const Center(
                               child: Text(
-                                "   Login",
+                                "Login",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

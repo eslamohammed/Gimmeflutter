@@ -121,7 +121,7 @@ class _Register_pageState extends State<Register_page> {
             ),
             SizedBox(// username , email , password , phone... //Register
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.55,
+              height: MediaQuery.of(context).size.height*0.57,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,13 +131,8 @@ class _Register_pageState extends State<Register_page> {
                     child: Container(
                         decoration: BoxDecoration(
                             color: HexColor("#E5E5E5"),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(25),
-                              bottomRight: Radius.circular(25),
-                              topLeft: Radius.circular(25),
-                              bottomLeft: Radius.circular(25),
-                            )
-
+                            borderRadius: BorderRadius.circular(10),
+                            border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
                             /// contin
                             ),
                         child: Padding(
@@ -157,12 +152,8 @@ class _Register_pageState extends State<Register_page> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: HexColor("#E5E5E5"),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
-                          topLeft: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
@@ -182,12 +173,8 @@ class _Register_pageState extends State<Register_page> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: HexColor("#E5E5E5"),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
-                          topLeft: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
@@ -207,12 +194,8 @@ class _Register_pageState extends State<Register_page> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: HexColor("#E5E5E5"),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
-                          topLeft: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
@@ -231,12 +214,8 @@ class _Register_pageState extends State<Register_page> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: HexColor("#E5E5E5"),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
-                          topLeft: Radius.circular(25),
-                          bottomLeft: Radius.circular(25),
-                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
@@ -268,7 +247,7 @@ class _Register_pageState extends State<Register_page> {
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: const Center(
                               child: Text(
-                                "   Register",
+                                "Register",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
