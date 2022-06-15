@@ -40,6 +40,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          toolbarHeight: 65,
           title: const Text(
             'Home',
             style: TextStyle(
@@ -79,11 +80,12 @@ class _SearchPageState extends State<SearchPage> {
             child: Column(
               children: [
                 Padding(//From
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.only(left: 20 , right: 20 , bottom: 15 , top: 10),
                   child: Container(
                       decoration: BoxDecoration(
                           color: fillColors,
-                          borderRadius: BorderRadius.circular(25)),
+                          border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
+                          borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomInputTextFieldWidget(
@@ -96,11 +98,12 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                 ),
                 Padding(//To
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.only(left: 20 , right: 20 , bottom: 15),
                   child: Container(
                     decoration: BoxDecoration(
-                        color:fillColors,
-                        borderRadius: BorderRadius.circular(25)),
+                      color:fillColors,
+                      border:  Border.all(color: Colors.black26 ,width:1 ,style: BorderStyle.solid ),
+                      borderRadius: BorderRadius.circular(10)),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomInputTextFieldWidget(
