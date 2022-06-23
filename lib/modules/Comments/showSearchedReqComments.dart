@@ -73,85 +73,66 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                       if(snapshot.hasData){
                       http.Response res = snapshot.data as http.Response;
                       var body = jsonDecode(res.body()); 
-                      //print("${body}");
-                      if (body['data'].isEmpty){
-                        print("no comments");
-                        return Center(child: Column(
-                        // ignore: prefer_const_literals_to_create_immutables
-                          children: [
-                            const Text("\n\n\n\n\n\n\n\n\nNo Comments Exist...",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
-                            const Text("Add one to be first Commenter",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
-                          ],
-                        ),
-                      );
-                      }else{
-                        print("showSearchedReqComments");
-                        //List <SearchedReqCommentsModel> comments = [] ;
-                        //comments.add(SearchedReqCommentsModel.fromJson(body)); 
-                        List comments =[];
-                        comments.add(body);
-                        switch(snapshot.connectionState){                        
-                          case ConnectionState.waiting:
-                            return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
-                            
-                          case ConnectionState.none:
-                            return const Center(child: Text("Error in connection"),);
-                
-                          case ConnectionState.active:
-                            return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
-                
-                          case ConnectionState.done:
-                          return SizedBox(
-                            height: 860,
-                            width: 800,
-                            child :ListView.builder(
-                              itemCount:comments[0]['data'].length ,
-                              itemBuilder: (context , index){
-                                /*
-                                return comments[0]['data'][index]['userId'] == globals.getUserID()? _ownCommentsCard( //routing the data to comment card
-                                  context,
-                                  comments[0]['data'][index]['time']['unit'],
-                                  comments[0]['data'][index]['time']['val'],
-                                  comments[0]['data'][index]['_id'],
-                                  comments[0]['data'][index]['userId'],
-                                  comments[0]['data'][index]['text'],
-                                  comments[0]['data'][index]['price'],
-                                  comments[0]['data'][index]['mod'],
-                                ):_commentsCard( //routing the data to comment card
-                                  context,
-                                  comments[0]['data'][index]['time']['unit'],
-                                  comments[0]['data'][index]['time']['val'],
-                                  comments[0]['data'][index]['_id'],
-                                  comments[0]['data'][index]['userId'],
-                                  comments[0]['data'][index]['text'],
-                                  comments[0]['data'][index]['price'],
-                                  comments[0]['data'][index]['mod'],
-                                );*/
-                                return comments[0]['data'][index]['userId'] == globals.getUserID()? MyCommentCard(
-                                  comments[0]['data'][index]['time']['unit'],
-                                  comments[0]['data'][index]['time']['val'],
-                                  comments[0]['data'][index]['_id'],
-                                  comments[0]['data'][index]['userId'],
-                                  comments[0]['data'][index]['text'],
-                                  comments[0]['data'][index]['price'],
-                                  comments[0]['data'][index]['mod'],
-                                  widget.id,
-                                  key: Key("${index}"),
-                                ):CommentCard(
-                                  comments[0]['data'][index]['time']['unit'],
-                                  comments[0]['data'][index]['time']['val'],
-                                  comments[0]['data'][index]['_id'],
-                                  comments[0]['data'][index]['userId'],
-                                  comments[0]['data'][index]['text'],
-                                  comments[0]['data'][index]['price'],
-                                  comments[0]['data'][index]['mod'],
-                                  key: Key("${index}"),
-                                );
-                              }
-                            )
-                          );
-                        }
-                      } 
+                      print("hi :${body}");
+                        if (body['data'].isEmpty){
+                          print("no comments");
+                          return Center(child: Column(
+                          // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              const Text("\n\n\n\n\n\n\n\n\nNo Comments Exist...",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
+                              const Text("Add one to be first Commenter",style: TextStyle(color: Colors.black , fontSize: 35 ,fontWeight: FontWeight.bold),),
+                            ],
+                          ),
+                        );
+                        }else{
+                          print("${body}");
+                          print("showSearchedReqComments");
+                          //List <SearchedReqCommentsModel> comments = [] ;
+                          //comments.add(SearchedReqCommentsModel.fromJson(body)); 
+                          List comments =[];
+                          comments.add(body);
+                          switch(snapshot.connectionState){                        
+                            case ConnectionState.waiting:
+                              return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                              
+                            case ConnectionState.none:
+                              return const Center(child: Text("Error in connection"),);
+                  
+                            case ConnectionState.active:
+                              return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                  
+                            case ConnectionState.done:
+                            return SizedBox(
+                              height: 860,
+                              width: 800,
+                              child :ListView.builder(
+                                itemCount:comments[0]['data'].length ,
+                                itemBuilder: (context , index){
+                                  return comments[0]['data'][index]['userId'] == globals.getUserID()? MyCommentCard(
+                                    comments[0]['data'][index]['time']['unit'],
+                                    comments[0]['data'][index]['time']['val'],
+                                    comments[0]['data'][index]['_id'],
+                                    comments[0]['data'][index]['userId'],
+                                    comments[0]['data'][index]['text'],
+                                    comments[0]['data'][index]['price'],
+                                    comments[0]['data'][index]['mod'],
+                                    widget.id,
+                                    key: Key("${index}"),
+                                  ):CommentCard(
+                                    comments[0]['data'][index]['time']['unit'],
+                                    comments[0]['data'][index]['time']['val'],
+                                    comments[0]['data'][index]['_id'],
+                                    comments[0]['data'][index]['userId'],
+                                    comments[0]['data'][index]['text'],
+                                    comments[0]['data'][index]['price'],
+                                    comments[0]['data'][index]['mod'],
+                                    key: Key("${index}"),
+                                  );
+                                }
+                              )
+                            );
+                          }
+                        } 
                     }else{
                       return const Center(child: CircularProgressIndicator(backgroundColor: Colors.black,),);
                     }

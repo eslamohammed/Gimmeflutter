@@ -62,6 +62,9 @@ class ShowCommentsState extends State<ShowComments> {
                     if(snapshot.hasData){
                     http.Response res = snapshot.data as http.Response;
                     var body = jsonDecode(res.body()); 
+                    print("User ID :"+widget.id);
+                    print(body);
+                    print("User ID :"+widget.id);
                     if (body['data'].isNotEmpty) {
                       List <CommentModel> comments = [] ;
                       comments.add(CommentModel.fromJson(body)); 

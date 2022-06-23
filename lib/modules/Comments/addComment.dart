@@ -219,9 +219,13 @@ class _AddCommentState extends State<AddComment> {
               child: TextButton(
                 child:Text("Submit",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                 onPressed: (){
+                   try {
                   //addComment function here
                   _addComment(context);
                   debugPrint(widget.reqID);
+                  } catch (e) {
+                    print("hallo");
+                  }
                 },
                 style: ButtonStyle(
                   //maximumSize: Size.infinite,
@@ -311,6 +315,7 @@ Map<String,String> header = {
               "${body["message"]}",
               "Ok", 
               (){
+                Navigator.pop(context);
                 Navigator.pop(context);
               },
             );

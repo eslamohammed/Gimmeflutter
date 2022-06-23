@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/modules/Comments/editComment.dart';
 import 'package:gimme/controller/HomeController.dart';
+import 'package:gimme/modules/Comments/showSearchedReqComments.dart';
 import 'package:gimme/utilies/config.dart';
 import 'package:gimme/main.dart';
 
@@ -18,23 +19,23 @@ class MyCommentCard extends StatelessWidget {
      //{ Key? key }
      this.timeUnits,
      this.timeValue,
-     this.userID,
+     this.commentID,
      this.commenterUserID,
      this.text,
      this.price,
      this.mod,
-     this.id, {Key? key}
+     this.reqId, {Key? key}
      ) : super(key: key);
 
   final FetchAccounts _fetchOthersAccount = FetchAccounts();
   final  String timeUnits;
   final  dynamic timeValue;
-  final  String userID;
+  final  String commentID;
   final  dynamic commenterUserID;
   final  dynamic text;
   final  dynamic price;
   final  dynamic mod;
-  final  id;
+  final  String reqId;
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +43,12 @@ class MyCommentCard extends StatelessWidget {
       context,
       timeUnits,
       timeValue,
-      userID,
+      commentID,
       commenterUserID,
       text,
       price,
       mod,
+      reqId
     );
   }
 
@@ -55,12 +57,12 @@ class MyCommentCard extends StatelessWidget {
     BuildContext context, /*, String id*/
     String timeUnits,
     dynamic timeValue,
-    String userID,//user { request owner/created by} ID
+    String commentID,//user { request owner/created by} ID
     String commenterUserID, //user {2nd part : current user who'm make the comment} ID
     String text,
     dynamic price,
     dynamic mod,
-
+    String requestID
     ){
     return Card(  
       elevation: 6,
@@ -73,8 +75,7 @@ class MyCommentCard extends StatelessWidget {
             List commenters = [] ;
               var body = jsonDecode(res.body()); 
               commenters.add(CommentModel.fromJson(body));
-              print(body);
-              print(commenters[0].data);
+              print("MyCommentCard :${body}");
               switch(snapshot.connectionState){                        
                 case ConnectionState.waiting:
                   return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
@@ -139,7 +140,7 @@ class MyCommentCard extends StatelessWidget {
                                   child:const Text("Edit",style: TextStyle(fontSize: 20 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                                   onPressed: () =>//Edit [methods] page
                                     Navigator.push(context , MaterialPageRoute( 
-                                      builder: (context) => EditComment( id ),
+                                      builder: (context) => EditComment( reqId ),
                                       ),
                                     ),//routing to edit page,
                                   
@@ -173,7 +174,7 @@ class MyCommentCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),),
                             height: MediaQuery.of(context).size.height*0.12,
                             width: MediaQuery.of(context).size.width*0.9,
-                              child: Row(
+                              child: Row(//price & units & delete
                                 //crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -183,7 +184,8 @@ class MyCommentCard extends StatelessWidget {
                                     child: TextButton(
                                       child: Text("${price}  EGP",style: const TextStyle(fontSize: 15 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                                       onPressed: (){
-
+                                        print("Request ID :"+reqId);
+                                        print("Comment ID :"+commentID);
                                       },
                                       style: ButtonStyle(
                                         //maximumSize: Size.infinite,
@@ -197,7 +199,7 @@ class MyCommentCard extends StatelessWidget {
                                   ),
                                 ),    
 
-                                  const SizedBox(width: 5,),
+                                  SizedBox(width: MediaQuery.of(context).size.width*0.01,),
 
                                   SizedBox(//Time value & unit
                                       height: MediaQuery.of(context).size.height*0.075,
@@ -229,7 +231,8 @@ class MyCommentCard extends StatelessWidget {
                                       iconSize: 39,
                                       icon: const Icon(Icons.delete),
                                       onPressed: ()=>{ ///calling delete comment method
-                                        _deleteComment(context,id)
+                                        _deleteComment(context,requestID,commentID)
+
                                       },
                                     ),
                                   ),
@@ -251,12 +254,30 @@ class MyCommentCard extends StatelessWidget {
   }
 
 
-Future  _deleteComment(BuildContext context ,String id) async{ 
+Future  _deleteComment(BuildContext context ,String reqId , String commentId) async{ 
   
-  Map<String,String> header = { "Authorization":"Bearer " + (prefs.getString("token") as String),};
-
-    var url = Uri.parse(Config.apiURl+Config.commentAPI+ id);
-    var response = await http.delete(url , headers: header);
+  Map<String,String> header = {
+    "Authorization":"Bearer " + (prefs.getString("token") as String),
+    'Content-Type': 'application/json; charset=UTF-8'
+    };
+  /*String bodii = json.encode(
+      {
+        
+        "reqId" : reqId as String,
+        "commentId" : commentID
+        
+      }
+    );*/
+    var url = Uri.parse(Config.apiURl + Config.commentAPI);
+    var response = await http.delete(
+      url ,
+      body: json.encode(
+        {
+          "reqId" : reqId,
+          "commentId" : commentID
+        }
+      ),
+      headers: header );
 
     if(response.statusCode == 200){
     var body = jsonDecode(response.body());
@@ -265,33 +286,35 @@ Future  _deleteComment(BuildContext context ,String id) async{
       FormHelper.showSimpleAlertDialog(
         context, 
         Config.appName,
-        "Success : Comment has been deleted !!!",
+        "${body["message"]}",
         "Ok", 
         (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()));  
+        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ShowSearchedReqComments(reqId)));  
+          Navigator.pop(context);
+          Navigator.pop(context);
       },);
       } else {
         FormHelper.showSimpleAlertDialog(
         context, 
         Config.appName,
-        "Faild : Something went Error !!!",
+        "Error:${body["message"]}",
         "Ok", 
         (){
         Navigator.pop(context);  
         //Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()));  
       },);
       }
-    }else if (response.statusCode == 404){
+    }else{
+      var body = jsonDecode(response.body());
+      print(body);
       FormHelper.showSimpleAlertDialog(
       context, 
       Config.appName,
-      "Error ${response.statusCode}: Comment doens't exist ",
+      "Error:${response.statusCode}\n${body["message"]["formErrors"]}",
       "Ok", 
       (){
       Navigator.pop(context);  
     },);
     }  
   }
-
-
 }

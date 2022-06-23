@@ -220,8 +220,10 @@ class CommentCard extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),),
                                     width: MediaQuery.of(context).size.width*0.425
                                   ),
+                                  
                                   const SizedBox(width: 17.5,),
-                                  Center(
+                                  //it waiting for nagib
+                                  Center(//massage
                                     child: IconButton(
                                       color: Colors.white,
                                       iconSize: 39,

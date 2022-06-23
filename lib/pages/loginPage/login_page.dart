@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/main.dart';
+import 'package:gimme/utilies/config.dart';
 import 'package:gimme/utilies/sharedPrefrances/sharedPrefsToken.dart';
 
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';
@@ -11,8 +12,6 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:snippet_coder_utils/hex_color.dart';
-import '../../utilies/config.dart';
 
 // ignore: camel_case_types
 class Login_page extends StatefulWidget {
@@ -133,7 +132,7 @@ class _Login_pageState extends State<Login_page> {
 
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 3,
+              height: MediaQuery.of(context).size.height * 0.3,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,6 +248,7 @@ class _Login_pageState extends State<Login_page> {
                 ),
               ),
             ),
+          
             SizedBox(
               height: 30,
             ),
