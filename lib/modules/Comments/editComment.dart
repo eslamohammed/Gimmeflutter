@@ -119,17 +119,17 @@ class _EditCommentState extends State<EditComment> {
               decoration:  BoxDecoration(
                 border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
                 color: Colors.white,
-                borderRadius:  const BorderRadius.only(  
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),  
-                  
-                )
+                borderRadius: BorderRadius.circular(10)
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: CustomInputTextFieldWidget(hintText: "time",secure: false ,ccontroller: _timeTextEditingController, icon: Icons.update,),
+                child: CustomInputTextFieldWidget(
+                  hintText: "time",
+                  labelText: "Time",
+                  fillColor: Colors.white,
+                  secure: false ,
+                  ccontroller: _timeTextEditingController,
+                  ),
               )),
              ),
             ),
@@ -180,7 +180,12 @@ class _EditCommentState extends State<EditComment> {
               decoration: BoxDecoration(
                  border:  Border.all(color: Colors.black ,width:1 ,style: BorderStyle.solid ),
                 borderRadius: BorderRadius.circular(10.0),),
-              child:  CustomInputTextFieldWidget(hintText: "Put some Comment ",secure: false ,ccontroller: _commentTextEditingController,) ,
+              child:  CustomInputTextFieldWidget(
+                hintText: "Put new Comment ",
+                labelText: "Comment",
+                fillColor: Colors.white,
+                secure: false ,
+                ccontroller: _commentTextEditingController,) ,
 
             ),
           ),
@@ -246,9 +251,10 @@ Map<String,String> header = {
           FormHelper.showSimpleAlertDialog(
               context, 
             "["+Config.appName+"]",
-              "Success: Your Comment has been Edited !!!",
+              "${body["message"]}",
               "Ok", 
               (){
+                Navigator.pop(context);
                 Navigator.pop(context);
               },
             );
@@ -264,32 +270,33 @@ Map<String,String> header = {
             );
           }
       }else if (response.statusCode == 403){
-          debugPrint("not Forbidden");
+      var body =jsonDecode(response.body());
           FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
-            "Forbidden [MOD is already choosen !!!]",
+            "${body["message"]}",
             "Ok", 
             (){
               Navigator.pop(context);
             },
           );
       }else if (response.statusCode == 400){
-          debugPrint("not Forbidden");
+      var body =jsonDecode(response.body());
           FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
-            "Price can't be less than the minimum range",
+            "Faild: ${body["message"]}",
             "Ok", 
             (){
               Navigator.pop(context);
             },
           );
       }else{
+        var body =jsonDecode(response.body());
         FormHelper.showSimpleAlertDialog(
             context, 
           "["+Config.appName+"]",
-            "Something went woring, try again",
+            "Faild: ${body["message"]}",
             "Ok", 
             (){
               Navigator.pop(context);
