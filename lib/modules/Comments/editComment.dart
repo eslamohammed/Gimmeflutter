@@ -2,7 +2,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 

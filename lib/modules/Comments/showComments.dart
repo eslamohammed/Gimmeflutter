@@ -2,7 +2,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/Models/CommentsModel.dart';
 import 'package:gimme/Api/fetchMyComment.dart';
@@ -16,8 +16,8 @@ import 'package:http/http.dart' as http;
 
 class ShowComments extends StatefulWidget {
   
-  final id ;
-  ShowComments(this.id); //wedget.id
+  final reqId ;
+  ShowComments(this.reqId); //wedget.id
 
   @override
   ShowCommentsState createState() => ShowCommentsState();
@@ -31,7 +31,7 @@ class ShowCommentsState extends State<ShowComments> {
   @override
   void initState() {
     //_fetchOthersAccount.fetchOthersAccount("");
-    _fetchComments.fetchMyComment(widget.id);  //id=RequestID
+    _fetchComments.fetchMyComment(widget.reqId);  //id=RequestID
     //_fetchRequest.fetchRequests(getUserID());
     super.initState();
   }
@@ -57,14 +57,14 @@ class ShowCommentsState extends State<ShowComments> {
            RefreshIndicator(
                 onRefresh: _refresh,
                 child: FutureBuilder(
-                  future: _fetchComments.fetchMyComment(widget.id),
+                  future: _fetchComments.fetchMyComment(widget.reqId),
                   builder: (context , snapshot){
                     if(snapshot.hasData){
                     http.Response res = snapshot.data as http.Response;
                     var body = jsonDecode(res.body()); 
-                    print("User ID :"+widget.id);
+                    print("User ID :"+widget.reqId);
                     print(body);
-                    print("User ID :"+widget.id);
+                    print("User ID :"+widget.reqId);
                     if (body['data'].isNotEmpty) {
                       List <CommentModel> comments = [] ;
                       comments.add(CommentModel.fromJson(body)); 
@@ -86,6 +86,7 @@ class ShowCommentsState extends State<ShowComments> {
                             itemCount:comments[0].data.length ,
                             itemBuilder: (context , index){
                               return  CommentCard( //routing the data to comment card 
+                                widget.reqId,
                                 comments[0].data[index]['time']['unit'],
                                 comments[0].data[index]['time']['val'],
                                 comments[0].data[index]['_id'],

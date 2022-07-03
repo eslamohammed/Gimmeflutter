@@ -51,7 +51,7 @@ class AddRequestModel{
   String  title="" , body="" ;
   double fromLocation=0.0 , toLocation=0.0 ,  priceRangemin=0.0,  priceRangemax=00.0 , timeRange=0.00 ;  
 */
-import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:gimme/shared/global_library.dart' as globals;
 
 class AddRequestModel{
   bool?  status;

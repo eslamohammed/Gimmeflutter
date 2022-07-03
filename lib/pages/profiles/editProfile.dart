@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';
@@ -12,7 +12,7 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:gimme/shared/global_library.dart' as globals;
 
 import 'package:http/http.dart' as http;
 

@@ -7,10 +7,10 @@ import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 
 import 'package:snippet_coder_utils/FormHelper.dart';
 
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:gimme/shared/global_library.dart' as globals;
 
 import 'package:gimme/main.dart';
 import 'package:gimme/controller/HomeController.dart';

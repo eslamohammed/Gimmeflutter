@@ -3,13 +3,13 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gimme/modules/Payment/Stripe/createStripeAccount.dart';
+import 'package:gimme/Api/Stripe/createStripeAccount.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 
 import '../../main.dart';
 import 'package:gimme/controller/HomeController.dart';
 
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
@@ -370,7 +370,7 @@ Map<String,String> header = {
   }
 
 //id=CommentID/RequestID
-Future  deleteComment(BuildContext context ,String id) async{ 
+Future  _deleteComment(BuildContext context ,String id) async{ 
   
   Map<String,String> header = { "Authorization":"Bearer " + (prefs.getString("token") as String),};
 

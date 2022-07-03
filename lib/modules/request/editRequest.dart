@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/modules/Google_maps/googleMap.dart';
 import 'dart:convert';
 
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';
@@ -13,7 +13,7 @@ import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:gimme/shared/global_library.dart' as globals;
 
 import 'package:gimme/main.dart';
 import 'package:snippet_coder_utils/hex_color.dart';

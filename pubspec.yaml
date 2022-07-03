@@ -54,6 +54,7 @@ dependencies:
   stripe: ^4.7.0
   flutter_stripe: ^3.0.2
   get: ^4.6.5
+  qr_flutter: ^4.0.0
 
   
 

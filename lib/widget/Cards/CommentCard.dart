@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/Api/paymentCheckout.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 
 import 'package:gimme/Api/fetchAccountsData.dart';
@@ -12,10 +13,10 @@ import 'package:http/http.dart' as http;
 
 class CommentCard extends StatelessWidget {
    CommentCard(
-     //{ Key? key }
+     this.reqId,
      this.timeUnits,
      this.timeValue,
-     this.userID,
+     this.commentID,
      this.commenterUserID,
      this.text,
      this.price,
@@ -23,9 +24,10 @@ class CommentCard extends StatelessWidget {
      ) : super(key: key);
 
   final FetchAccounts _fetchOthersAccount = FetchAccounts();
+  final reqId;
   final  String timeUnits;
   final  dynamic timeValue;
-  final  String userID;
+  final  String commentID;
   final  dynamic commenterUserID;
   final  dynamic text;
   final  dynamic price;
@@ -37,11 +39,12 @@ class CommentCard extends StatelessWidget {
       context,
       timeUnits,
       timeValue,
-      userID,
+      commentID,
       commenterUserID,
       text,
       price,
       mod,
+      reqId,
     );
   }
 
@@ -49,12 +52,12 @@ class CommentCard extends StatelessWidget {
     BuildContext context, /*, String id*/
     String timeUnits,
     dynamic timeValue,
-    String userID,//user { request owner/created by} ID
+    String commentID,//user { request owner/created by} ID
     String commenterUserID, //user {2nd part : current user who'm make the comment} ID
     String text,
     dynamic price,
     dynamic mod,
-
+    String reqId,
     ){
     return Card(
       elevation: 6,
@@ -66,6 +69,11 @@ class CommentCard extends StatelessWidget {
             http.Response res = snapshot.data as http.Response;
             List commenters = [] ;
               var body = jsonDecode(res.body()); 
+              print(body);
+              print("==============================");
+              print(body["data"]);
+              print(reqId);
+              print("commentID : $commentID ");
               commenters.add(CommentModel.fromJson(body)); 
               switch(snapshot.connectionState){                        
                 case ConnectionState.waiting:
@@ -121,7 +129,7 @@ class CommentCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        /*  
+                         
                           Padding(//Accept
                               padding: const EdgeInsets.only(top:5.0 , right: 5),
                               child: SizedBox(//Accept
@@ -129,14 +137,8 @@ class CommentCard extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width*0.2,
                                 child: TextButton(
                                   child:const Text("Accept",style: TextStyle(fontSize: 15 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-                                  onPressed: (){
-                                    print(globals.getUserID());
-                                    if (globals.getUserID() == "624ea47be96ec076cbce6e5b"){
-                                      print(true);
-                                    }else{
-                                      print(false);
-                                    }
-                                    //Accept method || close request method
+                                  onPressed: (){///Accept Comment method || close request method
+                                    PaymentCheckout().paymentCheckout(context,reqId,commentID);
                                   },
                                   style: ButtonStyle(
                                     //maximumSize: Size.infinite,
@@ -150,7 +152,7 @@ class CommentCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                        */
+                        
                         ],
                       ) ,
                     ),
@@ -225,7 +227,7 @@ class CommentCard extends StatelessWidget {
                                   //it waiting for nagib
                                   Center(//massage
                                     child: IconButton(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       iconSize: 39,
                                       icon: const Icon(Icons.email),
                                       onPressed: ()=>{

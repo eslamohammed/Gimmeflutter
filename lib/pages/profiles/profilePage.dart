@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/Api/fetchRequest.dart';
 import 'package:gimme/Models/profileModel.dart';
 import 'package:gimme/Models/requestModel.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

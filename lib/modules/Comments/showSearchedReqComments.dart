@@ -2,7 +2,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/Models/CommentsModel.dart';
 import 'package:gimme/modules/Comments/editComment.dart';
@@ -17,15 +17,15 @@ import 'package:gimme/widget/Cards/MyCommentCard.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:gimme/shared/global_library.dart' as globals;
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 
 
 class ShowSearchedReqComments extends StatefulWidget {
   
-  final id ;
-  ShowSearchedReqComments(this.id); //wedget.id
+  final reqId ;
+  ShowSearchedReqComments(this.reqId); //wedget.id
 
   @override
   ShowSearchedReqCommentsState createState() => ShowSearchedReqCommentsState();
@@ -39,7 +39,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
   @override
   void initState() {
     //_fetchOthersAccount.fetchOthersAccount("");
-    _fetchComments.fetchMyComment(widget.id);  //id=RequestID
+    _fetchComments.fetchMyComment(widget.reqId);  //id=RequestID
     //_fetchRequest.fetchRequests(getUserID());
     super.initState();
   }
@@ -67,7 +67,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
              RefreshIndicator(
                   onRefresh: _refresh,
                   child: FutureBuilder(
-                    future: _fetchComments.fetchMyComment(widget.id),
+                    future: _fetchComments.fetchMyComment(widget.reqId),
                     //future: fetchMyComment(widget.id),
                     builder: (context , snapshot){
                       if(snapshot.hasData){
@@ -116,9 +116,10 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                                     comments[0]['data'][index]['text'],
                                     comments[0]['data'][index]['price'],
                                     comments[0]['data'][index]['mod'],
-                                    widget.id,
+                                    widget.reqId,
                                     key: Key("${index}"),
                                   ):CommentCard(
+                                    widget.reqId,
                                     comments[0]['data'][index]['time']['unit'],
                                     comments[0]['data'][index]['time']['val'],
                                     comments[0]['data'][index]['_id'],
@@ -438,7 +439,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                                   child:const Text("Edit",style: TextStyle(fontSize: 20 , color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                                   onPressed: () =>//Edit [methods] page
                                     Navigator.push(context , MaterialPageRoute( builder: (context) => EditComment(
-                                          widget.id
+                                          widget.reqId
                                         ),
                                       ),
                                     ),//routing to edit page,
@@ -529,7 +530,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                                       iconSize: 39,
                                       icon: const Icon(Icons.delete),
                                       onPressed: ()=>{ ///calling delete comment method
-                                        _deleteComment(context,widget.id)
+                                        _deleteComment(context,widget.reqId)
                                       },
                                     ),
                                   ),

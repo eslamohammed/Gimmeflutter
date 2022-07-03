@@ -11,7 +11,7 @@ import 'package:gimme/main.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:gimme/shared/global_library.dart' as globals;
 
 String location = 'Null, Press Button';
 String address = 'search';

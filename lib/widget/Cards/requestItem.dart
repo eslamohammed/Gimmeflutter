@@ -6,7 +6,7 @@ import 'package:gimme/main.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/modules/request/requestDetails.dart';
 
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 
 class RequestItem extends StatelessWidget {
   final index;

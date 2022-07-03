@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gimme/Api/deleteComment.dart';
 import 'package:gimme/modules/Comments/editComment.dart';
 import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/modules/Comments/showSearchedReqComments.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 
 import 'package:gimme/Api/fetchAccountsData.dart';
@@ -11,7 +12,6 @@ import 'package:gimme/Models/CommentsModel.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:snippet_coder_utils/FormHelper.dart';
 
 
 class MyCommentCard extends StatelessWidget {
@@ -111,7 +111,8 @@ class MyCommentCard extends StatelessWidget {
                               ),
                             ),
 
-                          const SizedBox(width: 5,),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.01),
+                          
                           Container(//*** title && body
                           decoration: const BoxDecoration(color:Colors.white,),
                           height: MediaQuery.of(context).size.height*0.4,
@@ -231,7 +232,7 @@ class MyCommentCard extends StatelessWidget {
                                       iconSize: 39,
                                       icon: const Icon(Icons.delete),
                                       onPressed: ()=>{ ///calling delete comment method
-                                        _deleteComment(context,requestID,commentID)
+                                        DeleteComment().deleteComment(context,requestID,commentID)
 
                                       },
                                     ),
@@ -254,67 +255,4 @@ class MyCommentCard extends StatelessWidget {
   }
 
 
-Future  _deleteComment(BuildContext context ,String reqId , String commentId) async{ 
-  
-  Map<String,String> header = {
-    "Authorization":"Bearer " + (prefs.getString("token") as String),
-    'Content-Type': 'application/json; charset=UTF-8'
-    };
-  /*String bodii = json.encode(
-      {
-        
-        "reqId" : reqId as String,
-        "commentId" : commentID
-        
-      }
-    );*/
-    var url = Uri.parse(Config.apiURl + Config.commentAPI);
-    var response = await http.delete(
-      url ,
-      body: json.encode(
-        {
-          "reqId" : reqId,
-          "commentId" : commentID
-        }
-      ),
-      headers: header );
-
-    if(response.statusCode == 200){
-    var body = jsonDecode(response.body());
-    print(body["status"]);
-      if (body["status"]== true){
-      FormHelper.showSimpleAlertDialog(
-        context, 
-        Config.appName,
-        "${body["message"]}",
-        "Ok", 
-        (){
-        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ShowSearchedReqComments(reqId)));  
-          Navigator.pop(context);
-          Navigator.pop(context);
-      },);
-      } else {
-        FormHelper.showSimpleAlertDialog(
-        context, 
-        Config.appName,
-        "Error:${body["message"]}",
-        "Ok", 
-        (){
-        Navigator.pop(context);  
-        //Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeControllerPage()));  
-      },);
-      }
-    }else{
-      var body = jsonDecode(response.body());
-      print(body);
-      FormHelper.showSimpleAlertDialog(
-      context, 
-      Config.appName,
-      "Error:${response.statusCode}\n${body["message"]["formErrors"]}",
-      "Ok", 
-      (){
-      Navigator.pop(context);  
-    },);
-    }  
-  }
 }

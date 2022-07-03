@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/controller/HomeController.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:snippet_coder_utils/FormHelper.dart';

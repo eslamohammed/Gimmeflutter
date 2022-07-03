@@ -11,7 +11,7 @@ import 'package:gimme/modules/Google_maps/googleMap.dart';
 import 'package:gimme/modules/Comments/addComment.dart';
 import 'package:gimme/modules/Comments/showSearchedReqComments.dart';
 
-import 'package:gimme/utilies/global_library.dart' as globals;
+import 'package:gimme/shared/global_library.dart' as globals;
 
 
 class SearchRequestDetails extends StatefulWidget { 

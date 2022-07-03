@@ -8,12 +8,12 @@ import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 //import 'package:gimme/pages/loginPage/loginPage.dart';
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import '../../utilies/config.dart';
+import '../../shared/config.dart';
 import '../../widget/InputWidet/customInputTextField.dart';
 
 class Register_page extends StatefulWidget {

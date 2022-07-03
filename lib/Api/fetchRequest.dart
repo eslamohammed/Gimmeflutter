@@ -1,4 +1,4 @@
-import 'package:gimme/utilies/config.dart';
+import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:http/http.dart' as http;
 
