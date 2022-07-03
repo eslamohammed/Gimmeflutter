@@ -23,6 +23,7 @@ class RequestDetails extends StatefulWidget {
   final timeUnit;
   final fromAddress;
   final toAddress;
+  final requesterID;
   RequestDetails(
     this.body,
     this.title,
@@ -33,6 +34,7 @@ class RequestDetails extends StatefulWidget {
     this.timeUnit,
     this.fromAddress,
     this.toAddress,
+    this.requesterID,
   ); // this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
 
   @override
@@ -59,6 +61,7 @@ class RequestDetailsState extends State<RequestDetails> {
       widget.timeUnit,
       widget.fromAddress,
       widget.toAddress,
+      widget.requesterID,
     );
   }
 
@@ -73,6 +76,7 @@ class RequestDetailsState extends State<RequestDetails> {
     dynamic timeUnit,
     dynamic fromAddress,
     dynamic toAddress,
+    String requesterID,
   ) {
     return Scaffold(
       appBar: AppBar(
@@ -394,7 +398,7 @@ class RequestDetailsState extends State<RequestDetails> {
                           ),
                         ), //Icon(Icons.ac_unit_sharp), // city name from location
                         onPressed: () => Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => ShowComments(reqID),
+                          context, MaterialPageRoute(builder: (context) => ShowComments(reqID, requesterID,),
                           ),
                         ),
                         style: ButtonStyle(//maximumSize: Size.infinite,

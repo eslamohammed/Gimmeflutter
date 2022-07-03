@@ -23,7 +23,8 @@ class RequestResultCard extends StatelessWidget {
      this.fromAddress,
      this.toAddress,
      this.requesterID,
-     this.reqtimeunit, {Key? key}
+     this.reqtimeunit, 
+     this.state,{Key? key}
      ) : super(key: key);
 
   final FetchAccounts _fetchOthersAccount = FetchAccounts();
@@ -37,7 +38,7 @@ class RequestResultCard extends StatelessWidget {
   final  dynamic toAddress;
   final  dynamic requesterID;
   final  dynamic reqtimeunit;
-
+  final  String state ;
   @override
   Widget build(BuildContext context) {
     return reqResultCard(
@@ -71,7 +72,7 @@ Widget reqResultCard(
     return InkWell(
       onTap: () => Navigator.push(context,MaterialPageRoute(
         builder: (context) => SearchRequestDetails(
-          reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit,requesterID),
+          reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit,requesterID, state),
           ),
         ),
       child: FutureBuilder(

@@ -25,7 +25,8 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 class ShowSearchedReqComments extends StatefulWidget {
   
   final reqId ;
-  ShowSearchedReqComments(this.reqId); //wedget.id
+  final requesterID;
+  ShowSearchedReqComments(this.reqId,this.requesterID); //wedget.id
 
   @override
   ShowSearchedReqCommentsState createState() => ShowSearchedReqCommentsState();
@@ -127,6 +128,7 @@ class ShowSearchedReqCommentsState extends State<ShowSearchedReqComments> {
                                     comments[0]['data'][index]['text'],
                                     comments[0]['data'][index]['price'],
                                     comments[0]['data'][index]['mod'],
+                                    widget.requesterID,
                                     key: Key("${index}"),
                                   );
                                 }

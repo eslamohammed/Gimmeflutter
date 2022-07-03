@@ -359,30 +359,33 @@ class _Login_pageState extends State<Login_page> {
         },
       );
     } else if (response.statusCode == 401) {
+      var body = jsonDecode(response.body());
       FormHelper.showSimpleAlertDialog(
         context,
         Config.appName,
-        "[Can't login : Incorrect Password!!!] ",
+        "[Can't login : ${body["message"]}] ",
         "Ok",
         () {
           Navigator.pop(context);
         },
       );
     } else if (response.statusCode == 400) {
+      var body = jsonDecode(response.body());
       FormHelper.showSimpleAlertDialog(
         context,
         Config.appName,
-        "Invalid Syntax : Email and Password are required!",
+        "Invalid Syntax : ${body["message"]}",
         "Try again",
         () {
           Navigator.pop(context);
         },
       );
     } else {
+      var body = jsonDecode(response.body());
       FormHelper.showSimpleAlertDialog(
         context,
         Config.appName,
-        "Something went worng",
+        "${body["message"]}",
         "Try again",
         () {
           Navigator.pop(context);

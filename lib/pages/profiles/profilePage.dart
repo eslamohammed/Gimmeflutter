@@ -248,6 +248,209 @@ Widget _profilePageUI(BuildContext context){
                                             requests[0].data[index]["priceRange"]["min"],
                                             requests[0].data[index]["priceRange"]["max"],
                                             requests[0].data[index]["timeRange"]["unit"] ,
+                                            requests[0].data[index]["fromAddress"],
+                                            requests[0].data[index]["toAddress"],
+                                            requests[0].data[index]['userId'],
+
+                                            myAcc.name
+                                          );
+                                        }
+                                      ):Container()
+                                    );
+                                  }
+                                }
+                              } 
+                                return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                            } 
+                          ),
+                          ),
+                        ),
+                        //////////////////////////////
+                        /////////////////////////////
+                        Row(//This is my on [Closed] Requests
+                        children: [
+                          Container(//profile photo
+                            width: MediaQuery.of(context).size.height*0.065,
+                            height: MediaQuery.of(context).size.height*0.065,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(75),
+                              image: const DecorationImage(image: NetworkImage(Config.ImageURL,),
+                              )
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.values[0],
+                            children: [
+                              RichText(//username
+                              text : TextSpan(
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                                children: <TextSpan>[    
+                                  TextSpan(
+                                    text:"\t\t${myAcc.name} :",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      //decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(height: MediaQuery.of(context).size.height*0.005,),
+                              const Center(child: Text(" This is my on Requests :",style:  TextStyle(fontSize: 29, color: Colors.black,fontWeight: FontWeight.bold))),
+                            ],
+                          ),
+                        ],
+                        ),
+                        SizedBox(//my Requests
+                          height:MediaQuery.of(context).size.height*0.33 ,
+                          child: RefreshIndicator(
+                            onRefresh: _refresh,
+                            child: FutureBuilder(
+                              //initialData: [ _fetchRequest.fetchRequests(getUserID())],
+                              future: _fetchRequest.fetchMyOnRequests(),
+                              builder: (context , snapshot){
+                                if(snapshot.hasData){
+                                http.Response res = snapshot.data as http.Response;
+                                List <RequestModel> requests = [] ;
+                                var body = jsonDecode(res.body());
+                                if(body["data"].isEmpty){
+                                  return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
+                                }else{ 
+                                  requests.add(RequestModel.fromJson(body)); 
+                                  switch(snapshot.connectionState){                        
+                                    case ConnectionState.waiting:
+                                      return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                                      
+                                    case ConnectionState.none:
+                                      return const Center(child: Text("Error in connection"),);
+                              
+                                    case ConnectionState.active:
+                                      return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                              
+                                    case ConnectionState.done:
+                                    return SizedBox(
+                                      height: 860,
+                                      width: 800,
+                                      child : requests.isNotEmpty ? ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount:requests[0].data.length ,
+                                        itemBuilder: (context , index){
+                                          return  RequestItem( //sending data to request card
+                                            index,
+                                            requests[0].data[index]['body'].toString(),
+                                            requests[0].data[index]['title'].toString(),
+                                            requests[0].data[index]['_id'].toString(),
+                                            requests[0].data[index]["timeRange"]["val"] ,
+                                            requests[0].data[index]["priceRange"]["min"],
+                                            requests[0].data[index]["priceRange"]["max"],
+                                            requests[0].data[index]["timeRange"]["unit"] ,
+                                            requests[0].data[index]["fromAddress"],
+                                            requests[0].data[index]["toAddress"],
+                                            requests[0].data[index]['userId'],
+
+                                            myAcc.name
+                                          );
+                                        }
+                                      ):Container()
+                                    );
+                                  }
+                                }
+                              } 
+                                return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                            } 
+                          ),
+                          ),
+                        ),
+                        //////////////////////////////
+                        /////////////////////////////
+                      /*  Row(//This is my on [Fulfilled] Requests
+                        children: [
+                          Container(//profile photo
+                            width: MediaQuery.of(context).size.height*0.065,
+                            height: MediaQuery.of(context).size.height*0.065,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(75),
+                              image: const DecorationImage(image: NetworkImage(Config.ImageURL,),
+                              )
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.values[0],
+                            children: [
+                              RichText(//username
+                              text : TextSpan(
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                                children: <TextSpan>[    
+                                  TextSpan(
+                                    text:"\t\t${myAcc.name} :",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      //decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(height: MediaQuery.of(context).size.height*0.005,),
+                              const Center(child: Text(" This is my on [Fulfilled] Requests :",style:  TextStyle(fontSize: 29, color: Colors.black,fontWeight: FontWeight.bold))),
+                            ],
+                          ),
+                        ],
+                        ),
+                        SizedBox(//my Requests
+                          height:MediaQuery.of(context).size.height*0.33 ,
+                          child: RefreshIndicator(
+                            onRefresh: _refresh,
+                            child: FutureBuilder(
+                              //initialData: [ _fetchRequest.fetchRequests(getUserID())],
+                              future: _fetchRequest.fetchMyOnFulfilledRequests(),
+                              builder: (context , snapshot){
+                                if(snapshot.hasData){
+                                http.Response res = snapshot.data as http.Response;
+                                List <RequestModel> requests = [] ;
+                                var body = jsonDecode(res.body());
+                                print(body);
+                                if(body["data"].isEmpty){
+                                  return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
+                                }else{ 
+                                  requests.add(RequestModel.fromJson(body)); 
+                                  switch(snapshot.connectionState){                        
+                                    case ConnectionState.waiting:
+                                      return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                                      
+                                    case ConnectionState.none:
+                                      return const Center(child: Text("Error in connection"),);
+                              
+                                    case ConnectionState.active:
+                                      return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                              
+                                    case ConnectionState.done:
+                                    return SizedBox(
+                                      height: 860,
+                                      width: 800,
+                                      child : requests.isNotEmpty ? ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount:requests[0].data.length ,
+                                        itemBuilder: (context , index){
+                                          return  RequestItem( //sending data to request card
+                                            index,
+                                            requests[0].data[index]['body'].toString(),
+                                            requests[0].data[index]['title'].toString(),
+                                            requests[0].data[index]['_id'].toString(),
+                                            requests[0].data[index]["timeRange"]["val"] ,
+                                            requests[0].data[index]["priceRange"]["min"],
+                                            requests[0].data[index]["priceRange"]["max"],
+                                            requests[0].data[index]["timeRange"]["unit"] ,
                                             
                                             requests[0].data[index]["fromAddress"],
                                             requests[0].data[index]["toAddress"],
@@ -264,6 +467,7 @@ Widget _profilePageUI(BuildContext context){
                           ),
                           ),
                         )
+                      */
                       ],
                     );
                   }
@@ -287,6 +491,14 @@ Widget _profilePageUI(BuildContext context){
   );
 }
 
+  Future<void> _refresh() async {
+    setState(() {
+      
+    });
+    return Future.delayed(
+      Duration(seconds: 2)
+    );
+  }
 
 /*
 Future fetchRequests(String id) async{
@@ -304,15 +516,5 @@ Future fetchRequests(String id) async{
     }
 }
 */
-  
-
-  Future<void> _refresh() async {
-    setState(() {
-      
-    });
-    return Future.delayed(
-      Duration(seconds: 2)
-    );
-  }
 
 }

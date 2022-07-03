@@ -22,8 +22,17 @@ class SearchRequestDetails extends StatefulWidget {
   final minPr;
   final maxPr;
   final timeunit;
-  final userId;
-  SearchRequestDetails (this.body, this.title,this.reqID,this.timerange,this.minPr,this.maxPr,this.timeunit,this.userId, {Key? key}) : super(key: key);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
+  final requesterID;
+  final state;
+  SearchRequestDetails (
+    this.body, 
+    this.title,
+    this.reqID,
+    this.timerange,
+    this.minPr,
+    this.maxPr,
+    this.timeunit,
+    this.requesterID,this.state, {Key? key}) : super(key: key);// this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
   
     @override
   SearchRequestDetailsState createState() => SearchRequestDetailsState();
@@ -40,7 +49,7 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
   @override
   Widget build(BuildContext context){
 
-    return globals.getUserID()== widget.userId ?
+    return (globals.getUserID()== widget.requesterID || widget.state !="on" ) ?
      _userRequestDetails(
       context,
       widget.body,
@@ -49,7 +58,8 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
       widget.timerange,
       widget.minPr,
       widget.maxPr,
-      widget.timeunit
+      widget.timeunit,
+      widget.requesterID
     ) : _otherRequestDetails(
       context,
       widget.body,
@@ -58,11 +68,12 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
       widget.timerange,
       widget.minPr,
       widget.maxPr,
-      widget.timeunit
+      widget.timeunit,
+      widget.requesterID
     );
  }
 
- Widget _otherRequestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr,dynamic timeunit){
+ Widget _otherRequestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr,dynamic timeunit, String requesterID ){
    return Scaffold(
       appBar:  AppBar(
       title:const Text('Request Details' , style: TextStyle(color: Colors.black , fontSize: 50 ,fontWeight: FontWeight.bold),),
@@ -272,7 +283,7 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                       width: MediaQuery.of(context).size.width*0.4,
                       child: TextButton(
                         child:const Text("Show Comments",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowSearchedReqComments(reqID)),),
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowSearchedReqComments(reqID , requesterID)),),
                         style: ButtonStyle(
                           //maximumSize: Size.infinite,
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -313,7 +324,7 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
     );
  }
 
- Widget _userRequestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr,dynamic timeunit){
+ Widget _userRequestDetails(BuildContext context, String body, String title ,String reqID,dynamic timerange,dynamic minPr,dynamic maxPr,dynamic timeunit, String requesterID){
    return Scaffold(
       appBar:  AppBar(
       title:const Text('Request Details' , style: TextStyle(color: Colors.black , fontSize: 50 ,fontWeight: FontWeight.bold),),
@@ -516,7 +527,7 @@ class  SearchRequestDetailsState extends State<SearchRequestDetails>{
                 width: MediaQuery.of(context).size.width*0.4,
                 child: TextButton(
                   child:const Text("Show Comments",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowComments(reqID)),),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowComments(reqID,requesterID)),),
                   style: ButtonStyle(
                     //maximumSize: Size.infinite,
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

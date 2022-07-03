@@ -179,10 +179,12 @@ class _SearchPageState extends State<SearchPage> {
                                 var body = jsonDecode(res.body());
                                 //print("${body["data"].isNotEmpty}");
                                 //print("${body["data"]}");
-                                //print("${body["data"]}");
+                                //print("${body["data"]["state"]}");
+
                                 if (body["data"].isNotEmpty) {
                                   List<SearchRequestModel> resultReq = [];
                                   resultReq.add(SearchRequestModel.fromJson(body));
+                                  //print("${resultReq[0].data[0]['state']}");
                                   switch (snapshot.connectionState) {
                                     case ConnectionState.waiting:
                                       return const Center(
@@ -211,6 +213,7 @@ class _SearchPageState extends State<SearchPage> {
                                               resultReq[0].data[index]['toAddress'],
                                               resultReq[0].data[index]['userId'],
                                               resultReq[0].data[index]["timeRange"]["unit"],
+                                              resultReq[0].data[0]['state'],
                                               key: Key("$index") ,
                                             );
                                           },
@@ -270,7 +273,7 @@ class _SearchPageState extends State<SearchPage> {
     return InkWell(
       onTap: () => Navigator.push(context,MaterialPageRoute(
         builder: (context) => SearchRequestDetails(
-          reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit,requesterID ,),
+          reqBody, reqTitle, reqID, reqtimerange, reqminPrice, reqmaxPrice, reqtimeunit,requesterID ,""),
           ),
         ),
       child: FutureBuilder(

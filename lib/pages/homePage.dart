@@ -25,11 +25,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home>{
     final FetchAccounts _fetchMyAccount = FetchAccounts();
 
-
-  FetchRequest _fetchRequest = FetchRequest();
- // List <RequestModel> requests = [] ;
-
-
+    FetchRequest _fetchRequest = FetchRequest();
 
   @override
   void initState() {
@@ -117,7 +113,7 @@ class _HomeState extends State<Home>{
                                     requests[0].data[index]["timeRange"]["unit"] ,
                                     requests[0].data[index]["fromAddress"] ,
                                     requests[0].data[index]["toAddress"] ,
-
+                                    requests[0].data[index]['userId'],
                                     myAcc.name,
                                   );
                                 }

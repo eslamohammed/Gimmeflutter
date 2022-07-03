@@ -19,6 +19,7 @@ class RequestItem extends StatelessWidget {
   final unit;
   final from;
   final to;
+  final requesterID;
 
   final userName;
   RequestItem(
@@ -32,6 +33,7 @@ class RequestItem extends StatelessWidget {
     this.unit,
     this.from,
     this.to,
+    this.requesterID,
 
     this.userName
   );
@@ -50,6 +52,7 @@ class RequestItem extends StatelessWidget {
       unit,
       from,
       to,
+      requesterID,
 
       userName
     );
@@ -67,6 +70,8 @@ class RequestItem extends StatelessWidget {
     dynamic timeUnits,
     dynamic fromAddress,
     dynamic toAddress,
+    String requesterID,
+
     dynamic username,
   ) {
     return InkWell(
@@ -82,7 +87,8 @@ class RequestItem extends StatelessWidget {
                   reqmaxPrice,
                   timeUnits,
                   fromAddress,
-                  toAddress
+                  toAddress,
+                  requesterID,
                   ),
                 ),
               ),

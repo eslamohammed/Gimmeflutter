@@ -15,9 +15,9 @@ import 'package:http/http.dart' as http;
 
 
 class ShowComments extends StatefulWidget {
-  
+  final requesterID;
   final reqId ;
-  ShowComments(this.reqId); //wedget.id
+  ShowComments(this.reqId , this.requesterID); //wedget.id
 
   @override
   ShowCommentsState createState() => ShowCommentsState();
@@ -94,6 +94,7 @@ class ShowCommentsState extends State<ShowComments> {
                                 comments[0].data[index]['text'],
                                 comments[0].data[index]['price'],
                                 comments[0].data[index]['mod'],
+                                widget.requesterID,
                                 key: Key("${index}"),
                               );
                             }
