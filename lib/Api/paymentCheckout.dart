@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gimme/modules/Payment/paymentWebview.dart';
 import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:http/http.dart' as http;
@@ -28,14 +29,21 @@ class PaymentCheckout{
     print(body);
     if (response.statusCode == 200) {
       if (body["status"] == true) {
+        print(body["data"]["url"]);
         FormHelper.showSimpleAlertDialog(
         context,
         Config.appName,
         "${body["message"]}",
         "Ok",
         () {
-          debugPrint("${body}");
           Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(
+          builder: (context) => PaymentWebview(
+/*here */   body["data"]["url"], //routing url to open in webview page
+            key: Key("key"),
+            ),
+          ),
+        );
         },
       );
       } else {

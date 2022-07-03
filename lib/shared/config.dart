@@ -27,6 +27,8 @@ class Config {
   static const requestAPI = "/request";
   static const openRequestAPI = "/open";
   static const getAllRequestAPI = "/request/requests?id=";
+  static const getMyOnClosedRequestAPI = "/request/on";///?state=closed
+  static const getMyOnFulfilledRequestAPI = "/request/on?state=fulfilled";///?state=fulfilled
   static const getRequestAPI = "/request/requests?id=";
   static const deleteRequestAPI = "/delete/";
   static const editRequestAPI = "/edit/";
