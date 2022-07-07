@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:gimme/shared/config.dart';
-import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/Api/user/fetchAccountsData.dart';
 
 
 class GetLatLong extends StatefulWidget {

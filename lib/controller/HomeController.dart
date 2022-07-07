@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:gimme/shared/config.dart';
 
-import 'package:gimme/widget/Pdrawer.dart';
+import 'package:gimme/widget/drawer/Pdrawer.dart';
 import 'package:gimme/main.dart';
 
 import 'package:gimme/shared/global_library.dart' as globals ;

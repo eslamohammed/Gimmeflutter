@@ -1,20 +1,16 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
-import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/request/deleteRequest.dart';
 import 'package:gimme/modules/Google_maps/googleMap.dart';
 import 'package:gimme/main.dart';
 
 import 'package:gimme/modules/Comments/showComments.dart';
 import 'package:gimme/modules/request/editRequest.dart';
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-class RequestDetails extends StatefulWidget {
-  final index;
+class ClosedRequestDetails extends StatefulWidget {
   final body;
   final title;
   final reqID;
@@ -25,8 +21,7 @@ class RequestDetails extends StatefulWidget {
   final fromAddress;
   final toAddress;
   final requesterID;
-  RequestDetails(
-    this.index,
+  ClosedRequestDetails(
     this.body,
     this.title,
     this.reqID,
@@ -40,10 +35,10 @@ class RequestDetails extends StatefulWidget {
   ); // this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
 
   @override
-  RequestDetailsState createState() => RequestDetailsState();
+  ClosedRequestDetailsState createState() => ClosedRequestDetailsState();
 }
 
-class RequestDetailsState extends State<RequestDetails> {
+class ClosedRequestDetailsState extends State<ClosedRequestDetails> {
   @override
   void initState() {
     GoogleMapsState().build(context);
@@ -52,9 +47,8 @@ class RequestDetailsState extends State<RequestDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return requestDetails(
+    return closedRequestDetails(
       context,
-      widget.index,
       widget.body,
       widget.title,
       widget.reqID,
@@ -68,9 +62,8 @@ class RequestDetailsState extends State<RequestDetails> {
     );
   }
 
-  Widget requestDetails(
+  Widget closedRequestDetails(
     BuildContext context,
-    dynamic index,
     String body,
     String title,
     String reqID,
@@ -84,58 +77,43 @@ class RequestDetailsState extends State<RequestDetails> {
   ) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            'Request Details',
-            style: TextStyle(
-                color: Colors.black, fontSize: 50, fontWeight: FontWeight.bold),
-          ),
-          toolbarHeight: 65,
-          centerTitle: true,
-          actions: [
-            TextButton(
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditRequest(
-                          body,
-                          title,
-                          reqID,
-                          timerange,
-                          minPr,
-                          maxPr,
-                          timeUnit,
-                          fromAddress,
-                          toAddress,
-                        ),
-                      ),
-                    ), //route to edit page,
-                //()=> _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+        title: const Text(
+          'Closed Request',
+          style: TextStyle(
+          color: Colors.black, fontSize: 45, fontWeight: FontWeight.bold),
+        ),
+        toolbarHeight: 65,
+        centerTitle: true,
+        actions: [
+          TextButton(
+              onPressed: () => {},
+              //()=> _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
 
-                style: TextButton.styleFrom(
-                    primary: primaryColor,
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold)),
-                child: const Text("Edit", style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
-                ),
+              style: TextButton.styleFrom(
+                  primary: primaryColor,
+                  textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+              child: const Text("Edit", style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25),
               ),
-          ],
-          backgroundColor: Colors.white,
-          elevation: 0,
-          automaticallyImplyLeading: true,
-          leading: TextButton(
-              child: const Text("Back", style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                  color: primaryColor,
+            ),
+        ],
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        leading: TextButton(
+            child: const Text("Back", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                color: primaryColor,
+              ),
+            ), //Icon(Icons.ac_unit_sharp), // city name from location
+            ///here it will change .close
+            onPressed: () => Navigator.pop(context),
+            //Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomeControllerPage(),),),
                 ),
-              ), //Icon(Icons.ac_unit_sharp), // city name from location
-              ///here it will change .close
-              onPressed: () => Navigator.pop(context),
-              //Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomeControllerPage(),),),
-                  ),
-                ),
+      ),
       body: Card(
         color: Colors.white,
         shape: RoundedRectangleBorder(
@@ -349,62 +327,92 @@ class RequestDetailsState extends State<RequestDetails> {
                       child: Text(
                         "  Location ",
                         style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 40,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                     ), //waiting for API data
-                    Center(//Google maps widget *** some error
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.23,
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        decoration: BoxDecoration(
-                          color: HexColor("#BDBDBD"),
-                          borderRadius: BorderRadius.circular(17.0),
+                    
+                    Row(
+                      //crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: TextButton(
+                            child: Text(
+                              "From:\n$fromAddress",
+                              style: const TextStyle(
+                                fontSize: 17.5,
+                                color: primaryColor,
+                              ),
+                            ), // city name from location
+                            onPressed: () async {
+                              print("==============");
+                            },
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: const BorderSide(color: primaryColor),
+                              ),
+                            )),
+                          ),
                         ),
-                        child: GoogleMapsState().build(context),
-                        //Text will be replace by  Googlemaps
-                        //will send From & To Locations LatLong Co ordinates here
-                      ),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.02,),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: TextButton(
+                            child: Text(
+                              "To:\n$toAddress",
+                              style: const TextStyle(
+                                fontSize: 17.5,
+                                color: primaryColor,
+                              ),
+                            ), // city name from location
+                            onPressed: () async {
+                              print("==============");
+                            },
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(17.0),
+                                side: const BorderSide(color: primaryColor),
+                              ),
+                            )),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
               
-              Container( //add && show Comments
+              Container( //Release Payment
                 decoration: const BoxDecoration(color: Colors.white),
                 height: MediaQuery.of(context).size.height * 0.1,
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    /*Padding(//deleteRequest 
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        child: FloatingActionButton(
-                        child: Icon(Icons.delete,color: Colors.white, ),
-                        backgroundColor: primaryColor,
-                        onPressed: (){
-                          //print(reqID);
-                          //deleteRequest(context,reqID); //sending object id to be deleted
-                        })
-                      ),
-                    ),*/
-
-                    SizedBox(//Show Comments
+                    SizedBox(//release Payment
                       height: MediaQuery.of(context).size.height * 0.08,
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       child: TextButton(
-                        child: const Text("Show Comments",  style: TextStyle(
+                        child: const Text("Release Payment",  style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22.5,
                             color: primaryColor,
                           ),
-                        ), //Icon(Icons.ac_unit_sharp), // city name from location
-                        onPressed: () => Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => ShowComments(reqID, requesterID,),
-                          ),
                         ),
+                        onPressed: () => {
+                          /// release payment method
+                        },
                         style: ButtonStyle(//maximumSize: Size.infinite,
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
@@ -417,25 +425,6 @@ class RequestDetailsState extends State<RequestDetails> {
                         )),
                       ),
                     ),
-                    /*
-                    SizedBox(//Add Comment
-                      height: MediaQuery.of(context).size.height*0.08,
-                      width: MediaQuery.of(context).size.width*0.4,
-                      child: TextButton(
-                        child: Text("Add Comment",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.5, color: primaryColor ,),), // city name from location
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>AddComment(reqID)),
-                        ),
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(17.0),
-                            side: BorderSide(color: primaryColor),
-                          ),
-                        )
-                      ),
-                    ),
-                  ),
-                    */
                   ],
                 ),
               ),
@@ -443,46 +432,17 @@ class RequestDetailsState extends State<RequestDetails> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+/*      floatingActionButton: FloatingActionButton(
         //delete function
         //calling delete function to delete request
         onPressed: () =>DeleteRequest().deleteRequest(context, reqID), //sending object id to be deleted
-        heroTag: "btn$index",
+        heroTag: "$reqID",
         child: const Icon(
           Icons.delete,
           color: Colors.black,
         ),
         backgroundColor: primaryColor,
-      ),
+      ),*/
     );
   }
-
-  var myMarkers = HashSet<Marker>();
-  Widget viewGMapLocation(BuildContext context, double lat, double lng) {
-    return GoogleMap(
-      initialCameraPosition: CameraPosition(
-        target: LatLng(lat,
-            lng), //LatLng(currentLatLocation(), currentLngLocation()) , //LatLng(30.033333, 31.233334),
-        zoom: 11.0,
-      ), //lag $$ long
-      onMapCreated: onMapCreated, //after map ready to be used
-      markers: Set<Marker>.of(
-          myMarkers), //array of mrakers any marker is added to on onMapCreated it will be add here
-    );
-  }
-
-  void onMapCreated(googleMapController) {
-    Marker fromMarker = const Marker(
-      markerId: MarkerId('1'),
-      position: LatLng(30.033333,
-          31.233334), //lat , lng),   //current location is initial position by defualt
-      infoWindow: InfoWindow(
-        title: "Gimme mobile app",
-        snippet: 'From',
-      ),
-    );
-
-    myMarkers.add(fromMarker);
-  }
-
 }

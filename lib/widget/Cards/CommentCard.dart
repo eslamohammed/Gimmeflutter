@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/paymentCheckout.dart';
+import 'package:gimme/Api/payment/paymentCheckout.dart';
 import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 
-import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/Api/user/fetchAccountsData.dart';
 import 'package:gimme/Models/CommentsModel.dart';
 
 import 'package:gimme/shared/global_library.dart' as globals;

@@ -6,9 +6,14 @@ import 'package:gimme/main.dart';
 
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/modules/notification/notificationPage.dart';
-import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/Api/user/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/modules/Payment/PaymentScreen.dart';
+import 'package:gimme/pages/qr/ScannerScreen.dart';
+import 'package:gimme/pages/qr/qr_create_page.dart';
+import 'package:gimme/pages/qr/qr_scan_page.dart';
+import 'package:gimme/shared/config.dart';
+import 'package:gimme/test.dart';
 
 
 
@@ -41,115 +46,6 @@ class PDrawer {
   }
 
   Widget widgetBuildDrawer(BuildContext context , urlImage) {
-    //const String name = "eslam";
-    //String email = "eslam@gmail.com";
-    //const urlImage = Config.ImageURL;
-    /*Drawer(
-      child: Material(
-        //color
-        child: ListView(
-          children: [
-            /*buildHeader(
-              UrlImage: urlImage,
-              name: name,
-              email: email,
-              onClicked: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfilePages())),
-            ),*/
-
-                
-        UserAccountsDrawerHeader(
-          onDetailsPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePages())),
-          accountName: Text(name ,),   //FetchDataAPIRequest().profileEmail as String,      //from account token
-          accountEmail: Text(email),
-          arrowColor: Colors.black,
-          decoration: BoxDecoration(color: Colors.white),
-          currentAccountPicture :  CircleAvatar(
-          backgroundImage:  NetworkImage(urlImage), 
-          backgroundColor: Colors.white,         
-          ),
-        ),
-              
-
-            const Padding(
-              padding: EdgeInsets.only(right: 15, left: 15),
-              child: Divider(
-                color: Colors.black,
-              ),
-            ),
-            buildMenuItem(
-              text: 'profile page',
-              icon: Icons.people,
-              onCliced: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfilePages())),
-            ),
-
-            const SizedBox(
-              height: 24,
-            ),
-            buildMenuItem(
-              text: 'notification',
-              icon: Icons.notifications_outlined,
-              onCliced: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NotificationPage()))
-              },
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            buildMenuItem(
-              text: 'update',
-              icon: Icons.update,
-              //onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>)),
-
-              //waiting for next version updates on app store
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(right: 15, left: 15),
-              child: Divider(
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            buildMenuItem(
-              text: 'Setting & Privacy',
-              icon: Icons.settings,
-              //onCliced: ()=>()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>Home())),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.logout,
-                color: Color.fromARGB(255, 10, 86, 114),
-              ),
-              title: Text(
-                'LogOut',
-                style: const TextStyle(color: Color.fromARGB(255, 10, 86, 114)),
-              ),
-              hoverColor: Colors.black,
-              onTap: () async => {
-                await prefs.remove('token'), //remove token
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Login_page())),
-              },
-            ), //success = await prefs.remove('counter');,
-          ],
-        ),
-      ),
-    );
-  
-
-     */
     return FutureBuilder(
       future: _fetchMyAccount.fetchMyAccount(),
       builder: (context , snapshot){
@@ -231,6 +127,39 @@ class PDrawer {
                     SizedBox(
                       height: 24,
                     ),
+                    buildMenuItem(
+                      text: 'QrScanCode',
+                      icon: Icons.update,
+                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScanPage())),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    buildMenuItem(
+                      text: 'QrCreateCode',
+                      icon: Icons.update,
+                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>QRCreatePage())),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    buildMenuItem(
+                      text: 'ScannerScreen',
+                      icon: Icons.update,
+                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>ScannerScreen(title: Config.appName,))),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    buildMenuItem(
+                      text: 'test',
+                      icon: Icons.update,
+                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>Test())),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ), 
+                    ///ScannerScreen
                     Padding(
                       padding: EdgeInsets.only(right: 15, left: 15),
                       child: Divider(

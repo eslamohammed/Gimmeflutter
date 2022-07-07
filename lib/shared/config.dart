@@ -27,8 +27,10 @@ class Config {
   static const requestAPI = "/request";
   static const openRequestAPI = "/open";
   static const getAllRequestAPI = "/request/requests?id=";
-  static const getMyOnClosedRequestAPI = "/request/on";///?state=closed
+  static const getMyOnRequestAPI = "/request/on";///?state=closed
+  static const getMyOnclosedRequestAPI = "/request/on?state=closed";
   static const getMyOnFulfilledRequestAPI = "/request/on?state=fulfilled";///?state=fulfilled
+  static const getMyOnFulfilledOwnerRequestAPI = "/request/on?state=fulfilled&owner=true";///?state=fulfilled
   static const getRequestAPI = "/request/requests?id=";
   static const deleteRequestAPI = "/delete/";
   static const editRequestAPI = "/edit/";
@@ -44,7 +46,7 @@ class Config {
   ///'http://192.168.1.4:8080/api/payment/create-stripe-account
   static const paymentAPI = "/payment/";
   static const createStripeAcc = "create-stripe-account";
-    static const paymentCheckoutAPI = "create-stripe-session";
+  static const paymentCheckoutAPI = "create-stripe-session";
 
 
   static const ImageURL =

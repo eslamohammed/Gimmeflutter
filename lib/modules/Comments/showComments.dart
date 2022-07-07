@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/Models/CommentsModel.dart';
-import 'package:gimme/Api/fetchMyComment.dart';
-import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/Api/Comment/fetchMyComment.dart';
+import 'package:gimme/Api/user/fetchAccountsData.dart';
 import 'package:gimme/widget/Cards/CommentCard.dart';
 
 

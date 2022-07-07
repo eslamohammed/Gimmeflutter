@@ -5,13 +5,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/fetchRequest.dart';
+import 'package:gimme/Api/request/fetchRequest.dart';
 import 'package:gimme/Models/profileModel.dart';
 import 'package:gimme/Models/requestModel.dart';
 
 import 'package:gimme/main.dart';
 import 'package:gimme/controller/HomeController.dart';
-import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/Api/user/fetchAccountsData.dart';
+import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/widget/Cards/requestItem.dart';
 
 import 'package:http/http.dart' as http;
@@ -59,7 +60,22 @@ class _HomeState extends State<Home>{
               http.Response res = snapshot.data as http.Response;
               var body = jsonDecode(res.body()); 
               if(body["data"].isEmpty){
-                  return const Center(child: Text("\n\n\n\n\n\n\nNO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
+                  return  Center(child: Column(
+                    children: [
+                      Text("\n\n\n\n\n\n\nNO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),),
+                      Container(child: ElevatedButton(child: Text("log out"),
+                      onPressed: () async => {
+                        await prefs.remove('token'), //remove token
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Login_page()
+                          )
+                        ),
+                      },
+                      ),),
+                    ],
+                  ));
               }else{
                 List <RequestModel> requests = [] ;
                 requests.add(RequestModel.fromJson(body)); 

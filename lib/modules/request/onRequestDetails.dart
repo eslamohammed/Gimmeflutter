@@ -13,8 +13,7 @@ import 'package:gimme/modules/request/editRequest.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-class RequestDetails extends StatefulWidget {
-  final index;
+class OnRequestDetails extends StatefulWidget {
   final body;
   final title;
   final reqID;
@@ -25,8 +24,7 @@ class RequestDetails extends StatefulWidget {
   final fromAddress;
   final toAddress;
   final requesterID;
-  RequestDetails(
-    this.index,
+  OnRequestDetails(
     this.body,
     this.title,
     this.reqID,
@@ -40,10 +38,10 @@ class RequestDetails extends StatefulWidget {
   ); // this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
 
   @override
-  RequestDetailsState createState() => RequestDetailsState();
+  OnRequestDetailsState createState() => OnRequestDetailsState();
 }
 
-class RequestDetailsState extends State<RequestDetails> {
+class OnRequestDetailsState extends State<OnRequestDetails> {
   @override
   void initState() {
     GoogleMapsState().build(context);
@@ -54,7 +52,6 @@ class RequestDetailsState extends State<RequestDetails> {
   Widget build(BuildContext context) {
     return requestDetails(
       context,
-      widget.index,
       widget.body,
       widget.title,
       widget.reqID,
@@ -70,7 +67,6 @@ class RequestDetailsState extends State<RequestDetails> {
 
   Widget requestDetails(
     BuildContext context,
-    dynamic index,
     String body,
     String title,
     String reqID,
@@ -84,58 +80,46 @@ class RequestDetailsState extends State<RequestDetails> {
   ) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            'Request Details',
-            style: TextStyle(
-                color: Colors.black, fontSize: 50, fontWeight: FontWeight.bold),
-          ),
-          toolbarHeight: 65,
-          centerTitle: true,
-          actions: [
-            TextButton(
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditRequest(
-                          body,
-                          title,
-                          reqID,
-                          timerange,
-                          minPr,
-                          maxPr,
-                          timeUnit,
-                          fromAddress,
-                          toAddress,
-                        ),
-                      ),
-                    ), //route to edit page,
-                //()=> _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-
-                style: TextButton.styleFrom(
-                    primary: primaryColor,
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold)),
-                child: const Text("Edit", style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
-                ),
+        title: const Text(
+          'Request Details',
+          style: TextStyle(
+              color: Colors.black, fontSize: 50, fontWeight: FontWeight.bold),
+        ),
+        toolbarHeight: 65,
+        centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () => {},
+            style: TextButton.styleFrom(
+                primary: primaryColor,
+                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+            child: const Text(
+              "Edit",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
               ),
-          ],
-          backgroundColor: Colors.white,
-          elevation: 0,
-          automaticallyImplyLeading: true,
-          leading: TextButton(
-              child: const Text("Back", style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                  color: primaryColor,
-                ),
-              ), //Icon(Icons.ac_unit_sharp), // city name from location
-              ///here it will change .close
-              onPressed: () => Navigator.pop(context),
-              //Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomeControllerPage(),),),
-                  ),
-                ),
+            ),
+          ),
+        ],
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        leading: TextButton(
+          child: const Text(
+            "Back",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: primaryColor,
+            ),
+          ), //Icon(Icons.ac_unit_sharp), // city name from location
+          ///here it will change .close
+          onPressed: () => Navigator.pop(context),
+          //Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomeControllerPage(),),),
+        ),
+      ),
       body: Card(
         color: Colors.white,
         shape: RoundedRectangleBorder(
@@ -147,11 +131,12 @@ class RequestDetailsState extends State<RequestDetails> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              SizedBox(///just for UI
+              SizedBox(
+                ///just for UI
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              
-              Container(//title & price
+              Container(
+                //title & price
                 decoration: const BoxDecoration(color: Colors.white),
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width,
@@ -161,11 +146,13 @@ class RequestDetailsState extends State<RequestDetails> {
                   ),
                   height: MediaQuery.of(context).size.height * 0.2,
                   width: MediaQuery.of(context).size.width * 0.67,
-                  child: Row(//title & price Box
+                  child: Row(
+                    //title & price Box
                     mainAxisAlignment: MainAxisAlignment.start,
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(//title
+                      Container(
+                        //title
                         decoration: const BoxDecoration(color: Colors.white),
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.56,
@@ -180,12 +167,14 @@ class RequestDetailsState extends State<RequestDetails> {
                           ),
                         ), //waiting for API data
                       ),
-                      Container(//just for UI
+                      Container(
+                        //just for UI
                         decoration: const BoxDecoration(color: Colors.white),
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.025,
                       ),
-                      SizedBox(//price
+                      SizedBox(
+                        //price
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.3,
                         child: TextButton(
@@ -208,7 +197,8 @@ class RequestDetailsState extends State<RequestDetails> {
                           )),
                         ),
                       ),
-                      Container(//just for UI
+                      Container(
+                        //just for UI
                         decoration: const BoxDecoration(color: Colors.white),
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.02,
@@ -217,15 +207,15 @@ class RequestDetailsState extends State<RequestDetails> {
                   ),
                 ),
               ),
-              
-              const Padding( //just for UI
+              const Padding(
+                //just for UI
                 padding: EdgeInsets.all(8.0),
                 child: Divider(
                   color: primaryColor,
                 ),
               ),
-              
-              Container(//body
+              Container(
+                //body
                 decoration: const BoxDecoration(color: Colors.white),
                 height: MediaQuery.of(context).size.height * 0.125,
                 width: MediaQuery.of(context).size.width,
@@ -249,29 +239,32 @@ class RequestDetailsState extends State<RequestDetails> {
                   ), //waiting for API data
                 ),
               ),
-              
-              const Padding(//divider
+              const Padding(
+                //divider
                 padding: EdgeInsets.all(8.0),
                 child: Divider(
                   color: primaryColor,
                 ),
               ),
-              
-              Container(//time
+              Container(
+                //time
                 decoration: const BoxDecoration(color: Colors.white),
                 height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width,
-                child: Container(//time
+                child: Container(
+                  //time
                   decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   height: MediaQuery.of(context).size.height * 0.2,
                   width: MediaQuery.of(context).size.width * 0.67,
-                  child: Row(//time
+                  child: Row(
+                    //time
                     mainAxisAlignment: MainAxisAlignment.start,
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(//word time
+                      Padding(
+                        //word time
                         padding: const EdgeInsets.all(20.0),
                         child: Container(
                           decoration: const BoxDecoration(color: Colors.white),
@@ -289,12 +282,14 @@ class RequestDetailsState extends State<RequestDetails> {
                           ), //waiting for API data,
                         ),
                       ),
-                      Container(//Just for UI
+                      Container(
+                        //Just for UI
                         decoration: const BoxDecoration(color: Colors.white),
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.04,
                       ),
-                      SizedBox(//timerange
+                      SizedBox(
+                        //timerange
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.15,
                         child: TextButton(
@@ -320,7 +315,8 @@ class RequestDetailsState extends State<RequestDetails> {
                           )),
                         ),
                       ),
-                      Container(//Just for UI
+                      Container(
+                        //Just for UI
                         decoration: const BoxDecoration(color: Colors.white),
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.02,
@@ -329,22 +325,23 @@ class RequestDetailsState extends State<RequestDetails> {
                   ),
                 ),
               ),
-              
-              const Padding(//Just for UI
+              const Padding(
+                //Just for UI
                 padding: EdgeInsets.all(8.0),
                 child: Divider(
                   color: primaryColor,
                 ),
               ),
-              
-              Container(//location
+              Container(
+                //location
                 decoration: const BoxDecoration(color: Colors.white),
                 height: MediaQuery.of(context).size.height * 0.30,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(//Location word
+                    const Padding(
+                      //Location word
                       padding: EdgeInsets.all(8.0),
                       child: Text(
                         "  Location ",
@@ -354,7 +351,8 @@ class RequestDetailsState extends State<RequestDetails> {
                             fontWeight: FontWeight.bold),
                       ),
                     ), //waiting for API data
-                    Center(//Google maps widget *** some error
+                    Center(
+                      //Google maps widget *** some error
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.23,
                         width: MediaQuery.of(context).size.width * 0.85,
@@ -370,8 +368,8 @@ class RequestDetailsState extends State<RequestDetails> {
                   ],
                 ),
               ),
-              
-              Container( //add && show Comments
+              Container(
+                //add && show Comments
                 decoration: const BoxDecoration(color: Colors.white),
                 height: MediaQuery.of(context).size.height * 0.1,
                 width: MediaQuery.of(context).size.width,
@@ -391,21 +389,30 @@ class RequestDetailsState extends State<RequestDetails> {
                       ),
                     ),*/
 
-                    SizedBox(//Show Comments
+                    SizedBox(
+                      //Show Comments
                       height: MediaQuery.of(context).size.height * 0.08,
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: TextButton(
-                        child: const Text("Show Comments",  style: TextStyle(
+                        child: const Text(
+                          "Show Comments",
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22.5,
                             color: primaryColor,
                           ),
                         ), //Icon(Icons.ac_unit_sharp), // city name from location
                         onPressed: () => Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => ShowComments(reqID, requesterID,),
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ShowComments(
+                              reqID,
+                              requesterID,
+                            ),
                           ),
                         ),
-                        style: ButtonStyle(//maximumSize: Size.infinite,
+                        style: ButtonStyle(
+                            //maximumSize: Size.infinite,
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -443,17 +450,6 @@ class RequestDetailsState extends State<RequestDetails> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        //delete function
-        //calling delete function to delete request
-        onPressed: () =>DeleteRequest().deleteRequest(context, reqID), //sending object id to be deleted
-        heroTag: "btn$index",
-        child: const Icon(
-          Icons.delete,
-          color: Colors.black,
-        ),
-        backgroundColor: primaryColor,
-      ),
     );
   }
 
@@ -484,5 +480,4 @@ class RequestDetailsState extends State<RequestDetails> {
 
     myMarkers.add(fromMarker);
   }
-
 }

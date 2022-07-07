@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/modules/Search/SearchRequestDetails.dart';
-import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/Api/user/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/otherProfilesPage.dart';
 
 

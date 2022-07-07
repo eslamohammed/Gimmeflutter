@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/deleteComment.dart';
+import 'package:gimme/Api/Comment/deleteComment.dart';
 import 'package:gimme/modules/Comments/editComment.dart';
 import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/modules/Comments/showSearchedReqComments.dart';
 import 'package:gimme/shared/config.dart';
 import 'package:gimme/main.dart';
 
-import 'package:gimme/Api/fetchAccountsData.dart';
+import 'package:gimme/Api/user/fetchAccountsData.dart';
 import 'package:gimme/Models/CommentsModel.dart';
 
 

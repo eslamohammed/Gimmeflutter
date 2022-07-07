@@ -3,7 +3,8 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gimme/Api/Stripe/createStripeAccount.dart';
+import 'package:gimme/Api/Stripe/createAccount.dart';
+import 'package:gimme/modules/stripe/createStripeAccountWV.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 
 import '../../main.dart';
@@ -223,8 +224,8 @@ class _AddCommentState extends State<AddComment> {
                   //addComment function here
                   _addComment(context);
                   debugPrint(widget.reqID);
-                  } catch (e) {
-                    print("hallo");
+                  } catch (err) {
+                    print(err);
                   }
                 },
                 style: ButtonStyle(
@@ -267,7 +268,7 @@ class _AddCommentState extends State<AddComment> {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                            _createStripeAccount(context);
+                            CreateAccount().createStripeAccount(context);
                         }
                       ),
                     ],
@@ -275,7 +276,6 @@ class _AddCommentState extends State<AddComment> {
                 ),
               ),
             ),
-
           ],
         ),
       ),

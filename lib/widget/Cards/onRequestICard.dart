@@ -3,12 +3,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/Api/request/deleteRequest.dart';
 import 'package:gimme/main.dart';
+import 'package:gimme/modules/request/closedRequestDetails.dart';
+import 'package:gimme/modules/request/onRequestDetails.dart';
+import 'package:gimme/pages/profiles/otherProfilesPage.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/modules/request/requestDetails.dart';
 
 import 'package:gimme/shared/config.dart';
 
-class RequestItem extends StatelessWidget {
+class OnRequestCard extends StatelessWidget {
   final index;
   final reqbody;
   final reqtitle;
@@ -22,7 +25,18 @@ class RequestItem extends StatelessWidget {
   final requesterID;
 
   final userName;
-  RequestItem(
+  final rate;
+  final isTrusted;
+  final createTime;
+  /*
+    "4.7",
+    body['data']['isTrusted'],
+    body['data']['createTime'],
+  */
+
+  final filter;
+
+  OnRequestCard(
     this.index,
     this.reqbody,
     this.reqtitle,
@@ -35,12 +49,17 @@ class RequestItem extends StatelessWidget {
     this.to,
     this.requesterID,
 
-    this.userName
+    this.userName,
+    this.rate,
+    this.isTrusted,
+    this.createTime,
+
+    this.filter,
   );
 
   @override
   Widget build(BuildContext context) {
-    return _requestCard(
+    return _onRequestCard(
       context,
       index,
       reqbody,
@@ -58,7 +77,7 @@ class RequestItem extends StatelessWidget {
     );
   }
 
-  Widget _requestCard(
+  Widget _onRequestCard(
     BuildContext context,
     int index,
     String reqBody,
@@ -75,23 +94,20 @@ class RequestItem extends StatelessWidget {
     dynamic username,
   ) {
     return InkWell(
-      onTap: () => Navigator.push(
-          context,
+      onTap: () => filter == 1 ? Navigator.push(context,
           MaterialPageRoute(
-              builder: (context) => RequestDetails(
-              index,
-              reqBody,
-              reqTitle,
-              reqID,
-              reqtimerange,
-              reqminPrice,
-              reqmaxPrice,
-              timeUnits,
-              fromAddress,
-              toAddress,
-              requesterID,
+              builder: (context) => ClosedRequestDetails(
+                reqBody,reqTitle,reqID,reqtimerange,reqminPrice,
+                reqmaxPrice,timeUnits,fromAddress,toAddress,requesterID,
             ),
-         ),
+          ),
+      ) :Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => OnRequestDetails(
+                  reqBody, reqTitle, reqID, reqtimerange,reqminPrice, reqmaxPrice,
+                  timeUnits, fromAddress, toAddress, requesterID,
+                  ),
+                ),
       ),
       child: Card(
         shape: RoundedRectangleBorder(
@@ -124,9 +140,7 @@ class RequestItem extends StatelessWidget {
                               backgroundImage: NetworkImage(Config.ImageURL),
                             ),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.005,
-                          ),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
                           RichText(//username
                             text: TextSpan(
                               style: const TextStyle(
@@ -145,7 +159,12 @@ class RequestItem extends StatelessWidget {
                                       ..onTap = () {
                                         // route to this account page
                                         //  Navigator.pushNamed(context, "/login");
-                                        Navigator.push(context,MaterialPageRoute(builder: (context) =>ProfilePages(),),);
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) =>OthersProfilePages(
+                                          username,
+                                          rate,
+                                          isTrusted,
+                                          createTime
+                                        ),),);
                                       }),
                               ],
                             ),
@@ -224,31 +243,17 @@ class RequestItem extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(///deleteRequest
-                      padding: const EdgeInsets.all(5.0),
-                      child: FloatingActionButton(
-                          child: const Icon(
-                            Icons.delete,
-                            color: Colors.black,
-                          ),
-                          heroTag: "btn$index",
-                          backgroundColor: primaryColor,
-                          onPressed: () {
-                            print(reqID);
-                            DeleteRequest().deleteRequest(context,reqID); //sending object id to be deleted
-                          }),
-                    ),
-                    /* Padding(//just for margin
+                    Padding(//just for margin
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         decoration: BoxDecoration(color:Colors.white,
                         borderRadius: BorderRadius.circular(10),),
                         height: MediaQuery.of(context).size.height*0.1,
-                        width: MediaQuery.of(context).size.width*0.25,
+                        width: MediaQuery.of(context).size.width*0.11,
                       ),
-                    ),*/
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Container(
