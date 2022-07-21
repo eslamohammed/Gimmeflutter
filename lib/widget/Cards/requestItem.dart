@@ -7,6 +7,7 @@ import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/modules/request/requestDetails.dart';
 
 import 'package:gimme/shared/config.dart';
+import 'package:gimme/widget/Alertdialog/alertDialog.dart';
 
 class RequestItem extends StatelessWidget {
   final index;
@@ -117,16 +118,14 @@ class RequestItem extends StatelessWidget {
                     Center(
                       child: Column(
                         children: [
-                          const Padding(
+                          const Padding(//Profile image
                             padding: EdgeInsets.only(left: 8.0, top: 15),
                             child: CircleAvatar(
                               radius: 30,
                               backgroundImage: NetworkImage(Config.ImageURL),
                             ),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.005,
-                          ),
+                          SizedBox(height:MediaQuery.of(context).size.height*0.005,),
                           RichText(//username
                             text: TextSpan(
                               style: const TextStyle(
@@ -236,8 +235,18 @@ class RequestItem extends StatelessWidget {
                           heroTag: "btn$index",
                           backgroundColor: primaryColor,
                           onPressed: () {
-                            print(reqID);
-                            DeleteRequest().deleteRequest(context,reqID); //sending object id to be deleted
+                            AlertDialogWidget.alartDialog(
+                              context,
+                              "Delete ?",
+                              ()=>{
+                                 //sending id of of request to be deleted
+                                DeleteRequest().deleteRequest(context,reqID),
+                                Navigator.pop(context),
+                              },
+                              ()=>{
+                                Navigator.pop(context),
+                              },
+                            );
                           }),
                     ),
                     /* Padding(//just for margin
@@ -249,7 +258,7 @@ class RequestItem extends StatelessWidget {
                         width: MediaQuery.of(context).size.width*0.25,
                       ),
                     ),*/
-                    Padding(
+                    Padding(//from & to address
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Container(
                         decoration: BoxDecoration(
@@ -262,29 +271,16 @@ class RequestItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            SizedBox(
+                            SizedBox(//from
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextButton(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "${fromAddress} ",
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: primaryColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.01,
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward,
-                                      color: primaryColor,
-                                    ),
-                                  ],
+                                child: Text(
+                                  "From: ${fromAddress} ",
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: primaryColor,
+                                  ),
                                 ), //Icon(Icons.ac_unit_sharp), // city name from location
                                 onPressed: () {
                                   debugPrint(
@@ -304,19 +300,19 @@ class RequestItem extends StatelessWidget {
                             const SizedBox(
                               width: 10,
                             ),
-                            SizedBox(
+                            SizedBox(//to
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.3,
                               child: TextButton(
                                 child: Text(
-                                  "$toAddress",
+                                  "To: $toAddress",
                                   style: const TextStyle(
                                     fontSize: 20,
                                     color: primaryColor,
                                   ),
                                 ), // city name from location
                                 onPressed: () async {
-                                  print("==============");
+                                  print("here");
                                 },
                                 style: ButtonStyle(
                                     shape: MaterialStateProperty.all<
@@ -341,6 +337,4 @@ class RequestItem extends StatelessWidget {
       ),
     );
   }
-
-
 }

@@ -41,6 +41,10 @@ class _ProfilePagesState extends State< ProfilePages >{
   void initState() {
     _fetchMyAccount.fetchMyAccount();
     _fetchRequest.fetchRequests();
+    _fetchRequest.fetchMyOnFulfilledRequests();
+    _fetchRequest.fetchMyOwnerRequests();
+    _fetchRequest.fetchMyOnRequests();
+    _fetchRequest.fetchMyOnClosedRequests();
     super.initState();
   }
   @override
@@ -53,9 +57,9 @@ class _ProfilePagesState extends State< ProfilePages >{
 
 Widget _profilePageUI(BuildContext context){
   return SafeArea(
-    child: SingleChildScrollView(
-      child: RefreshIndicator(
-        onRefresh: _refresh,
+    child: RefreshIndicator(
+      onRefresh: _refresh,
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -119,7 +123,7 @@ Widget _profilePageUI(BuildContext context){
                                   TextButton(
                                       child:const Text("Edit profile",style: TextStyle(fontSize: 17.5, color: Colors.white ,),) ,//Icon(Icons.ac_unit_sharp), // city name from location
                                       onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfile(myAcc.name,myAcc.email,myAcc.phone,myAcc.createTime))),
-      
+    
                                       style: ButtonStyle(
                                         //maximumSize: Size.infinite,
                                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -127,7 +131,7 @@ Widget _profilePageUI(BuildContext context){
                                           borderRadius: BorderRadius.circular(17.0),
                                           side: const BorderSide(color: Colors.white),
                                         ),
-                                      )
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -255,7 +259,7 @@ Widget _profilePageUI(BuildContext context){
                                             requests[0].data[index]["fromAddress"],
                                             requests[0].data[index]["toAddress"],
                                             requests[0].data[index]['userId'],
-      
+    
                                             myAcc.name
                                           );
                                         }
@@ -324,7 +328,7 @@ Widget _profilePageUI(BuildContext context){
                               http.Response res = snapshot.data as http.Response;
                               List <RequestModel> requests = [] ;
                               var body = jsonDecode(res.body());
-                              print(body);
+                              //print(body);
                               if(body["data"].isEmpty){
                                 return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
                               }else{ 
@@ -356,7 +360,7 @@ Widget _profilePageUI(BuildContext context){
                                               var body = jsonDecode(res.body());
                                               //print(body["data"]["name"]);
                                               print("Done..");
-      
+    
                                             if(body["data"].isEmpty){
                                               return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
                                             }else{ 
@@ -383,13 +387,14 @@ Widget _profilePageUI(BuildContext context){
                                                   requests[0].data[index]["fromAddress"],
                                                   requests[0].data[index]["toAddress"],
                                                   requests[0].data[index]['userId'],
-      
+    
                                                   body["data"]["name"],
                                                   "4.7",
                                                   body['data']['isTrusted'],
                                                   body['data']['createTime'],
-      
+    
                                                   0,
+                                                  requests[0].data[index]["mod"]
                                                   );
                                                 }
                                               }
@@ -408,7 +413,7 @@ Widget _profilePageUI(BuildContext context){
                                           requests[0].data[index]["fromAddress"],
                                           requests[0].data[index]["toAddress"],
                                           requests[0].data[index]['userId'],
-      
+    
                                           body["data"]["name"]
                                         );
                                       */
@@ -423,9 +428,13 @@ Widget _profilePageUI(BuildContext context){
                           ),
                         ),
                         //////////////////////////////
-                        /////////////////////////////
                         //////////////////////////////
-                        /////////////////////////////
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Divider(color: primaryColor,),
+                        ),
+                        //////////////////////////////
+                        //////////////////////////////
                         Row(//This is my on [Closed] Requests
                         children: [
                           Container(//profile photo
@@ -478,6 +487,148 @@ Widget _profilePageUI(BuildContext context){
                                 http.Response res = snapshot.data as http.Response;
                                 List <RequestModel> requests = [] ;
                                 var body = jsonDecode(res.body());
+                                print("object");
+                                //print(body["data"][0]["mod"]);
+                                if(body["data"].isEmpty){
+                                  return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
+                                }else{ 
+                                  requests.add(RequestModel.fromJson(body)); 
+                                  //print(requests[0].data[0]["mod"]);
+                                  switch(snapshot.connectionState){                        
+                                    case ConnectionState.waiting:
+                                      return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                                      
+                                    case ConnectionState.none:
+                                      return const Center(child: Text("Error in connection"),);
+                              
+                                    case ConnectionState.active:
+                                      return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                              
+                                    case ConnectionState.done:
+                                    return SizedBox(
+                                      height: 860,
+                                      width: 800,
+                                      child : requests.isNotEmpty ? ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount:requests[0].data.length ,
+                                        itemBuilder: (context , index){
+                                          return FutureBuilder(
+                                            //initialData: [ _fetchRequest.fetchRequests(getUserID())],
+                                            future:  _fetchOthersAccount.fetchOthersAccount(requests[0].data[index]['userId']),
+                                            builder: (context , snapshot){
+                                              if(snapshot.hasData){
+                                              http.Response res = snapshot.data as http.Response;
+                                                var body = jsonDecode(res.body());
+                                                //print(body["data"]["name"]);
+                                                print("Done..");
+                                                print(body["data"]);
+                                                //print(body["data"][0]["mod"]);
+                                              if(body["data"].isEmpty){
+                                                return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
+                                              }else{ 
+                                                switch(snapshot.connectionState){                        
+                                                  case ConnectionState.waiting:
+                                                    return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                                                    
+                                                  case ConnectionState.none:
+                                                    return const Center(child: Text("Error in connection"),);
+                                            
+                                                  case ConnectionState.active:
+                                                    return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                                            
+                                                  case ConnectionState.done:
+                                                  return OnRequestCard( //sending data to request card
+                                                    index,
+                                                    requests[0].data[index]['body'].toString(),
+                                                    requests[0].data[index]['title'].toString(),
+                                                    requests[0].data[index]['_id'].toString(),
+                                                    requests[0].data[index]["timeRange"]["val"] ,
+                                                    requests[0].data[index]["priceRange"]["min"],
+                                                    requests[0].data[index]["priceRange"]["max"],
+                                                    requests[0].data[index]["timeRange"]["unit"] ,
+                                                    requests[0].data[index]["fromAddress"],
+                                                    requests[0].data[index]["toAddress"],
+                                                    requests[0].data[index]['userId'],
+    
+                                                    body["data"]["name"],
+                                                    "4.7",
+                                                    body['data']['isTrusted'],
+                                                    body['data']['createTime'],
+    
+                                                    1,  //filter
+                                                    requests[0].data[index]["mod"]
+                                                    );
+                                                  }
+                                                }
+                                              } 
+                                                return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                                            } 
+                                          );
+                                        }
+                                      ):Container()
+                                    );
+                                  }
+                                }
+                              } 
+                                return const Center(child: CircularProgressIndicator(backgroundColor: primaryColor,),);
+                            } 
+                          ),
+                          ),
+                        ),
+                        //////////////////////////////
+                        //////////////////////////////
+                        Row(//This is my on [Fulfilled] Requests
+                        children: [
+                          Container(//profile photo
+                            width: MediaQuery.of(context).size.height*0.065,
+                            height: MediaQuery.of(context).size.height*0.065,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(75),
+                              image: const DecorationImage(image: NetworkImage(Config.ImageURL,),
+                              )
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.values[0],
+                            children: [
+                              RichText(//username
+                              text : TextSpan(
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                                children: <TextSpan>[    
+                                  TextSpan(
+                                    text:"\t\t${myAcc.name} :",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      //decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(height: MediaQuery.of(context).size.height*0.005,),
+                              const Center(child: Text(" This is my on [Fulfilld] Requests :",style:  TextStyle(fontSize: 29, color: Colors.black,fontWeight: FontWeight.bold))),
+                              const Center(child: Text("  Requests that has Commented by me and \n  Accept/closed by other",style:  TextStyle(fontSize: 17.5, color: Colors.black,fontWeight: FontWeight.bold))),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(//Closed Requests 
+                          height:MediaQuery.of(context).size.height*0.33 ,
+                          child: RefreshIndicator(
+                            onRefresh: _refresh,
+                            child: FutureBuilder(
+                              //initialData: [ _fetchRequest.fetchRequests(getUserID())],
+                              future: _fetchRequest.fetchMyOnFulfilledRequests(),
+                              builder: (context , snapshot){
+                                if(snapshot.hasData){
+                                http.Response res = snapshot.data as http.Response;
+                                List <RequestModel> requests = [] ;
+                                var body = jsonDecode(res.body());
                                 print(body);
                                 if(body["data"].isEmpty){
                                   return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
@@ -510,7 +661,7 @@ Widget _profilePageUI(BuildContext context){
                                                 var body = jsonDecode(res.body());
                                                 //print(body["data"]["name"]);
                                                 print("Done..");
-      
+    
                                               if(body["data"].isEmpty){
                                                 return const Center(child: Text("NO Request exist\nAdd one first", style :TextStyle(fontSize: 45 , fontWeight: FontWeight.bold),));
                                               }else{ 
@@ -537,13 +688,14 @@ Widget _profilePageUI(BuildContext context){
                                                     requests[0].data[index]["fromAddress"],
                                                     requests[0].data[index]["toAddress"],
                                                     requests[0].data[index]['userId'],
-      
+    
                                                     body["data"]["name"],
                                                     "4.7",
                                                     body['data']['isTrusted'],
                                                     body['data']['createTime'],
-      
-                                                    1  //filter
+    
+                                                    1,  //filter
+                                                    requests[0].data[index]["mod"]
                                                     );
                                                   }
                                                 }
@@ -562,7 +714,7 @@ Widget _profilePageUI(BuildContext context){
                           ),
                           ),
                         ),
-      
+    
                       ],
                     );
                   }
@@ -580,7 +732,7 @@ Widget _profilePageUI(BuildContext context){
               }
             )
           ],
-      
+    
         ),
       ),
     ),
@@ -592,6 +744,19 @@ Widget _profilePageUI(BuildContext context){
       const Duration(seconds: 1)
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

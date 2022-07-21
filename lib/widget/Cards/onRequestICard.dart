@@ -36,6 +36,8 @@ class OnRequestCard extends StatelessWidget {
 
   final filter;
 
+  final mod;
+
   OnRequestCard(
     this.index,
     this.reqbody,
@@ -55,6 +57,8 @@ class OnRequestCard extends StatelessWidget {
     this.createTime,
 
     this.filter,
+
+    this.mod
   );
 
   @override
@@ -73,7 +77,9 @@ class OnRequestCard extends StatelessWidget {
       to,
       requesterID,
 
-      userName
+      userName,
+
+      mod
     );
   }
 
@@ -92,6 +98,7 @@ class OnRequestCard extends StatelessWidget {
     String requesterID,
 
     dynamic username,
+    dynamic mod
   ) {
     return InkWell(
       onTap: () => filter == 1 ? Navigator.push(context,
@@ -99,6 +106,7 @@ class OnRequestCard extends StatelessWidget {
               builder: (context) => ClosedRequestDetails(
                 reqBody,reqTitle,reqID,reqtimerange,reqminPrice,
                 reqmaxPrice,timeUnits,fromAddress,toAddress,requesterID,
+                mod
             ),
           ),
       ) :Navigator.push(
@@ -271,25 +279,12 @@ class OnRequestCard extends StatelessWidget {
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextButton(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "${fromAddress} ",
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: primaryColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.01,
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward,
-                                      color: primaryColor,
-                                    ),
-                                  ],
+                                child: Text(
+                                  "${fromAddress} ",
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: primaryColor,
+                                  ),
                                 ), //Icon(Icons.ac_unit_sharp), // city name from location
                                 onPressed: () {
                                   debugPrint(

@@ -3,18 +3,14 @@ import 'package:gimme/Models/profileModel.dart';
 
 
 import 'package:gimme/main.dart';
+import 'package:gimme/modules/review/ReviewPage.dart';
+import 'package:gimme/modules/review/review.dart';
 
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/modules/notification/notificationPage.dart';
 import 'package:gimme/Api/user/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/modules/Payment/PaymentScreen.dart';
-import 'package:gimme/pages/qr/ScannerScreen.dart';
-import 'package:gimme/pages/qr/qr_create_page.dart';
-import 'package:gimme/pages/qr/qr_scan_page.dart';
-import 'package:gimme/shared/config.dart';
-import 'package:gimme/test.dart';
-
 
 
 import 'dart:convert';
@@ -127,34 +123,22 @@ class PDrawer {
                     SizedBox(
                       height: 24,
                     ),
-                    buildMenuItem(
-                      text: 'QrScanCode',
-                      icon: Icons.update,
-                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScanPage())),
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    buildMenuItem(
-                      text: 'QrCreateCode',
-                      icon: Icons.update,
-                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>QRCreatePage())),
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    buildMenuItem(
-                      text: 'ScannerScreen',
-                      icon: Icons.update,
-                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>ScannerScreen(title: Config.appName,))),
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
+                    
                     buildMenuItem(
                       text: 'test',
                       icon: Icons.update,
-                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>Test())),
+                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>AddReview())),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    buildMenuItem(
+                      text: 'test2',
+                      icon: Icons.update,
+                      onCliced: () =>  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>Rating(
+                       onRatingSelected() , 5
+                      ))),
                     ),
                     SizedBox(
                       height: 24,
@@ -212,6 +196,10 @@ class PDrawer {
               ),);
       }
     );
+  }
+
+  Function(int p1) onRatingSelected() {
+    return (int ) async =>{};
   }
 /*
   buildHeader({

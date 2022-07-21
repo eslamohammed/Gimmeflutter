@@ -5,11 +5,11 @@ import 'package:flutter/gestures.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/utilies/sharedPrefrances/sharedPrefsToken.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
+import 'package:gimme/widget/InputWidet/customInputPasswordField.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:gimme/shared/config.dart';
-//import 'package:gimme/pages/loginPage/loginPage.dart';
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -219,12 +219,8 @@ class _Register_pageState extends State<Register_page> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
-                        child: CustomInputTextFieldWidget(
-                          labelText: "Enter your password",
-                          hintText: "password",
-                          secure: true,
-                          ccontroller: _passwordTextEditingController,
-                          icon: Icons.password,
+                        child: CustomInputPasswordField(
+                          controller: _passwordTextEditingController,
                         ),
                       ),
                     ),
@@ -234,11 +230,21 @@ class _Register_pageState extends State<Register_page> {
                     padding: const EdgeInsets.all(15),
                     child: Center(
                       child: FlatButton(
-                        onPressed: () async {
-                          //registeration function
-                          //registerAccount();
-                          //_register();
-                          _register_user();
+                        onPressed: () async {//registeration Method
+                          try{
+                            _register_user();
+                          }
+                          catch(err){
+                            FormHelper.showSimpleAlertDialog(
+                              context,
+                              Config.appName,
+                              "Something Went Woring Be sure that you inserted the right data\n$err",
+                              "Ok",
+                              () {
+                                Navigator.pop(context);
+                              },
+                            );
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(12.5),
@@ -309,75 +315,8 @@ class _Register_pageState extends State<Register_page> {
     );
   }
 
-
   ///API
-  Future registerAccount() async {
-    ///Register/create account Method
-    var url = Uri.parse(Config.apiURl + Config.registerAPI);
-    var response = await http.post(url, body: {
-        "name": _nameTextEditingController.text,
-        "email": _emailTextEditingController.text,
-        "phone": _phoneTextEditingController.text,
-        "age": 20,
-        "password": _passwordTextEditingController.text,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      var body = jsonDecode(response.body());
-      print("Data body : ${body["status"]}");
-      ///////////////////////////////////////
-      SharedPrefs.saveToken(body["data"]);
-      if (body["status"] == true) {
-        FormHelper.showSimpleAlertDialog(
-          context,
-          Config.appName,
-          "Account created ! Now Press OK to login",
-          "Ok",
-          () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Login_page()));
-          },
-        );
-      } else {
-        FormHelper.showSimpleAlertDialog(
-          context,
-          Config.appName,
-          "validation failed:Insert required data.",
-          "Ok",
-          () {
-            Navigator.pop(context);
-          },
-        );
-      }
-    } else if (response.statusCode == 400) {
-      var body = jsonDecode(response.body());
-      print("Data body : ${body["status"]}");
-      print("Data body : ${body["message"]}");
-      FormHelper.showSimpleAlertDialog(
-        context,
-        Config.appName,
-        "Error:${body["message"]["fieldErrors"]}",
-        "Ok",
-        () {
-          Navigator.pop(context);
-        },
-      );
-    } else {
-      debugPrint("try again");
-      FormHelper.showSimpleAlertDialog(
-        context,
-        Config.appName,
-        "Data can not be Empty Or an error has ouccerd please try again [Ensure that you insert ther right data with the right requirments]",
-        "try again",
-        () {
-          Navigator.pop(context);
-        },
-      );
-    }
-  }
-  
-  Future _register_user() async {
+  Future _register_user() async {//used
     var url = Uri.parse(Config.apiURl + Config.registerAPI);
     var req_body = new Map();
 
@@ -387,10 +326,14 @@ class _Register_pageState extends State<Register_page> {
      req_body["age"] = int.parse(_ageTextEditingController.text) ;
      req_body["password"] = _passwordTextEditingController.text;
 
-  var response = await http.post(url, headers: {'Content-Type': 'application/json'}, body: jsonEncode(req_body));
+  var response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode(req_body),
+  );
 
 
-if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
       var body = jsonDecode(response.body());
       print("Data body : ${body["status"]}");
       print("Data body : ${body}");
@@ -447,5 +390,73 @@ if (response.statusCode == 200) {
       );
     }
 }
+
+  Future registerAccount() async {
+    ///Register/create account Method
+    var url = Uri.parse(Config.apiURl + Config.registerAPI);
+    var response = await http.post(url, body: {
+        "name": _nameTextEditingController.text,
+        "email": _emailTextEditingController.text,
+        "phone": int.parse(_phoneTextEditingController.text),
+        "age": int.parse(_ageTextEditingController.text),
+        "password": _passwordTextEditingController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body());
+      //print("Data body : ${body["status"]}");
+      ///////////////////////////////////////
+      SharedPrefs.saveToken(body["data"]);
+      if (body["status"] == true) {
+        FormHelper.showSimpleAlertDialog(
+          context,
+          Config.appName,
+          "${body["message"]}:\nNow Press OK to login",
+          "Ok",
+          () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Login_page()));
+          },
+        );
+      } else {
+        FormHelper.showSimpleAlertDialog(
+          context,
+          Config.appName,
+          "${body["message"]}",
+          "Ok",
+          () {
+            Navigator.pop(context);
+          },
+        );
+      }
+    } else if (response.statusCode == 400) {
+      var body = jsonDecode(response.body());
+      print("Data body : ${body["status"]}");
+      print("Data body : ${body["message"]}");
+      FormHelper.showSimpleAlertDialog(
+        context,
+        Config.appName,
+        "Error:${body["message"]["fieldErrors"]}",
+        "Ok",
+        () {
+          Navigator.pop(context);
+        },
+      );
+    } else {
+      debugPrint("try again");
+      FormHelper.showSimpleAlertDialog(
+        context,
+        Config.appName,
+        "Data can not be Empty Or an error has ouccerd please try again [Ensure that you insert ther right data with the right requirments]",
+        "try again",
+        () {
+          Navigator.pop(context);
+        },
+      );
+    }
+  }
+  
+
 
 }

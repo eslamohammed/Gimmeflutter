@@ -273,27 +273,14 @@ Widget reqResultCard(
                                           height: MediaQuery.of(context).size.height *0.06,
                                           width: MediaQuery.of(context).size.width *0.35,
                                           child: TextButton(
-                                            child: Row(
-                                              //mainAxisAlignment: MainAxisAlignment.end,
-                                              children: [
-                                                Center(
-                                                  child: Text(
-                                                  fromAddress,
-                                                  style: const TextStyle(
-                                                    fontSize: 15,
-                                                    color: primaryColor,
-                                                    ),
-                                                  ),
+                                            child: Center(
+                                              child: Text(
+                                              fromAddress,
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                color: primaryColor,
                                                 ),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context).size.width *
-                                                      0.001,
-                                                ),
-                                                const Icon(
-                                                  Icons.arrow_forward,
-                                                  color: primaryColor,
-                                                ),
-                                              ],
+                                              ),
                                             ), //Icon(Icons.ac_unit_sharp), // city name from location
                                             onPressed: () {
                                               debugPrint(

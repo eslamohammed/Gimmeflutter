@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:gimme/Api/payment/releasePayment.dart';
 import 'package:gimme/main.dart';
+import 'package:gimme/pages/qr/qr_scan_page.dart';
 import 'package:gimme/shared/config.dart';
+import 'package:gimme/test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCreatePage extends StatefulWidget {
+  const QRCreatePage( this.reqId , this.mod);
+  
+  final reqId ;  
+  final mod ;
   @override
   _QRCreatePageState createState() => _QRCreatePageState();
 }
 
 class _QRCreatePageState extends State<QRCreatePage> {
   final controller = TextEditingController();
+  
+  
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -25,22 +34,32 @@ class _QRCreatePageState extends State<QRCreatePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             QrImage(
-                data: controller.text,
+                data: widget.mod,
                 size: 200,
                 backgroundColor: Colors.white,
               ),
             SizedBox(height: 40),
-            Row(
-              children: [
-                Expanded(child: buildTextField(context)),
-                const SizedBox(width: 12),
-                FloatingActionButton(
+/*          FloatingActionButton(
                   backgroundColor: Theme.of(context).primaryColor,
                   child: Icon(Icons.done, size: 30),
-                  onPressed: () => setState(() {}),
-                )
-              ],
-            ),
+                  onPressed: () => print(widget.code),
+                ),
+         
+
+            SizedBox(height: 40),
+*/
+          Text("Just for test, It will be removed later" , style: TextStyle(color: Colors.black,fontSize: 30),),
+          FloatingActionButton(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  child: Icon(Icons.done, size: 30),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScanPage(widget.reqId,widget.mod))),
+                ),
+          SizedBox(height: 40),
+          ElevatedButton(onPressed: (){
+             ReleasePayment().releasePayment(context, widget.reqId);
+                          print("${widget.reqId}");
+          }, child: Text("Test release payment"))
+
           ],
         ),
       ),

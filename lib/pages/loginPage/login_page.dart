@@ -6,6 +6,7 @@ import 'package:gimme/controller/HomeController.dart';
 import 'package:gimme/main.dart';
 import 'package:gimme/shared/config.dart';
 import 'package:gimme/utilies/sharedPrefrances/sharedPrefsToken.dart';
+import 'package:gimme/widget/InputWidet/customInputPasswordField.dart';
 
 import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -37,8 +38,6 @@ class _Login_pageState extends State<Login_page> {
 
   bool isAPIcallProcess = false;
   bool hidepassword = true;
-  //String checkAccount = "";
-  //String checkData = "";
 
   @override
   Widget build(BuildContext context) {
@@ -58,39 +57,8 @@ class _Login_pageState extends State<Login_page> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-/*
-          Container(    //Logo
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4,
-            
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.white,
-                  Colors.white,
-                  ],
-              ),
-               borderRadius: BorderRadius.only(
-                 bottomLeft: Radius.circular(110),
-                 bottomRight: Radius.circular(110),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(  
-                alignment : Alignment.center,
-                child: Image.asset("assets/gimmeMoblieApp.png",
-                width: 250,
-                fit: BoxFit.contain,),
-                ), 
-            ],
-            ),
-          ),
-*/
-           
+
+
             Padding( //login Word
               padding: const EdgeInsets.all(15),
               child: Column(
@@ -168,15 +136,12 @@ class _Login_pageState extends State<Login_page> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Padding(
                           padding: const EdgeInsets.all(10),
-                          child: CustomInputTextFieldWidget(
-                            labelText: "password",
-                            hintText: "password",
-                            secure: true,
-                            ccontroller: _passwordTextEditingController,
-                            icon: Icons.update,
+                          child: CustomInputPasswordField(
+                          controller: _passwordTextEditingController,
                           ),
-                        )),
-                  ),
+                        ),
+                      ),
+                    ),
 
                   Padding(//Login
                     padding: const EdgeInsets.all(15),
@@ -448,4 +413,45 @@ class _Login_pageState extends State<Login_page> {
   }
 
 
- 
+
+
+
+
+
+
+
+
+
+///logo
+ /*
+          Container(    //Logo
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 4,
+            
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.white,
+                  Colors.white,
+                  ],
+              ),
+               borderRadius: BorderRadius.only(
+                 bottomLeft: Radius.circular(110),
+                 bottomRight: Radius.circular(110),
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Align(  
+                alignment : Alignment.center,
+                child: Image.asset("assets/gimmeMoblieApp.png",
+                width: 250,
+                fit: BoxFit.contain,),
+                ), 
+            ],
+            ),
+          ),
+*/

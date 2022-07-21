@@ -14,14 +14,7 @@ Future  deleteComment(BuildContext context ,String reqId , String commentId) asy
     "Authorization":"Bearer " + (prefs.getString("token") as String),
     'Content-Type': 'application/json; charset=UTF-8'
     };
-  /*String bodii = json.encode(
-      {
-        
-        "reqId" : reqId as String,
-        "commentId" : commentID
-        
-      }
-    );*/
+
     var url = Uri.parse(Config.apiURl + Config.commentAPI);
     var response = await http.delete(
       url ,
@@ -46,7 +39,8 @@ Future  deleteComment(BuildContext context ,String reqId , String commentId) asy
         //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ShowSearchedReqComments(reqId)));  
           Navigator.pop(context);
           Navigator.pop(context);
-      },);
+        },
+      );
       } else {
         FormHelper.showSimpleAlertDialog(
         context, 

@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:gimme/modules/Google_maps/googleMap.dart';
 import 'package:gimme/main.dart';
 
-import 'package:gimme/modules/Comments/showComments.dart';
-import 'package:gimme/modules/request/editRequest.dart';
+import 'package:gimme/pages/qr/qr_create_page.dart';
+import 'package:gimme/pages/qr/qr_scan_page.dart';
 
-import 'package:snippet_coder_utils/hex_color.dart';
+
+import 'package:gimme/shared/global_library.dart' as globals;
+
 
 class ClosedRequestDetails extends StatefulWidget {
   final body;
@@ -21,6 +23,7 @@ class ClosedRequestDetails extends StatefulWidget {
   final fromAddress;
   final toAddress;
   final requesterID;
+  final mod;
   ClosedRequestDetails(
     this.body,
     this.title,
@@ -32,6 +35,7 @@ class ClosedRequestDetails extends StatefulWidget {
     this.fromAddress,
     this.toAddress,
     this.requesterID,
+    this.mod
   ); // this.id,this.timerange,this.minPr,this.maxPr/* this.from ,this.to*/ );
 
   @override
@@ -412,17 +416,28 @@ class ClosedRequestDetailsState extends State<ClosedRequestDetails> {
                         ),
                         onPressed: () => {
                           /// release payment method
-                        },
+                          print(widget.requesterID),
+                          print(globals.getUserID()),
+                          print("here is mod : ${widget.mod}"),
+                          print("here is request id : ${widget.reqID}"),
+                          widget.requesterID == globals.getUserID() ?
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScanPage(widget.reqID,widget.mod)))
+                          : Navigator.push(context, MaterialPageRoute(builder: (context)=>QRCreatePage(widget.reqID,widget.mod)))
+                        /*    Navigator.push(context, MaterialPageRoute(builder: (context)=>QRCreatePage(widget.reqID,widget.mod)))
+                          : Navigator.push(context, MaterialPageRoute(builder: (context)=>QRScanPage(widget.reqID,widget.mod)))
+                        */
+                          },
                         style: ButtonStyle(//maximumSize: Size.infinite,
                             shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
+                          RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(17.0),
                             side: const BorderSide(
                               color: primaryColor,
+                              ),
                             ),
-                          ),
-                        )),
+                          )
+                        ),
                       ),
                     ),
                   ],

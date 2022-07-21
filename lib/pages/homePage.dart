@@ -170,7 +170,16 @@ class _HomeState extends State<Home>{
                   children: [
                     const Text("\n\nLoading...\n\n",style :TextStyle(fontSize: 20),),
                     const CircularProgressIndicator(backgroundColor: primaryColor,),
-                    const Text("\n\n\n\n Please check Your Connection...",style :TextStyle(fontSize: 30),)
+                    const Text("\n\n\n\n Please check Your Connection...",style :TextStyle(fontSize: 30),),
+                    ElevatedButton(onPressed: ()async => {
+                        await prefs.remove('token'), //remove token
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login_page())),
+                      },
+                    
+                      child: Text("log out"))
                   ],
                 ),
               );

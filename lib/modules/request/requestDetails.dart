@@ -9,6 +9,7 @@ import 'package:gimme/main.dart';
 
 import 'package:gimme/modules/Comments/showComments.dart';
 import 'package:gimme/modules/request/editRequest.dart';
+import 'package:gimme/widget/Alertdialog/alertDialog.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -446,7 +447,20 @@ class RequestDetailsState extends State<RequestDetails> {
       floatingActionButton: FloatingActionButton(
         //delete function
         //calling delete function to delete request
-        onPressed: () =>DeleteRequest().deleteRequest(context, reqID), //sending object id to be deleted
+        onPressed: () =>{
+          AlertDialogWidget.alartDialog(
+            context,
+            "Delete Request ?",
+            ()=>{ 
+              DeleteRequest().deleteRequest(context,reqID),
+              Navigator.pop(context),
+            },
+            ()=>{
+              Navigator.pop(context),
+            },
+          ),
+        },
+        //DeleteRequest().deleteRequest(context, reqID), //sending object id to be deleted
         heroTag: "btn$index",
         child: const Icon(
           Icons.delete,

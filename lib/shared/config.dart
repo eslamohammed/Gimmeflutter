@@ -47,7 +47,7 @@ class Config {
   static const paymentAPI = "/payment/";
   static const createStripeAcc = "create-stripe-account";
   static const paymentCheckoutAPI = "create-stripe-session";
-
+  static const paymentReleaseAPI = "release-payment";
 
   static const ImageURL =
       "https://images.unsplash.com/photo-1589883661923-6476cb0ae9f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80";
