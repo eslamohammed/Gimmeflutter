@@ -3,14 +3,14 @@ import 'package:gimme/Models/profileModel.dart';
 
 
 import 'package:gimme/main.dart';
-import 'package:gimme/modules/review/ReviewPage.dart';
-import 'package:gimme/modules/review/review.dart';
+import 'package:gimme/modules/review/addReview.dart';
 
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:gimme/modules/notification/notificationPage.dart';
 import 'package:gimme/Api/user/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/modules/Payment/PaymentScreen.dart';
+import 'package:gimme/pages/qr/qr_create_page.dart';
 
 
 import 'dart:convert';
@@ -127,7 +127,7 @@ class PDrawer {
                     buildMenuItem(
                       text: 'test',
                       icon: Icons.update,
-                      onCliced: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>AddReview())),
+                      onCliced: () => {} //Navigator.push(context, MaterialPageRoute(builder: (context)=>AddReview())),
                     ),
                     SizedBox(
                       height: 24,
@@ -136,14 +136,21 @@ class PDrawer {
                       text: 'test2',
                       icon: Icons.update,
                       onCliced: () =>  Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=>Rating(
-                       onRatingSelected() , 5
+                      MaterialPageRoute(builder: (context)=>QRCreatePage(
+                       "",""
                       ))),
                     ),
                     SizedBox(
                       height: 24,
-                    ), 
-                    ///ScannerScreen
+                    ),
+                    buildMenuItem(
+                      text: 'test add review',
+                      icon: Icons.update,
+                      onCliced: () =>  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>AddReview(
+                       ""
+                      ))),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(right: 15, left: 15),
                       child: Divider(
