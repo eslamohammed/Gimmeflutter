@@ -6,6 +6,7 @@ import 'package:gimme/main.dart';
 import 'package:gimme/utilies/sharedPrefrances/sharedPrefsToken.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 import 'package:gimme/widget/InputWidet/customInputPasswordField.dart';
+import 'package:gimme/widget/InputWidet/customInputTextField.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -13,8 +14,7 @@ import 'package:gimme/shared/config.dart';
 import 'package:gimme/pages/loginPage/login_page.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import '../../shared/config.dart';
-import '../../widget/InputWidet/customInputTextField.dart';
+
 
 class Register_page extends StatefulWidget {
   @override
@@ -232,7 +232,75 @@ class _Register_pageState extends State<Register_page> {
                       child: FlatButton(
                         onPressed: () async {//registeration Method
                           try{
-                            _register_user();
+                            if (_nameTextEditingController.text.isNotEmpty) {
+                              if (_emailTextEditingController.text.isNotEmpty) {
+                                if (_phoneTextEditingController.text.isNotEmpty ) {
+                                  if (_ageTextEditingController.text.isNotEmpty) {
+                                    if (_passwordTextEditingController.text.isNotEmpty) {
+                                      _register_user(); //function to add user
+                                    } else {
+                                      FormHelper.showSimpleAlertDialog(
+                                        //location
+                                        context,
+                                        Config.appName,
+                                        "Password id required:\nPassword can not be Empty try again",
+                                        "OK",
+                                        () {
+                                          Navigator.pop(context);
+                                          //Navigator.push(context, MaterialPageRoute(builder: (context)=>GoogleMaps()));
+                                        },
+                                      );
+                                    }
+                                  } else {
+                                    FormHelper.showSimpleAlertDialog(
+                                      //time
+                                      context,
+                                      Config.appName,
+                                      "Age is required:\nAnd can not be Empty try again",
+                                      "OK",
+                                      () {
+                                        Navigator.pop(context);
+                                      },
+                                    );
+                                  }
+                                } else {
+                                  FormHelper.showSimpleAlertDialog(
+                                    //price
+                                    context,
+                                    Config.appName,
+                                    "Phone number is required:\nPhone number can not be Empty try again",
+                                    "OK",
+                                    () {
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                }
+                              } else {
+                                FormHelper.showSimpleAlertDialog(
+                                  //body
+                                  context,
+                                  Config.appName,
+                                  "Email is required:\nEmail can not be Empty Anyway try again",
+                                  "OK",
+                                  () {
+                                    Navigator.pop(context);
+                                    debugPrint("");
+                                  },
+                                );
+                              }
+                            } else {
+                              FormHelper.showSimpleAlertDialog(
+                                //all data
+                                context,
+                                Config.appName,
+                                "User data is required and can not be Empty press OK to try again",
+                                "OK",
+                                () {
+                                  Navigator.pop(context);
+                                  debugPrint("");
+                                },
+                              );
+                            }
                           }
                           catch(err){
                             FormHelper.showSimpleAlertDialog(
@@ -347,7 +415,7 @@ class _Register_pageState extends State<Register_page> {
           "Ok",
           () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Login_page()));
+                MaterialPageRoute(builder: (context) => Login_page()));
           },
         );
       } else {
