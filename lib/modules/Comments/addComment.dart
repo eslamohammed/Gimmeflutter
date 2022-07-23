@@ -4,10 +4,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gimme/Api/Stripe/createAccount.dart';
+import 'package:gimme/main.dart';
 import 'package:gimme/modules/stripe/createStripeAccountWV.dart';
 import 'package:gimme/widget/InputWidet/customInputNumberField.dart';
 
-import '../../main.dart';
 import 'package:gimme/controller/HomeController.dart';
 
 import 'package:gimme/shared/config.dart';
@@ -222,8 +222,63 @@ class _AddCommentState extends State<AddComment> {
                 onPressed: (){
                    try {
                   //addComment function here
-                  _addComment(context);
+                  //_addComment(context);
                   debugPrint(widget.reqID);
+
+                    if (_priceTextEditingController.text.isNotEmpty) {
+                        if (_timeTextEditingController.text.isNotEmpty) {
+                          if (_unitsTextEditingController.text.isNotEmpty) {
+                            if (_commentTextEditingController.text.isNotEmpty) {
+                              _addComment(context); //function to add Request
+                            } else {
+                              FormHelper.showSimpleAlertDialog(
+                                //time
+                                context,
+                                Config.appName,
+                                "Comment required: Check inserted comment, press OK to try again",
+                                "OK",
+                                () {
+                                  Navigator.pop(context);
+                                },
+                              );
+                            }
+                          } else {
+                            FormHelper.showSimpleAlertDialog(
+                              //price
+                              context,
+                              Config.appName,
+                              "Units required \ninserted worng data ,check units and try again",
+                              "OK",
+                              () {
+                                Navigator.pop(context);
+                              },
+                            );
+                          }
+                        } else {
+                          FormHelper.showSimpleAlertDialog(
+                            //body
+                            context,
+                            Config.appName,
+                            "Time required:\ninserted worng data , time and try again",
+                            "OK",
+                            () {
+                              Navigator.pop(context);
+                              debugPrint("");
+                            },
+                          );
+                        }
+                      } else {
+                        FormHelper.showSimpleAlertDialog(
+                          //all data
+                          context,
+                          Config.appName,
+                          "Comment data is required and can not be Empty press OK to try again",
+                          "OK",
+                          () {
+                            Navigator.pop(context);
+                          },
+                        );
+                      }
                   } catch (err) {
                     print(err);
                   }
