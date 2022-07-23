@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:gimme/Api/payment/releasePayment.dart';
-import 'package:gimme/main.dart';
 import 'package:gimme/pages/qr/qr_scan_page.dart';
 import 'package:gimme/shared/config.dart';
-import 'package:gimme/test.dart';
+import 'package:gimme/main.dart';
+
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCreatePage extends StatefulWidget {
@@ -33,9 +34,12 @@ class _QRCreatePageState extends State<QRCreatePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Center(child: Text("Scan To release :",style:  TextStyle(fontSize: 50, color: Colors.black,fontWeight: FontWeight.bold))),
+
+            SizedBox(height: MediaQuery.of(context).size.height*0.07),
             QrImage(
                 data: widget.mod,
-                size: 200,
+                size: 300,
                 backgroundColor: Colors.white,
               ),
             SizedBox(height: 40),
