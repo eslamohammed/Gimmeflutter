@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gimme/main.dart';
+import 'package:gimme/modules/review/addReview.dart';
 
 import 'package:gimme/shared/config.dart';
 import 'dart:convert';
@@ -39,9 +40,12 @@ class ReleasePayment {
         "${body["message"]}",
         "Ok",
         () {
-          Navigator.pop(context);
         ///routing url to open in AddReview page
         //  Navigator.push(context, MaterialPageRoute(builder: (context) => AddReview(),),);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context)=>AddReview(reqId),
+            ),
+          );
         },
       );
       } else {
