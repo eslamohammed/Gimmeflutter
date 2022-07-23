@@ -49,6 +49,12 @@ class Config {
   static const paymentCheckoutAPI = "create-stripe-session";
   static const paymentReleaseAPI = "release-payment";
 
+  ///Review
+  ///http://192.168.1.4:8080/api/review/review/:reqId
+    static const reviewAPI = "/review/review/";  // + request id 
+
+
+
   static const ImageURL =
       "https://images.unsplash.com/photo-1589883661923-6476cb0ae9f2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80";
 
