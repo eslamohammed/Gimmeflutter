@@ -11,6 +11,7 @@ import 'package:gimme/Api/user/fetchAccountsData.dart';
 import 'package:gimme/pages/profiles/profilePage.dart';
 import 'package:gimme/modules/Payment/PaymentScreen.dart';
 import 'package:gimme/pages/qr/qr_create_page.dart';
+import 'package:gimme/widget/Cards/reviewCard.dart';
 
 
 import 'dart:convert';
@@ -149,6 +150,17 @@ class PDrawer {
                       onCliced: () =>  Navigator.push(context,
                       MaterialPageRoute(builder: (context)=>AddReview(
                        ""
+                      ))),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    buildMenuItem(
+                      text: 'test review card',
+                      icon: Icons.update,
+                      onCliced: () =>  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>ReviewCard(
+                       "","","","","","","","",
                       ))),
                     ),
                     Padding(

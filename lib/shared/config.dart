@@ -51,7 +51,8 @@ class Config {
 
   ///Review
   ///http://192.168.1.4:8080/api/review/review/:reqId
-    static const reviewAPI = "/review/review/";  // + request id 
+    static const reviewAPI = "/review/review/";  // + request id || user Id
+    static const reviewGetAPI = "/review/reviews/";  // + request id || user Id
 
 
 
@@ -60,10 +61,5 @@ class Config {
 
   static const user2ndImageURL =
       "https://media.istockphoto.com/photos/yorkshire-terrier-dog-looking-down-against-white-background-picture-id962815228?k=20&m=962815228&s=612x612&w=0&h=onoh6ES3mV7eLYU8oCE_H4qERO-g8jsycrqltYpuE10=";
-
-  //      http://localhost:8080/api/user/login
-  //      http://localhost:8080/api/user/register
-
-//AIzaSyA-iGDlbQj7CkHuymRPJgFo7t2VtO9M43Y
 
 }
