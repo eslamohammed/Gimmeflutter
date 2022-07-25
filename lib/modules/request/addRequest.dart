@@ -546,36 +546,49 @@ class _AddRequestState extends State<AddRequest> {
                   padding: const EdgeInsets.all(8.0),
                   child: FlatButton(
                     onPressed: () async {//Calling AddRequest() function
-                      if (_titleTextEditingController.text.isNotEmpty) {
-                        if (_bodyTextEditingController.text.isNotEmpty) {
-                          if (_minPricreTextEditingController.text.isNotEmpty &&
-                              _maxPricreTextEditingController.text.isNotEmpty) {
-                            if (_timeRangeTextEditingController
-                                .text.isNotEmpty) {
-                              if (globals.fromLat != null &&
-                                  globals.fromLong != null &&
-                                  globals.toLat != null &&
-                                  globals.toLong != null) {
-                                _addRequest(); //function to add Request
+                      try{
+                        if (_titleTextEditingController.text.isNotEmpty) {
+                          if (_bodyTextEditingController.text.isNotEmpty) {
+                            if (_minPricreTextEditingController.text.isNotEmpty &&
+                                _maxPricreTextEditingController.text.isNotEmpty) {
+                              if (_timeRangeTextEditingController
+                                  .text.isNotEmpty) {
+                                if (globals.fromLat != null &&
+                                    globals.fromLong != null &&
+                                    globals.toLat != null &&
+                                    globals.toLong != null) {
+                                  _addRequest(); //function to add Request
+                                } else {
+                                  FormHelper.showSimpleAlertDialog(
+                                    //location
+                                    context,
+                                    Config.appName,
+                                    "Set {From & To} markers on Google maps blow, uh baka!!",
+                                    "OK",
+                                    () {
+                                      Navigator.pop(context);
+                                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>GoogleMaps()));
+                                    },
+                                  );
+                                }
                               } else {
                                 FormHelper.showSimpleAlertDialog(
-                                  //location
+                                  //time
                                   context,
                                   Config.appName,
-                                  "Set {From & To} markers on Google maps blow, uh baka!!",
+                                  "Time[unit] in hour \nCheck inserted Time, press OK to try again",
                                   "OK",
                                   () {
                                     Navigator.pop(context);
-                                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>GoogleMaps()));
                                   },
                                 );
                               }
                             } else {
                               FormHelper.showSimpleAlertDialog(
-                                //time
+                                //price
                                 context,
                                 Config.appName,
-                                "Time[unit] in hour \nCheck inserted Time, press OK to try again",
+                                "inserted worng data , price and try again",
                                 "OK",
                                 () {
                                   Navigator.pop(context);
@@ -584,22 +597,23 @@ class _AddRequestState extends State<AddRequest> {
                             }
                           } else {
                             FormHelper.showSimpleAlertDialog(
-                              //price
+                              //body
                               context,
                               Config.appName,
-                              "inserted worng data , price and try again",
+                              "inserted worng data , body and try again",
                               "OK",
                               () {
                                 Navigator.pop(context);
+                                debugPrint("");
                               },
                             );
                           }
                         } else {
                           FormHelper.showSimpleAlertDialog(
-                            //body
+                            //all data
                             context,
                             Config.appName,
-                            "inserted worng data , body and try again",
+                            "Request data is required and can not be Empty press OK to try again",
                             "OK",
                             () {
                               Navigator.pop(context);
@@ -607,19 +621,17 @@ class _AddRequestState extends State<AddRequest> {
                             },
                           );
                         }
-                      } else {
+                      }catch(err){
                         FormHelper.showSimpleAlertDialog(
-                          //all data
                           context,
                           Config.appName,
-                          "Request data is required and can not be Empty press OK to try again",
-                          "OK",
+                          "Something Went Woring Be sure that you inserted the right data\n$err",
+                          "Ok",
                           () {
                             Navigator.pop(context);
-                            debugPrint("");
                           },
                         );
-                      }
+                      }  
                     },
                     child: Padding(
                       //Add Request

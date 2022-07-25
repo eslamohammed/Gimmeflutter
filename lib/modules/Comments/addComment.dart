@@ -279,8 +279,16 @@ class _AddCommentState extends State<AddComment> {
                           },
                         );
                       }
-                  } catch (err) {
-                    print(err);
+                  } catch(err){
+                    FormHelper.showSimpleAlertDialog(
+                      context,
+                      Config.appName,
+                      "Something Went Woring Be sure that you inserted the right data\n$err",
+                      "Ok",
+                      () {
+                        Navigator.pop(context);
+                      },
+                    );
                   }
                 },
                 style: ButtonStyle(
